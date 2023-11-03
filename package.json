@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^5.3.1",
     "@aws-sdk/client-s3": "^3.441.0",
     "@aws-sdk/s3-request-presigner": "^3.441.0",
     "@types/uuid": "^9.0.6",
+    "aws-amplify": "^5.3.11",
     "axios": "^1.6.0",
     "next": "14.0.1",
     "react": "^18",
