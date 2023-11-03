@@ -9,8 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.441.0",
+    "@aws-sdk/s3-request-presigner": "^3.441.0",
     "@types/uuid": "^9.0.6",
-    "aws-sdk": "^2.1487.0",
     "axios": "^1.6.0",
     "next": "14.0.1",
     "react": "^18",

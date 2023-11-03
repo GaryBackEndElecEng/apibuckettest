@@ -1,13 +1,22 @@
 "use client";
 import React, { ErrorInfo } from 'react';
 import axios from "axios";
+import Image from "next/image";
+import { v4 as uuidv4 } from "uuid";
+
+type getType = { Key: string, imgUrl: string };
 
 export default function TestPage() {
+    const [img, setImg] = React.useState<string>("#");
 
     const handleOnSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const body = await uploadFile(e)
-        console.log(body)
+        const body: getType | undefined = await uploadFile(e) as getType | undefined;
+        if (body) {
+            const { Key, imgUrl } = body;
+            // console.log(Key)
+            setImg(imgUrl)
+        }
 
     };
     return (
@@ -27,6 +36,12 @@ export default function TestPage() {
                     </button>
                 </div>
             </form>
+            <div className="flex flex-col w-1/2 mx-auto">
+                <Image src={img} width={600} height={400}
+                    className="aspect-video"
+                    alt="www"
+                />
+            </div>
         </div>
     )
 }
@@ -34,16 +49,18 @@ export default function TestPage() {
 export async function uploadFile(e: React.ChangeEvent<HTMLFormElement>) {
     const formdata = new FormData(e.currentTarget);
     const file: File | null = formdata.get("file") as File;
+    const genKey = `${uuidv4().split("-").slice(0, 2).join("")}-${file.name}`;
+    formdata.set("Key", genKey)
     if (!file) return null
-    const fileType: string = file?.type.toString()
     try {
-        const { data } = await axios.get(`/api/testmedia?fileType=${fileType}`);
-        const { uploadUrl, Key } = data;
-        // console.log(body, file)
-        // if (body) {
-        const res = await axios.put(uploadUrl, file)
-        console.log(res.status)
-        return { Key: Key, res: res.status }
+
+        const res = await axios.post(`/api/testmediav3`, formdata);
+        if (res.status === 200) {
+
+            const res = await fetch(`/api/getmedia?sendkey=${genKey}`)
+            return await res.json()
+        }
+
         // }
     } catch (error) {
         console.error(new Error(" error occurred"))
