@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
+
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuidv4 } from "uuid";
 import { NextRequest, NextResponse } from "next/server";
-export const config = { runtime: 'experimental-edge' }
+// export const config = { runtime: 'experimental-edge' }
 
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
@@ -18,7 +18,7 @@ const s3 = new S3Client({
     region,
 })
 
-export default async function handleTest(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const formdata = await req.formData() as FormData;
 
     const file: File = formdata.get("file") as File;
@@ -40,6 +40,6 @@ export default async function handleTest(req: NextRequest) {
 
     if (result) {
 
-        NextResponse.json({ status: 200 })
+        return new Response("ok", { status: 200 })
     }
 }
