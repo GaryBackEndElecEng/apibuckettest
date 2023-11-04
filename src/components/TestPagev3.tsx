@@ -53,8 +53,15 @@ export async function uploadFile(e: React.ChangeEvent<HTMLFormElement>) {
     formdata.set("Key", genKey)
     if (!file) return null
     try {
+        const options = {
+            method: "POST",
+            headers: {
+                Accept: "application/x-www-form-urlencoded"
+            },
+            body: formdata
+        }
 
-        const res = await axios.post(`/api/testmediav3`, formdata);
+        const res = await fetch(`/api/testmediav3`, options);
         if (res.status === 200) {
 
             const res = await fetch(`/api/getmedia?sendkey=${genKey}`)
