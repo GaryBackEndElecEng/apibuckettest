@@ -15,7 +15,7 @@
     "@types/uuid": "^9.0.6",
     "aws-amplify": "^5.3.11",
     "axios": "^1.6.0",
-    "next": "14.0.1",
+    "next": "13.4.19",
     "react": "^18",
     "react-dom": "^18",
     "uuid": "^9.0.1"
