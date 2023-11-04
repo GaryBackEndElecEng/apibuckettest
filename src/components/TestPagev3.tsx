@@ -8,14 +8,16 @@ type getType = { Key: string, imgUrl: string };
 
 export default function TestPage() {
     const [img, setImg] = React.useState<string>("#");
+    const [keepKey, setKeepKey] = React.useState<getType[]>([])
 
     const handleOnSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         const body: getType | undefined = await uploadFile(e) as getType | undefined;
         if (body) {
             const { Key, imgUrl } = body;
-            // console.log(Key)
+            console.log(Key)
             setImg(imgUrl)
+            setKeepKey([...keepKey, body])
         }
 
     };
@@ -42,6 +44,17 @@ export default function TestPage() {
                     alt="www"
                 />
             </div>
+            <div className="flex flex-col w-1/2 mx-auto">
+                {keepKey && keepKey.map((obj, index) => (
+                    <React.Fragment key={index}>
+                        <h3 className="text-xl text-center font-bold">{obj.Key}</h3>
+                        <Image src={obj.imgUrl} width={600} height={400}
+                            className="aspect-video"
+                            alt="www"
+                        />
+                    </React.Fragment>
+                ))}
+            </div>
         </div>
     )
 }
@@ -62,10 +75,13 @@ export async function uploadFile(e: React.ChangeEvent<HTMLFormElement>) {
         }
 
         const res = await fetch(`/api/testmediav3`, options);
+
         if (res.status === 200) {
 
-            const res = await fetch(`/api/getmedia?sendkey=${genKey}`)
-            return await res.json()
+            const res = await fetch(`/api/getmediatest?sendkey=${genKey}`)
+            const body: getType = await res.json()
+            console.log("recieved", body)//
+            return body
         }
 
         // }
