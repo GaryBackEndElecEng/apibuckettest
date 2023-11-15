@@ -5,6 +5,14 @@ const nextConfig = {
   experimental: {
     serverActions: true,
     serverComponentsExternalPackages: ["@prisma/client", "bcryptjs"],
+    swcPlugins: [
+      [
+        "next-superjson-plugin",
+        {
+          excluded: [],
+        },
+      ],
+    ],
   },
   typescript: {
     ignoreBuildErrors: true,

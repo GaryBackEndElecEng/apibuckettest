@@ -1,0 +1,59 @@
+.card {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 1px 1px 5px 2px hsl(196, 97%, 49%),
+    -1px -1px 5px 2px hsl(192, 91%, 50%);
+  padding: 1rem;
+  border-radius: 6px;
+  margin-inline: 1rem;
+  background: whitesmoke;
+}
+.card > img {
+  width: 100%;
+  aspect-ratio: auto;
+  padding-inline: 20px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  background: rgba(36, 35, 35, 0.1);
+}
+.user {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 1px 1px 5px 2px hsl(138, 96%, 11%),
+    -1px -1px 5px 2px hsl(135, 96%, 20%);
+  padding: 0.25rem;
+  border-radius: 6px;
+  margin-inline: 0.5rem;
+  margin-block: 1rem;
+}
+.user > p > img {
+  float: left;
+  shape-outside: circle();
+  margin-top: 0.5rem;
+  margin-left: 0.25rem;
+  border-radius: 50%;
+  border: 1px solid black;
+  box-shadow: 1px 1px 5px 2px hsl(248, 97%, 49%),
+    -1px -1px 5px 2px hsl(247, 91%, 70%);
+}
+@media screen and (max-width: 920px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+}
+@media screen and (max-width: 420px) {
+  .grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+}

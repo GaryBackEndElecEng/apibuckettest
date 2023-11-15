@@ -69,3 +69,29 @@ export type msgType = {
     loaded: boolean,
     msg: string | undefined
 }
+export type generalInfoType = {
+    id: number,
+    category: string,
+    name: string,
+    url: string,
+    desc: string
+}
+export type rateType = {
+    id: number,
+    rate: number,
+    fileId: string,
+    postId: number
+}
+export type likeType = {
+    id: number,
+    name: string,
+    fileId: string,
+    postId: number
+}
+export type pageHitType = {
+    id?: number,
+    page: string
+    count?: number,
+    date?: Date
+    name: string
+}

@@ -2,11 +2,342 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.flexrow {
+  display: flex;
+  direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2rem;
+}
+.flexrowspace {
+  display: flex;
+  direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.flexcol {
+  display: flex;
+  direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2rem;
+}
+.summary {
+  /* font-size: 110%; */
+  /* margin-bottom: 2rem; */
+}
+.title {
+  font-size: 150%;
+}
+.subHeading {
+  font-size: 110%;
+}
+.heading {
+  font-size: 130%;
+}
+.section {
+  /* font-size: 110%; */
+  /* margin-bottom: 2rem; */
+}
+.conclusion {
+  font-size: 110%;
+  /* margin-bottom: 2rem; */
+}
+p.paraCreator {
+  font-size: 115%;
+  margin-bottom: 3rem;
+}
+div.listContainer {
+}
+.list {
+  padding: 0.75rem;
+  font-size: 120%;
+  display: flex;
+  direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.list ul {
+}
+.list ul li {
+  margin-top: 0.75rem;
+  text-indent: 10px;
+}
+form.listform {
+  background: whitesmoke;
+  color: black;
+  border-radius: 30px 30px 30px 30px;
+  box-shadow: 1px 1px 5px 1px hsla(179, 84%, 78%, 0.4),
+    -1px -1px 5px 1px hsla(179, 84%, 58%, 0.6);
+}
+form.listform div {
+  border-radius: inherit;
+}
+.icon::before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+li::before {
+  font: bold;
+  content: "\276F";
+  color: red;
+  margin-right: 5px;
+}
+
+.link,
+.hlink {
+  font-size: 110%;
+}
+.fileSummary {
+  font-size: 110%;
+}
+.dataReplyGrow {
+  opacity: 1;
+  position: absolute;
+  inset: 0rem;
+  margin-inline: auto;
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: 1px 1px 5px 1px hsl(179, 84%, 78%),
+    -1px -1px 5px 1px hsl(179, 84%, 58%);
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+  margin-block: 0.5rem;
+  height: 32vh;
+  animation: grow 1s ease-in-out;
+}
+.dataReplyShrink {
+  opacity: 0;
+  position: absolute;
+  inset: 0rem;
+  margin-inline: auto;
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: 1px 1px 5px 1px hsl(179, 84%, 78%),
+    -1px -1px 5px 1px hsl(179, 84%, 58%);
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+  margin-block: 0.5rem;
+  height: 1vh;
+  animation: shrink 1s ease-in-out;
+}
+@keyframes shrink {
+  from {
+    height: 32vh;
+  }
+  to {
+    height: 0;
+  }
+}
+@keyframes grow {
+  from {
+    height: 0;
+  }
+  to {
+    height: 32vh;
+  }
+}
+blockquote.reply {
+  position: relative;
+}
+blockquote.reply::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -30%;
+  width: 10px;
+  height: 100%;
+  border-radius: 50px 0px 0px 50px;
+  background: hsla(36, 89%, 68%, 0.9);
+  /* box-shadow: 1px 1px 3px 1px hsl(187, 95%, 50%),
+    -1px 11px 3px 1px hsl(187, 95%, 30%); */
+}
+
+.conclusion > p::first-letter {
+  color: rgba(229, 241, 234, 0.9);
+  font-weight: bold;
+  margin-right: 0.57rem;
+  -webkit-initial-letter: 1.25;
+  initial-letter: 1.35;
+}
+.summary > p::first-letter,
+.summary::first-letter,
+.section > p::first-letter,
+.FileSummary p::first-letter,
+p.paraCreator::first-letter {
+  color: rgba(255, 190, 150, 0.9);
+  font-weight: bold;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  margin-right: 0.55rem;
+  margin-bottom: 0.5rem;
+  -webkit-initial-letter: 1.25;
+  initial-letter: 1.25;
+}
+.FileSummary {
+  font-size: 150%;
+}
+.summary,
+.section {
+  font-size: 110%;
+}
+.image {
+  box-shadow: 1.5px 1.5px 10px 3px hsl(39, 90%, 51%),
+    -1.5px -1.5px 10px 3px hsl(39, 90%, 51%);
+  border-radius: 5px;
+  border: 1px solid hsl(39, 90%, 81%);
+  margin-inline: auto;
+  margin-block: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+.imageRnd {
+  box-shadow: 1px 1px 7px 1px hsl(184, 86%, 50%),
+    -1px -1px 7px 1px hsl(184, 96%, 50%);
+  border-radius: 50%;
+  border: 1px solid hsl(39, 90%, 81%);
+  margin-inline: auto;
+  margin-block: 2rem;
+  justify-content: center;
+  align-items: center;
+}
 .button {
-  margin-top: 1rem;
-  box-shadow: 1px 1px 5px 1px green, -1px -1px 5px 1px green;
-  border: 1px solid red;
-  border-radius: 25px 24px 25px 25px;
-  padding-inline: 2rem;
+  padding-inline: 3rem;
+  padding-block: 1rem;
+  border-radius: 2px 2px 2px 2px;
+  box-shadow: 1.5px 1.5px 10px 3px hsl(154, 97%, 49%),
+    -1.5px -1.5px 10px 3px hsl(154, 97%, 49%);
+  border: 1px hsl(154, 97%, 49%);
+  border-radius: 30px 30px 30px 30px;
+  transition: all 0.5s ease-in-out;
+}
+.buttonmd {
+  font-size: 90%;
+  padding-inline: 1.55rem;
   padding-block: 0.5rem;
+  border-radius: 2px 2px 2px 2px;
+  box-shadow: 1.25px 1.25px 7px 1px hsl(154, 97%, 49%),
+    -1.25px -1.25px 7px 1px hsl(154, 97%, 49%);
+  border: 1px hsl(154, 97%, 49%);
+  border-radius: 30px 30px 30px 30px;
+  transition: all 0.5s ease-in-out;
+}
+.buttonsm {
+  font-size: 80%;
+  padding-inline: 1rem;
+  padding-block: 0.15rem;
+  box-shadow: 1px 1px 5px 1px hsl(53, 97%, 49%),
+    -1px -1px 5px 1px hsl(60, 97%, 44%);
+  border: 1px hsl(69, 58%, 95%);
+  border-radius: 30px 30px 30px 30px;
+  transition: all 0.5s ease-in-out;
+}
+.button:hover,
+.buttonsm:hover,
+.buttonmd:hover {
+  box-shadow: 1px 1px 12px 1px hsl(152, 32%, 91%),
+    -1px -1px 8px 1px hsl(153, 29%, 87%);
+  transition: all 0.5s ease-in-out;
+}
+/* FOR PARGRAPHMAKER */
+.paraStyle {
+  text-indent: 0.5rem;
+}
+.contactbuttonshow {
+  height: 20vh;
+  opacity: 1;
+  animation: growUp 1.5s ease-in-out;
+}
+
+.contactbuttonhide {
+  height: 0vh;
+  opacity: 0;
+  animation: growdown 1.5s ease-in-out;
+}
+@keyframes growUp {
+  from {
+    height: 0vh;
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    height: 20vh;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes growdown {
+  from {
+    height: 20vh;
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    height: 0vh;
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+.card {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 1px 1px 5px 2px hsl(196, 97%, 49%),
+    -1px -1px 5px 2px hsl(192, 91%, 50%);
+  padding: 1rem;
+  border-radius: 6px;
+}
+.postcard {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 1px 1px 5px 2px hsl(181, 85%, 79%),
+    -1px -1px 5px 2px hsl(173, 73%, 85%);
+  padding: 0.5rem;
+  margin-block: 0.75rem;
+  border-radius: 15px 15px 15px 15px;
+}
+div.allBlog_container {
+}
+.allBlog_subContainer {
+}
+.allBlogs_mainText {
+  background: rgba(0, 0, 10, 0.5);
+}
+@media screen and (max-width: 420px) {
+  .card {
+    padding-inline: 0;
+  }
+}
+.learningIsLiving {
+  position: relative;
+  display: flex;
+  direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.learningIsLiving > q::before {
+  display: block;
+  position: absolute;
+  inset: 0;
+  left: -10%;
+  content: "";
+  width: 10px;
+  height: 50px;
+  margin-right: 5px;
+  background: hsl(184, 15%, 77%);
+  border-radius: 0px 30px 30px 0px;
+}
+@media screen and (max-width: 420px) {
+  .learningIsLiving > q::before {
+    top: -40%;
+  }
 }
