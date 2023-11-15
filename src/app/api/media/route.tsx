@@ -1,8 +1,8 @@
 
+import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuidv4 } from "uuid";
-import { NextRequest, NextResponse } from "next/server";
 // export const config = { runtime: 'experimental-edge' }
 
 const Bucket = process.env.BUCKET_NAME as string
@@ -31,15 +31,24 @@ export async function POST(req: NextRequest) {
         Key,
         Body: buffer,
     }
-    const get_params = {
-        Bucket,
-        Key,
-    }
+
     const command = new PutObjectCommand(params);
     const result = await s3.send(command);
 
     if (result) {
-
-        return new Response("ok", { status: 200 })
+        return NextResponse.json({ status: 200 })
     }
+}
+export async function GET(req: NextRequest) {
+    const Key = req.nextUrl.searchParams.get("Key") as string;
+    if (!Key) return NextResponse.json({ error: "no Key" })
+    const params = {
+        Bucket,
+        Key,
+    }
+
+    const command = new GetObjectCommand(params);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    return NextResponse.json({ url, status: 200 })
+
 }

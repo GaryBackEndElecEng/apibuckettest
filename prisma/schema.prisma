@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_AWS")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @unique @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  imgKey        String?
+  bio           String?
+  accounts      Account[]
+  sessions      Session[]
+  files         File[]
+  contacts      Contact[]
+  posts         Post[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model File {
+  id        String   @id @unique @default(cuid())
+  name      String
+  title     String
+  content   String
+  fileUrl   String
+  published Boolean  @default(false)
+  date      DateTime @default(now()) @db.Date
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  imageKey  String?
+  imageUrl  String?
+}
+
+// model InputType {
+//   id      Int      @id @default(autoincrement())
+//   name    String
+//   content String
+//   type    String
+//   url     String?
+//   s3Key   String?
+//   file    File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+//   fileId  String
+//   date    DateTime @default(now()) @db.Date
+//   links   Link[]
+// }
+
+model Post {
+  id       Int      @id @default(autoincrement())
+  name     String
+  content  String
+  imageUrl String?
+  s3Key    String?
+  date     DateTime @default(now()) @db.Date
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  bloglink String?
+}
+
+model PageHit {
+  id    Int      @id @default(autoincrement())
+  page  String   @unique
+  count Int      @default(autoincrement())
+  date  DateTime @default(now()) @db.Date
+  name  String
+}
+
+model Contact {
+  id      Int    @id @default(autoincrement())
+  email   String @unique
+  subject String
+  content String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+}
+
+// # This is for client's links in their blogs
+// model Link {
+//   id      Int       @id @default(autoincrement())
+//   url     String
+//   subject String?
+//   content String?
+//   count   Int       @default(autoincrement())
+//   file    File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+//   fileId  String
+//   input   InputType @relation(fields: [inputId], references: [id], onDelete: Cascade)
+//   inputId Int
+// }
+
+model GeneralInfo {
+  id       Int    @id @default(autoincrement())
+  category String
+  name     String
+  url      String
+  desc     String
+}
