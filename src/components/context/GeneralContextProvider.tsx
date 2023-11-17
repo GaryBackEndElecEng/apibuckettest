@@ -3,7 +3,6 @@ import axios from "axios";
 import React from 'react';
 import type { msgType, userType, pageHitType, contactType, postType, generalInfoType, } from "@lib/Types";
 import { useSession } from "next-auth/react";
-import type { Session } from "next-auth";
 import { getErrorMessage } from "@lib/errorBoundaries";
 const base_url = process.env.NEXT_PUBLIC_baseurl;
 
@@ -53,22 +52,7 @@ const GeneralContextProvider = (props: any) => {
 
 
 
-    React.useEffect(() => {
-        const recordHit = async () => {
-            if (!pageHit) return
-            try {
-                await axios.post(`/api/pagehit`, pageHit);
-                //components
-            } catch (error) {
-                let message: string = `${getErrorMessage(error)}@api/page-hit`
-                setGetError(message)
-                return console.error(message)
-            }
-        }
-        if (pageHit) {
-            recordHit();
-        }
-    }, [pageHit]);
+
 
     React.useEffect(() => {
         const getGenInfo = async () => {
@@ -86,28 +70,10 @@ const GeneralContextProvider = (props: any) => {
             }
         }
 
-        getGenInfo();
+        // getGenInfo();
 
     }, []);
-    React.useEffect(() => {
-        const getGenInfo = async () => {
 
-            try {
-                const { data } = await axios.get(`/api/getposts`);
-                //components
-                const body: postType[] = await data as postType[];
-
-                setPosts(body);
-            } catch (error) {
-                let message: string = `${getErrorMessage(error)}@api/generalInfo`
-                setGetError(message)
-                return console.log(message)
-            }
-        }
-
-        getGenInfo();
-
-    }, []);
 
 
     return (

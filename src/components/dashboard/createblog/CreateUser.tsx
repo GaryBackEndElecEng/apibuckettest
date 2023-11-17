@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { genHash } from "@lib/ultils";
 import Image from "next/image";
-import CreateFile from "@component/createblog/CreateFile";
+import CreateFile from "@/components/dashboard/createblog/CreateFile";
 
 
 export default function CreateUser() {

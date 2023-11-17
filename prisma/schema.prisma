@@ -137,10 +137,13 @@ model Link {
 model Like {
   id     Int    @id @default(autoincrement())
   name   String
+  count  Int
   file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade)
   fileId String
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
+
+  @@unique([id, name])
 }
 
 model Rate {

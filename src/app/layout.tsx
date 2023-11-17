@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
+import './globals.css';
+import "@pages/globalsTwo.css";
+import Nav from "@component/nav/Nav";
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,8 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-600" >
+      <body className="bg-slate-600 relative lg:container mx-auto w-full" style={{ position: "relative" }} >
+        <Nav />
         {children}
+
       </body>
     </html>
   )

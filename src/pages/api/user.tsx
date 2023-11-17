@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import type { userType } from "@lib/Types";
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client/edge';
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuidv4 } from "uuid";
@@ -71,6 +71,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         temUser.image = await getSignedUrl(s3, command, { expiresIn: 3600 });
                     }
                     res.status(200).json(temUser)
+                } else {
+                    res.status(404).json({ message: "no user" })
                 }
             } catch (error) {
                 console.error(new Error("issues @api/user get"))

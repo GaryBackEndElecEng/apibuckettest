@@ -1,68 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
 :root {
   --colorWorld: url("/images/colorWorld.png");
+  --bg-one: hsla(60, 6%, 20%, 0.8);
+  --bg-two: hsla(60, 6%, 40%, 0.6);
 }
-.flexrow {
+body {
+  background: var(--bg-one);
+}
+.blogsLink {
+  text-decoration: none;
+  -moz-text-decoration: none;
+  margin-inline: auto;
+}
+.container {
+  margin-inline: 1rem;
+  margin-block: 1rem;
   display: flex;
-  direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  gap: 2rem;
-}
-.flexrowspace {
-  display: flex;
-  direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-}
-.flexcol {
-  display: flex;
-  direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 2rem;
-}
-.summary {
-  /* font-size: 110%; */
-  /* margin-bottom: 2rem; */
-}
-.title {
-  font-size: 150%;
-}
-.subHeading {
-  font-size: 110%;
-}
-.heading {
-  font-size: 130%;
-}
-.section {
-  /* font-size: 110%; */
-  /* margin-bottom: 2rem; */
-}
-.conclusion {
-  font-size: 110%;
-  /* margin-bottom: 2rem; */
-}
-p.paraCreator {
-  font-size: 115%;
-  margin-bottom: 3rem;
-}
-div.listContainer {
+  width: 100%;
 }
 .list {
   padding: 0.75rem;
   font-size: 120%;
   display: flex;
-  direction: column;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
 }
@@ -159,7 +121,7 @@ blockquote.reply::before {
   border-radius: 50px 0px 0px 50px;
   background: hsla(36, 89%, 68%, 0.9);
   /* box-shadow: 1px 1px 3px 1px hsl(187, 95%, 50%),
-    -1px 11px 3px 1px hsl(187, 95%, 30%); */
+      -1px 11px 3px 1px hsl(187, 95%, 30%); */
 }
 
 .conclusion > p::first-letter {
@@ -296,6 +258,16 @@ p.paraCreator::first-letter {
   padding: 1rem;
   border-radius: 6px;
 }
+.blogCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: whitesmoke;
+  box-shadow: 1px 1px 15px 2px black, -1px -1px 15px 2px black;
+  padding: 1rem;
+  border-radius: 6px;
+}
 .postcard {
   display: flex;
   justify-content: space-evenly;
@@ -353,12 +325,28 @@ h1 {
   text-underline-offset: 0.5rem;
 }
 p {
-  line-height: 1.25rem;
+  line-height: 1.75rem;
   margin-block: 0.75rem;
   padding-inline: 2rem;
   margin-inline: 1rem;
 }
+p.TWO {
+  line-height: 1.75rem;
+  margin-block: 0.75rem;
+  padding-inline: 0.25rem;
+  margin-inline: 0.5rem;
+}
 p.style {
+  background-image: var(--colorWorld);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: movethru 30s infinite;
+  font-size: 130%;
+}
+.text-style {
   background-image: var(--colorWorld);
   color: transparent;
   background-clip: text;
@@ -389,9 +377,20 @@ p.style {
 .profileImage {
   width: 50px;
   height: 50px;
-  margin-block: 1rem;
+  float: left;
+  margin-block: 1.25rem;
   margin-left: 0.25rem;
   shape-outside: circle();
+  border-radius: 50%;
+  border: 1px solid rgb(1, 34, 31);
+  filter: drop-shadow(1px 1px 15px rgba(250, 170, 50, 0.596));
+}
+.profileImageTwo {
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin: 0.5rem;
+  margin-left: 0.25rem;
   border-radius: 50%;
   border: 1px solid rgb(1, 34, 31);
   box-shadow: 1px 1px 5px 2px rgba(250, 170, 50, 0.596);
@@ -400,16 +399,27 @@ p.style {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  direction: column;
+  flex-direction: column;
   padding-inline: 0.75rem;
   margin-block: 2rem;
   gap: 0.25rem;
+  width: 80%;
+}
+.flexcollg {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  padding-inline: 0.75rem;
+  margin-block: 2rem;
+  gap: 0.25rem;
+  width: 100%;
 }
 .flexcolsm {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  direction: column;
+  flex-direction: column;
   padding-inline: 0.25rem;
   margin-block: 0.25rem;
   gap: 0.25rem;
@@ -432,7 +442,7 @@ p.style {
 }
 .userCard {
   display: flex;
-  direction: column;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   padding-inline: 1rem;
@@ -441,10 +451,32 @@ p.style {
   border-radius: 10px 10px 10px 10px;
   margin: 0.2rem;
 }
+.userCardTwo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-inline: 0.5rem;
+  padding-block: 0.25rem;
+  border: 1px solid lightgrey;
+  border-radius: 15px 15px 15px 15px;
+  margin: 0.2rem;
+  margin-block: 0.5rem;
+  box-shadow: 1px 1px 6px 1px var(--bg-two), -1px -1px 6px 1px var(--bg-two);
+}
 .line-break {
   width: 75%;
-  height: 2rem;
+  height: 0.5rem;
   margin-block: 4rem;
   margin-inline: 3rem;
+  border-radius: 10px 10px 10px 10px;
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+}
+.line-break-sm {
+  width: 75%;
+  height: 0.25rem;
+  margin-block: 1rem;
+  margin-inline: 3rem;
+  border-radius: 10px 10px 10px 10px;
   background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
 }

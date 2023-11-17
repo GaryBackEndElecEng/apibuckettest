@@ -1,0 +1,130 @@
+.navContainer {
+  position: sticky;
+  top: 0;
+  left: 0;
+  margin-inline: 0rem;
+  padding-inline: 0rem;
+  z-index: 2000;
+}
+.navMain {
+  position: sticky;
+  height: 5vh;
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid green; */
+  padding-inline: 5rem;
+}
+.navMain > img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 1);
+  box-shadow: 1px 1px 4px 1px black;
+  background: black;
+}
+.subNav {
+  position: relative;
+  display: flex;
+  direction: row;
+  justify-content: space-evenly;
+  gap: 1.5rem;
+}
+.navlist {
+  margin-inline: auto;
+  display: flex;
+  direction: row;
+  justify-content: space-evenly;
+  gap: 1.5rem;
+}
+.navlist > a {
+  border-radius: 4px 4px 4px 4px;
+  border: 1px solid white;
+  box-shadow: 1px 1px 3px 1px whitesmoke;
+  padding-inline: 2rem;
+  padding-block: 0.5rem;
+  color: white;
+  background: rgba(33, 33, 33, 0.671);
+  text-align: center;
+  text-justify: center;
+}
+
+@media screen and (max-width: 920px) {
+  .navMain {
+    display: flex;
+    direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-inline: 0rem;
+    gap: 3rem;
+    padding-left: 5rem;
+    padding-top: 0.5rem;
+    /* min-height: 20vh; */
+  }
+  .subNav {
+    direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .navMain > img {
+    width: 45px;
+    height: 45px;
+  }
+  .navlist {
+    position: absolute;
+    background: transparent;
+    display: block;
+    margin: auto;
+    flex: 1;
+    gap: 0.5rem;
+    /* padding: 0.5rem; */
+    margin-inline: auto;
+    top: 3rem;
+    width: max-content;
+    transform: translateX(-200%) scale(0.6);
+    transition: all 0.75s ease-in-out;
+    /* min-height: 10vh; */
+  }
+  .navlistShow {
+    position: absolute;
+    display: block;
+    background: rgba(245, 245, 245, 0.294);
+    margin-inline: auto;
+    top: 3rem;
+    flex: 1;
+    gap: 0.75rem;
+    /* padding: 0.5rem; */
+    width: max-content;
+    transform: translateX(-50%) scale(1);
+    transition: all 0.75s ease-in-out;
+    /* min-height: 10vh; */
+  }
+  .navlistShow > a {
+    display: block;
+    border-radius: 4px 4px 4px 4px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 3px 1px whitesmoke;
+    padding-inline: 2rem;
+    padding-block: 0.25rem;
+    background: black;
+    color: white;
+    transition: all 0.5s ease-in-out;
+  }
+  .navlist > a {
+    display: block;
+    border-radius: 4px 4px 4px 4px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 3px 1px grey;
+    padding-inline: 2rem;
+    background: transparent;
+    color: transparent;
+    transition: all 0.5s ease-in-out;
+  }
+}
+@media screen and (max-width: 450px) {
+  .navMain {
+    padding-left: 2rem;
+    padding-top: 0.5rem;
+  }
+}

@@ -1,4 +1,10 @@
-
+import { Redirect } from "next"
+import React from "react";
+import { FaRegThumbsUp } from "react-icons/fa";
+import { FaThumbsDown } from "react-icons/fa";
+import { FaSmileBeam } from "react-icons/fa";
+import { MdGppGood } from "react-icons/md";
+import { IoCheckmarkOutline } from "react-icons/io5";
 
 
 export type accountType = {
@@ -20,6 +26,16 @@ export type sessionType = {
     sessionToken: string,
     userId: string,
     expires: Date,
+}
+export type inputType = {
+    id: number,
+    name: string,
+    content: string,
+    type: string,
+    url: string | null,
+    s3Key: string | null,
+    fileId: string,
+    date: Date
 }
 export type userType = {
     id?: string,
@@ -46,7 +62,10 @@ export type fileType = {
     date?: Date,
     userId: string,
     imageKey: string | null,
-    imageUrl: string | null
+    imageUrl: string | null,
+    inputs: inputType[],
+    likes: likeType[],
+    rates: rateType[]
 }
 export type postType = {
     id?: number,
@@ -85,9 +104,22 @@ export type rateType = {
 export type likeType = {
     id: number,
     name: string,
+    count: number,
     fileId: string,
     postId: number
 }
+export type likeIcon = {
+    name: string,
+    count: number,
+    icon: React.ReactNode
+}
+export const likeArr: { name: string, icon: React.ReactNode }[] = [
+    { name: "happy", icon: <FaSmileBeam /> },
+    { name: "thumbUp", icon: <FaRegThumbsUp /> },
+    { name: "thumbDown", icon: <FaThumbsDown /> },
+    { name: "great", icon: <MdGppGood /> },
+    { name: "average", icon: <IoCheckmarkOutline /> },
+]
 export type pageHitType = {
     id?: number,
     page: string
@@ -95,3 +127,15 @@ export type pageHitType = {
     date?: Date
     name: string
 }
+export type navLinkType = {
+    id: number,
+    icon: React.ReactNode,
+    name: string,
+    image: string,
+    link: string,
+    desc: string
+}
+export type GetServerSidePropsResult<P> =
+    | { props: P | Promise<P> }
+    | { redirect: Redirect }
+    | { notFound: true }

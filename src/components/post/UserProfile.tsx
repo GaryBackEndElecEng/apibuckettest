@@ -7,29 +7,19 @@ import { userType } from '@/lib/Types';
 import Image from 'next/image';
 
 
-export default function UserProfile({ userId }: { userId: string }) {
-    const [user, setUser] = React.useState<userType | undefined>();
-    React.useEffect(() => {
-        const getUser = async () => {
-            try {
-                const { data } = await axios.get(`/api/user?userId=${userId}`);
-                setUser(data);
-            } catch (error) {
-                console.error(getErrorMessage(error))
-            }
-        }
-        if (userId) {
-            getUser();
-        }
-    }, [userId]);
+export default function UserProfile({ user }: { user: userType | undefined }) {
+    const logo = "/images/gb_logo.png";
+
 
     return (
         <React.Fragment>
             {user && <div className={`${styles.user}`}>
                 <h3 className="text-center text-xl mb-1">{user.name}</h3>
                 <p className="prose prose-lg">
-                    {user.image &&
+                    {user.image ?
                         <Image src={user.image} width={75} height={75} alt="www.ablogroom.com" />
+                        :
+                        <Image src={logo} width={75} height={75} alt="www.ablogroom.com" />
                     }
                     {user.bio}
                 </p>
