@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google'
 import './globals.css';
 import "@pages/globalsTwo.css";
 import Nav from "@component/nav/Nav";
+import Providers from "./providers";
+import GeneralContextProvider from '@/components/context/GeneralContextProvider';
+import DashboardContextProvider from '@/components/context/DashBoardContextProvider';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,9 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-slate-600 relative lg:container mx-auto w-full" style={{ position: "relative" }} >
-        <Nav />
-        {children}
-
+        <Providers>
+          <GeneralContextProvider>
+            <DashboardContextProvider>
+              <Nav />
+              {children}
+            </DashboardContextProvider>
+          </GeneralContextProvider>
+        </Providers>
       </body>
     </html>
   )

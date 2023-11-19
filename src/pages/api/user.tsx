@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import type { userType } from "@lib/Types";
-import { PrismaClient } from '@prisma/client/edge';
+import { PrismaClient } from '@prisma/client';
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuidv4 } from "uuid";
+import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
 const Bucket = process.env.BUCKET_NAME as string
@@ -44,9 +45,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
                 if (url) tempUser.image = url;
             }
-            res.status(200).json(tempUser)
+            return res.status(200).json(tempUser)
         } catch (error) {
-            console.error(new Error("server issues@api/user"))
+            console.error(new Error(`${getErrorMessage(error)}@api/user`))
+
         } finally {
             await prisma.$disconnect()
         }
@@ -82,5 +84,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         } else {
             res.status(404).json({ message: "no key" })
         }
+    }
+    if (req.method === "PUT") {
+        const user = req.body as userType;
+        try {
+            const newUser = await prisma.user.update({
+                where: {
+                    id: user.id
+                },
+                data: {
+                    name: user.name,
+                    email: user.email,
+                    password: user.password,
+                    imgKey: user.imgKey ? user.imgKey : null,
+                    bio: user.bio
+                }
+            });
+            let tempUser = newUser;
+            if (tempUser.imgKey) {
+                const params = {
+                    Bucket,
+                    Key: tempUser.imgKey
+                }
+                const command = new GetObjectCommand(params);
+                const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                if (url) tempUser.image = url;
+            }
+            console.log("TEMPUSER", tempUser)
+            return res.status(200).json(tempUser)
+        } catch (error) {
+            console.error(new Error(`${getErrorMessage(error)}@api/user`))
+
+        } finally {
+            await prisma.$disconnect()
+        }
+
     }
 }

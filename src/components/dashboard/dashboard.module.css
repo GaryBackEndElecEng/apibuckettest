@@ -1,0 +1,127 @@
+.buttonsm {
+  padding-inline: 1rem;
+  padding-block: 0.25rem;
+  text-align: center;
+  border-radius: 20px 20px 20px 20px;
+  border: 1px solid white;
+  background: black;
+  color: white;
+}
+.dashContainer {
+  width: 80%;
+  margin-inline: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-block: 2rem;
+  background: rgba(1, 37, 35, 0.5);
+}
+.gridThree {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  place-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+.gridElement {
+  background: whitesmoke;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px 2px grey;
+  border-radius: 10px 10px 10px 10px;
+  min-height: 20vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridElement button {
+  background: black;
+  color: white;
+}
+/*---Dash Signup---------- */
+.signupMain {
+  display: grid;
+  margin-top: 2rem;
+  place-items: center;
+  padding: 20rem;
+  background: black;
+  border-radius: 15px 15px 15px 15px;
+  filter: drop-shadow(2px 2px 10px white);
+}
+.signupMain > div {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+/*---Dash Signup---------- */
+/*---userUpdate ---------- */
+.userUpDatemain {
+  position: relative;
+  width: 100%;
+  margin-block: 1rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.gridTwo {
+  margin-inline: auto;
+  margin-block: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.gridTwo > div {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+  width: 100%;
+  background: whitesmoke;
+  border-radius: 10px 10px 10px 10px;
+  filter: drop-shadow(1px 1px 3px lightgrey);
+}
+.userImage {
+  border-radius: 50%;
+  padding: 0.25rem;
+  filter: drop-shadow(1px 1px 8px black);
+  border: 1px solid white;
+  background-color: black;
+  shape-outside: circle();
+  float: left;
+  margin-left: 3px;
+  margin-block: 1rem;
+}
+/*---userUpdate ---------- */
+@media screen and (max-width: 920px) {
+  .dashContainer {
+    width: 100%;
+  }
+  .gridThree {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+  }
+  .signupMain {
+    padding: 10rem;
+  }
+}
+@media screen and (max-width: 420px) {
+  .gridThree {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-auto-flow: dense;
+  }
+  .signupMain {
+    padding: 5rem;
+  }
+}

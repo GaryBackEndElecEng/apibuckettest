@@ -1,14 +1,23 @@
-"use client"
+
 import React from 'react'
 import MainDash from "@dashboard/MainDash";
+import authOptions from "@lib/authOptions";
+import { getServerSession } from 'next-auth';
+import DashSignup from "@component/dashboard/DashSignup";
 
-export default function page() {
+export default async function page() {
+    const session = await getServerSession(authOptions);
+    if (session) {
+        return (
 
 
-    return (
+            <MainDash session={session} />
 
+        )
+    } else {
+        return (
+            <DashSignup />
+        )
 
-        <MainDash />
-
-    )
+    }
 }

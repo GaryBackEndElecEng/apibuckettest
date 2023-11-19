@@ -5,7 +5,7 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import Image from 'next/image';
-import CreatePost from "@/components/dashboard/createblog/CreatePost";
+import CreatePost from "@/components/dashboard/createPost/CreatePost";
 
 export default function CreateFile({ userId }: { userId: string | undefined }) {
     const [file, setFile] = React.useState<fileType>({} as fileType);

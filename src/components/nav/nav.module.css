@@ -1,6 +1,6 @@
 .navContainer {
   position: sticky;
-  top: 0;
+  top: 1rem;
   left: 0;
   margin-inline: 0rem;
   padding-inline: 0rem;
@@ -31,19 +31,95 @@
   justify-content: space-evenly;
   gap: 1.5rem;
 }
+/*--MediaLinks---- */
+.flexrowxs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-inline: 0.25rem;
+  margin-block: 0.5rem;
+  gap: 1rem;
+  width: 200px;
+}
+.link_name {
+  color: white;
+  margin-left: 10px;
+  font-size: 14px;
+}
+.linkText {
+  position: relative;
+  margin-inline: auto;
+  border: 1px solid white;
+  transition: all 0.75s ease-in-out;
+}
+.linkText:hover {
+  cursor: pointer;
+  transition: all 0.75s ease-in-out;
+}
+.linkText::before {
+  display: block;
+  opacity: 0;
+  content: attr(data-word);
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  background: black;
+  color: white;
+  padding: 8px;
+  transform: scale(0.3);
+  transition: all 0.75s ease-in-out;
+}
+.linkText:hover::before {
+  display: block;
+  opacity: 1;
+  content: attr(data-word);
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  background: black;
+  color: white;
+  padding: 8px;
+  transform: scale(0.7);
+  transition: all 0.75s ease-in-out;
+}
+.linkText > svg {
+  color: blue;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  width: 20px;
+  height: 20px;
+  transition: all 0.75s ease-in-out;
+  filter: drop-shadow(1px 1px 3px white);
+}
+.linkText > svg:hover {
+  color: blue;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  width: 25px;
+  height: 25px;
+  transition: all 0.75s ease-in-out;
+  filter: drop-shadow(1px 1px 4px blue);
+}
+
+/*--MediaLinks---- */
 .navlist {
   margin-inline: auto;
+  background: transparent;
   display: flex;
-  direction: row;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: center;
   gap: 1.5rem;
 }
 .navlist > a {
-  border-radius: 4px 4px 4px 4px;
+  border-radius: 14px 14px 14px 14px;
   border: 1px solid white;
   box-shadow: 1px 1px 3px 1px whitesmoke;
-  padding-inline: 2rem;
-  padding-block: 0.5rem;
+  background: black;
+  padding-inline: 2px;
+  padding-block: 0.25rem;
   color: white;
   background: rgba(33, 33, 33, 0.671);
   text-align: center;
@@ -80,32 +156,32 @@
     gap: 0.5rem;
     /* padding: 0.5rem; */
     margin-inline: auto;
-    top: 3rem;
+    top: 4rem;
     width: max-content;
-    transform: translateX(-200%) scale(0.6);
+    transform: translateX(-400%) scale(0.6);
     transition: all 0.75s ease-in-out;
     /* min-height: 10vh; */
   }
   .navlistShow {
     position: absolute;
     display: block;
-    background: rgba(245, 245, 245, 0.294);
+    background: transparent;
     margin-inline: auto;
-    top: 3rem;
+    top: 4rem;
     flex: 1;
     gap: 0.75rem;
     /* padding: 0.5rem; */
     width: max-content;
-    transform: translateX(-50%) scale(1);
+    transform: translateX(-250%) scale(1);
     transition: all 0.75s ease-in-out;
     /* min-height: 10vh; */
   }
   .navlistShow > a {
     display: block;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 14px 14px 14px 14px;
     border: 1px solid white;
     box-shadow: 1px 1px 3px 1px whitesmoke;
-    padding-inline: 2rem;
+    padding-inline: 2px;
     padding-block: 0.25rem;
     background: black;
     color: white;
@@ -116,7 +192,7 @@
     border-radius: 4px 4px 4px 4px;
     border: 1px solid white;
     box-shadow: 1px 1px 3px 1px grey;
-    padding-inline: 2rem;
+    padding-inline: 2px;
     background: transparent;
     color: transparent;
     transition: all 0.5s ease-in-out;

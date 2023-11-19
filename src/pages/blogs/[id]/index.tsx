@@ -1,4 +1,4 @@
-import type { InferGetServerSidePropsType, GetServerSideProps, GetStaticProps, InferGetStaticPropsType } from 'next';
+import type { GetServerSideProps, InferGetStaticPropsType } from 'next';
 import React from 'react';
 import { PrismaClient } from "@prisma/client";
 import { fileType, userType, GetServerSidePropsResult } from '@/lib/Types';
@@ -103,17 +103,13 @@ export default function Page({
     return (
         <React.Fragment>
             <PostHeader />
-            <div className="container">
+            <div className="container flexcol">
+                {repo.fileInsert && repo.userInsert &&
 
-                <div className={`flexcol lg:container mx-auto place-items-center bg-slate-300`}>
-                    {repo.fileInsert && repo.userInsert &&
-
-                        <div className={styles.mainBlogItem}>
-                            <BlogItem file={repo.fileInsert} user={repo.userInsert} />
-                        </div>
-
-                    }
-                </div>
+                    <div className={styles.mainBlogItem}>
+                        <BlogItem file={repo.fileInsert} user={repo.userInsert} />
+                    </div>
+                }
             </div>
         </React.Fragment>
     )

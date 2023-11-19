@@ -83,4 +83,6 @@ const GeneralContextProvider = (props: any) => {
     )
 }
 
-export default GeneralContextProvider
+export default GeneralContextProvider;
+
+export const useGeneralContext = () => React.useContext(GeneralContext)

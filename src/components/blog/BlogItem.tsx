@@ -9,6 +9,7 @@ import InputDisplay from "@component/blog/InputDisplay";
 import UserCard from "@component/blog/UserCard";
 import "@pages/globalsTwo.css";
 import { getPageHits } from '@/lib/fetchTypes';
+import BlogRatesLikes from "@component/blog/BlogRatesLikes";
 
 
 type MainItemType = {
@@ -55,21 +56,10 @@ export default function BlogItem({ file, user }: MainItemType) {
                 {file.date && <small>{getFormattedDate(file.date)}</small>}
                 {pageHits && getHits && <small>hits:{getHits}</small>}
             </div>
-            <div className="flexrow">
-                <small>average rating:{file.rates && calcAvg(file.rates)}</small>
-                {arrLikeIcon &&
-                    <div className="flexrowsm">
-                        {arrLikeIcon.map((item, index) => (
-                            <div key={index} className="flexcolsm">
-                                <small className="text-orange-800">{item.icon}</small>
-                                <small>{item.name}</small>
-                                <small>{item.count}</small>
-                            </div>
-                        ))}
-                    </div>
-                }
-            </div>
-            <div className="line-break" />
+            <div className="line-break-sm" />
+            <BlogRatesLikes rates={file.rates} likes={file.likes} fileId={file.id} />
+            <div className="line-break-sm" />
+
         </div>
     )
 }

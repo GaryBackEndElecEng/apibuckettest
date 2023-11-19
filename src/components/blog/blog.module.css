@@ -1,11 +1,9 @@
 .mainBlogItem {
   display: flex;
   justify-content: center;
-  direction: column;
+  flex-direction: column;
   align-items: center;
-  margin-inline: 0.5rem;
-  margin-block: 1rem;
-  padding-inline: 1rem;
+  margin-inline: auto;
 }
 .card {
   position: relative;

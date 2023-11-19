@@ -39,7 +39,7 @@ export type inputType = {
 }
 export type userType = {
     id?: string,
-    name: string | null,
+    name?: string,
     email: string,
     password: string | null,
     emailVerified: Date | null,
@@ -75,7 +75,9 @@ export type postType = {
     s3Key: string | null,
     date?: Date,
     userId: string,
-    bloglink: string | null
+    bloglink: string | null,
+    likes: likeType[],
+    rates: rateType[]
 }
 export type contactType = {
     id?: number,
@@ -139,3 +141,13 @@ export type GetServerSidePropsResult<P> =
     | { props: P | Promise<P> }
     | { redirect: Redirect }
     | { notFound: true }
+
+export const inputNames = [
+    { type: "image", },
+    { type: "heading" },
+    { type: "subHeading" },
+    { type: "section" },
+    { type: "list" },
+    { type: "article" },
+    { type: "conclusion" },
+]

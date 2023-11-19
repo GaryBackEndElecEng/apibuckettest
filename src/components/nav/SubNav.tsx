@@ -7,6 +7,8 @@ import styles from "@component/nav/nav.module.css";
 import { navList } from "@context/navList";
 import Link from 'next/link';
 import Image from 'next/image';
+import { IconButton } from '@mui/material';
+import MediaLinks from "@component/nav/MediaLinks";
 
 export default function SubNav() {
     const [show, setShow] = React.useState<boolean>(false);
@@ -34,11 +36,17 @@ export default function SubNav() {
     return (
         <main className={`${styles.navMain}`}>
             <Image src={logo} width={50} height={50} alt="www.ablogroom.com" onClick={(e) => handleShow(e)} />
+            <MediaLinks />
             <div className={styles.subNav}>
                 <div className={show ? styles.navlistShow : styles.navlist}>
                     {navList && navList.map((navlink, index) => (
                         <Link href={navlink.link} key={index}>
-                            {navlink.name}
+                            <IconButton>
+                                {navlink.icon}
+                                <span className={styles.link_name}>
+                                    {navlink.name}
+                                </span>
+                            </IconButton>
                         </Link>
                     ))}
                 </div>

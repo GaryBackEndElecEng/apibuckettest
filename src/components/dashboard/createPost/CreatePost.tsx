@@ -5,23 +5,25 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import Image from 'next/image';
+import { DashboardContext } from "@context/DashBoardContextProvider";
 
-export default function CreatePost({ userId, fileId }: { userId: string | undefined, fileId: string | undefined }) {
+export default function CreatePost() {
+    const { user, file } = React.useContext(DashboardContext);
     const [post, setPost] = React.useState<postType>({} as postType);
     const [message, setMessage] = React.useState<msgType>({} as msgType);
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
     React.useEffect(() => {
-        if (userId && fileId) {
-            setPost({ ...post, bloglink: `/blog/${fileId}`, userId: userId })
+        if (user && file && post.userId) {
+            setPost({ ...post, bloglink: `/blog/${file.id}`, userId: user.id as string })
         }
-    }, [userId, fileId]);
+    }, [user, file]);
 
     React.useEffect(() => {
-        if (post && post.name && post.content && post.s3Key && userId && fileId) {
+        if (post && post.name && post.content && post.s3Key && user && file) {
             setComplete(true);
         }
-    }, [post, userId, setComplete, fileId]);
+    }, [post, user, setComplete, file]);
 
     const handlepost = async (e: React.FormEvent<HTMLFormElement>
     ) => {

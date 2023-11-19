@@ -1,0 +1,55 @@
+.GB_imageMobile {
+  box-shadow: 1px 1px 7px 1px hsl(184, 86%, 50%),
+    -1px -1px 7px 1px hsl(184, 96%, 50%);
+  border-radius: 50%;
+  border: 1px solid hsl(179, 91%, 9%);
+  margin-inline: auto;
+  margin-block: 2rem;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  width: 70%;
+}
+.GB_image {
+  box-shadow: 1px 1px 7px 1px hsl(184, 86%, 50%),
+    -1px -1px 7px 1px hsl(184, 96%, 50%);
+  border-radius: 50%;
+  border: 1px solid hsl(179, 91%, 9%);
+  margin-inline: auto;
+  margin-block: 2rem;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  width: 100%;
+}
+/*----MSGTYPE----- */
+.message {
+  position: relative;
+  z-index: 0;
+}
+.messagePassed,
+.messageNotPassed {
+  position: absolute;
+  inset: 0rem;
+  display: grid;
+  place-items: center;
+  padding-inline: 12rem;
+  padding-block: 5rem;
+  z-index: 2000;
+}
+.messagePassed > h3 {
+  color: white;
+  border: 1px solid blue;
+  border-radius: 15px 15px 15px 15px;
+  padding-inline: 2rem;
+  padding-block: auto;
+  background: black;
+}
+.messageNotPassed > h3 {
+  color: red;
+  border: 1px solid white;
+  border-radius: 15px 15px 15px 15px;
+  padding-inline: 2rem;
+  padding-block: auto;
+  background: white;
+}
