@@ -1,0 +1,236 @@
+.mainCreatablog {
+  background: whitesmoke;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-block: 1rem;
+}
+.mainCreatablog > div {
+  margin: auto;
+}
+.showFileName {
+  margin: auto;
+  opacity: 1;
+  z-index: 1;
+  padding: 10rem;
+  height: auto;
+  transition: all 0.75s ease-in-out;
+}
+.hideFileName {
+  margin: auto;
+  opacity: 0;
+  z-index: -1;
+  height: auto;
+  padding: 0;
+  transition: all 0.75s ease-in-out;
+}
+.creatablogForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.creatablogForm input {
+  font-weight: bold;
+  border-radius: 5px 5px 5px 5px;
+  border: 1px solid black;
+}
+.mainCreateInputs {
+  display: flex;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-inline: 1rem;
+  /* border: 1px solid red; */
+}
+.mainCreateGrid {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  place-items: center;
+  gap: 2rem;
+}
+.mainSelectInput {
+  margin-block: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+.mainSelectInput > div {
+  margin: auto;
+}
+.showInputForm {
+  opacity: 1;
+  margin: auto;
+  /* display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem; */
+  margin-block: 1rem;
+  transform: scale(1);
+  transition: all 0.75s ease-in-out;
+}
+.hideInputForm {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.75s ease-in-out;
+}
+.hideSelector {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.75s ease-in-out;
+}
+.showSelector {
+  opacity: 1;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  margin-block: 1rem;
+  transform: scale(1);
+  transition: all 0.75s ease-in-out;
+}
+.leftSide {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 10px 10px 10px 10px;
+  filter: drop-shadow(1px 1px 3px black);
+  padding: 0.5rem;
+  grid-column: span 1 / span 1;
+  -ms-grid-column: span 1 / span 1;
+}
+.rightSide {
+  grid-column: span 7 / span 7;
+  -ms-grid-column: span 7 / span 7;
+}
+.genInputImg {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  position: relative;
+}
+.genInputImg > h4 {
+  align-self: flex-start;
+  margin-inline: 1rem;
+  font-weight: bold;
+  text-underline-offset: 10px;
+  text-decoration: underline;
+}
+.genInputImg > small {
+  font-weight: bold;
+  align-self: flex-start;
+}
+@media screen and (max-width: 940px) {
+  .mainCreateInputs {
+    padding-inline: 0.5rem;
+  }
+}
+@media screen and (max-width: 460px) {
+  .mainCreateInputs {
+    padding-inline: 0.25rem;
+  }
+}
+/*----------------INPUTFORM------------- */
+.mainInputForm {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.inputFormButton {
+  padding-inline: 1.25rem;
+  margin-block: 1.25rem;
+  padding-block: 0.25rem;
+  background-color: black;
+  color: white;
+  border: 1px solid rgb(85, 217, 212);
+  border-radius: 20px 20px 20px 20px;
+  filter: drop-shadow(1px 1px 5px grey);
+}
+/*----------------INPUTFORM------------- */
+/*---Gen inputs--- */
+.genInputContainer {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+/*---Gen inputs--- */
+
+.inputForm {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btnSubmit {
+  padding-inline: 1.5rem;
+  padding-block: 0.25rem;
+  background: black;
+  border-radius: 20px 20px 20px 20px;
+  border: 1px solid black;
+  color: white;
+}
+.mainPopup {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pop_up {
+  position: absolute;
+  inset: 0;
+  height: 1.5rem;
+  width: 8rem;
+  background: black;
+  color: white;
+}
+.pop_up > h3 {
+  background: transparent;
+  color: white;
+  padding-inline: 2rem;
+  padding-block: 0.25rem;
+  border-radius: 10px 10px 10px 10px;
+}
+.pop_up > h2 {
+  background: white;
+  color: red;
+  padding-inline: 2rem;
+  padding-block: 0.25rem;
+  border-radius: 10px 10px 10px 10px;
+}
+
+@media screen and (max-width: 920px) {
+  .mainCreateGrid {
+    width: 100%;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .leftSide {
+    grid-column: span 1;
+    -ms-grid-column: span 1;
+  }
+  .rightSide {
+    order: -1;
+    grid-column: span 1;
+    -ms-grid-column: span 1;
+  }
+}
+@media screen and (max-width: 560px) {
+}

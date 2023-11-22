@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { likeType, rateType, likeIcon, likeArr, pageHitType } from "./Types";
+import "@pages/globalsTwo.css"
 
 
 
@@ -99,7 +100,7 @@ export function SeparatePara({ para, class_ }: { para: string, class_: string })
     if (arr) {
         retArr = arr.map((pg: string, index) => {
             return (
-                <p className={class_} key={index}>{pg}</p>
+                <p className={`paraCreator ${class_}`} key={index}>{pg}</p>
             )
         });
     }

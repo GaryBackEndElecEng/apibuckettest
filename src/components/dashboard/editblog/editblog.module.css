@@ -1,0 +1,82 @@
+.mainEditBlog {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-block: 1rem;
+  align-items: center;
+  background: white;
+  border-radius: 7px 7px 7px 7px;
+  filter: drop-shadow(1px 1px 5px black);
+}
+
+/*---------EDITFILE------------ */
+.mainFile {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-block: 2rem;
+  align-items: center;
+  width: 80%;
+}
+.mainFile > form {
+  margin: auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+}
+.fileTitle {
+  background-image: url("/images/colorWorld.png");
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: movethru 30s infinite;
+  font-size: 140%;
+  padding-inline: 1rem;
+}
+.content {
+  margin: auto;
+  width: 100%;
+  line-height: 2rem;
+  margin-block: 0.75rem;
+  padding-inline: 0.25rem;
+  margin-inline: 0.5rem;
+}
+.displayFile {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+}
+.fileImg {
+  margin: auto;
+  aspect-ratio: 16 / 9;
+  align-self: center;
+  filter: drop-shadow(1px 1px 5px black);
+  border: 1px solid black;
+  border-radius: 10px 10px 10px 10px;
+}
+.para {
+  line-height: 1.75rem;
+  margin-block: 0.75rem;
+  padding-inline: 0.25rem;
+  margin-inline: 0.5rem;
+}
+
+@media screen and (max-width: 940px) {
+  .mainFile {
+    width: 100%;
+  }
+  .mainFile > form {
+    width: 90%;
+  }
+}
+/*---------EDITFILE------------ */

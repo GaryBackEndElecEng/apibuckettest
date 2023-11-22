@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const item = req.body;
+        const item = JSON.parse(req.body);
         const like: likeType = item as likeType;
         if (like.fileId) {
             try {

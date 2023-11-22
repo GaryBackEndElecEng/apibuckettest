@@ -3,6 +3,7 @@ import type { fileType, postType, userType } from "@lib/Types";
 import { PrismaClient } from '@prisma/client';
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
 const Bucket = process.env.BUCKET_NAME as string
@@ -22,7 +23,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const post = req.body as postType;
+        const post = JSON.parse(req.body) as postType;
         try {
             const newPost = await prisma.post.create({
                 data: {
@@ -45,7 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             res.status(200).json(tempPost)
         } catch (error) {
-            console.error(new Error("server issues@api/Post"))
+            const message = getErrorMessage(error)
+            console.error(`${message}@post`)
         } finally {
             await prisma.$disconnect()
         }
@@ -72,7 +74,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     res.status(200).json(temPost)
                 }
             } catch (error) {
-                console.error(new Error("issues @api/post get"))
+                const message = getErrorMessage(error)
+                console.error(`${message}@post`)
             } finally {
                 await prisma.$disconnect()
             }

@@ -28,14 +28,14 @@ export type sessionType = {
     expires: Date,
 }
 export type inputType = {
-    id: number,
+    id?: number,
     name: string,
     content: string,
     type: string,
     url: string | null,
     s3Key: string | null,
     fileId: string,
-    date: Date
+    date?: Date
 }
 export type userType = {
     id?: string,
@@ -89,7 +89,7 @@ export type contactType = {
 export type msgType = {
     loaded: boolean,
     msg: string | undefined
-}
+} | undefined
 export type generalInfoType = {
     id: number,
     category: string,
@@ -142,12 +142,12 @@ export type GetServerSidePropsResult<P> =
     | { redirect: Redirect }
     | { notFound: true }
 
-export const inputNames = [
-    { type: "image", },
-    { type: "heading" },
-    { type: "subHeading" },
-    { type: "section" },
-    { type: "list" },
-    { type: "article" },
-    { type: "conclusion" },
+export const inputNames: inputType[] = [
+    { type: "image", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "heading", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "subHeading", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "section", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "list", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "article", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "conclusion", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
 ]

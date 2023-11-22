@@ -24,18 +24,18 @@
 }
 /*----MSGTYPE----- */
 .message {
-  position: relative;
-  z-index: 0;
+  position: absolute;
+  min-height: 10vh;
+  top: -20%;
+  inset: 0rem;
+  z-index: 2000;
 }
 .messagePassed,
 .messageNotPassed {
-  position: absolute;
-  inset: 0rem;
   display: grid;
   place-items: center;
   padding-inline: 12rem;
   padding-block: 5rem;
-  z-index: 2000;
 }
 .messagePassed > h3 {
   color: white;

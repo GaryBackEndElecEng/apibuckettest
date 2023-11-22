@@ -47,7 +47,7 @@ async function insertFileImg(file: fileType): Promise<fileType> {
     }
     const inputs = await Promise.all(
         file.inputs.map(async (input) => {
-            if (input.s3Key && input.name === "image") {
+            if (input.s3Key) {
                 const params = { Key: input.s3Key, Bucket };
                 const command = new GetObjectCommand(params);
                 input.url = await getSignedUrl(s3, command, { expiresIn: 3600 });

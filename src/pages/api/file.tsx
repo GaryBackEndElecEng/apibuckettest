@@ -3,6 +3,7 @@ import type { fileType, userType } from "@lib/Types";
 import { PrismaClient } from '@prisma/client';
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
 const Bucket = process.env.BUCKET_NAME as string
@@ -22,9 +23,53 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const file = req.body as fileType;
+        const file = JSON.parse(req.body) as fileType;
         try {
             const newFile = await prisma.file.create({
+                data: {
+                    name: file.name,
+                    title: file.title ? file.title : "title",
+                    content: file.content ? file.content : "content",
+                    imageKey: file.imageKey ? file.imageKey : null,
+                    published: false,
+                    userId: file.userId,
+                    fileUrl: "fill"
+                }
+            });
+            if (newFile) {
+                const newFile2 = await prisma.file.update({
+                    where: { id: newFile.id },
+                    data: {
+                        fileUrl: `/blog/${newFile.id}`
+                    }
+                })
+                let tempFile = newFile2;
+                if (tempFile.imageKey) {
+                    const params = {
+                        Bucket,
+                        Key: tempFile.imageKey
+                    }
+                    const command = new GetObjectCommand(params);
+                    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                    if (url) tempFile.imageUrl = url;
+                }
+                return res.status(200).json({ file: tempFile, message: "created" })
+            }
+        } catch (error) {
+            const message = getErrorMessage(error)
+            console.error(message)
+            res.status(500).json({ file: null, message: message })
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+    if (req.method === "PUT") {
+        const file = JSON.parse(req.body) as fileType;
+        try {
+            const updateFile = await prisma.file.update({
+                where: {
+                    id: file.id
+                },
                 data: {
                     name: file.name,
                     title: file.title,
@@ -32,16 +77,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     imageKey: file.imageKey,
                     published: file.published,
                     userId: file.userId,
-                    fileUrl: "fill"
+                    fileUrl: file.fileUrl,
+                    imageUrl: file && file.imageUrl ? file.imageUrl : null
                 }
             });
-            const newFile2 = await prisma.file.update({
-                where: { id: newFile.id },
-                data: {
-                    fileUrl: `/blog/${newFile.id}`
-                }
-            })
-            let tempFile = newFile2;
+
+            let tempFile = updateFile;
             if (tempFile.imageKey) {
                 const params = {
                     Bucket,
@@ -51,7 +92,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
                 if (url) tempFile.imageUrl = url;
             }
-            res.status(200).json(tempFile)
+            return res.status(200).json({ file: tempFile, message: "updated" })
         } catch (error) {
             console.error(new Error("server issues@api/file"))
         } finally {
@@ -77,7 +118,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         const command = new GetObjectCommand(params);
                         temFile.imageUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
                     }
-                    res.status(200).json(temFile)
+                    return res.status(200).json({ file: temFile, message: "retrieved" })
                 }
             } catch (error) {
                 console.error(new Error("issues @api/file get"))
@@ -85,7 +126,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 await prisma.$disconnect()
             }
         } else {
-            res.status(404).json({ message: "no filekey" })
+            return res.status(404).json({ message: "no filekey" })
+        }
+    }
+    if (req.method === "DELETE") {
+        const fileId = req.query.fileId as string;
+        if (fileId) {
+            try {
+                const file = await prisma.file.delete({
+                    where: {
+                        id: fileId
+                    }
+                });
+                if (file) {
+
+                    return res.status(200).json({ file: file, message: "deleted" })
+                }
+            } catch (error) {
+                console.error(new Error("issues @api/file get"))
+            } finally {
+                await prisma.$disconnect()
+            }
+        } else {
+            return res.status(404).json({ file: null, message: "no filekey" })
         }
     }
 }

@@ -9,14 +9,11 @@ import axios from 'axios';
 import { genHash } from "@lib/ultils"
 import { Button } from '@mui/material';
 import GenMsg from "@component/register/GenMsg";
-import UploadImg from "@component/register/UploadImg";
-import DashboardComtextProvider, { useDashboardContext } from '../context/DashBoardContextProvider';
 
 type resType = { user: string | undefined, message: string | undefined, status: number }
 
 export default function Register() {
     const router = useRouter();
-    const { setUser, uploaded, setUploaded } = useDashboardContext();
     const logo = `/images/gb_logo.png`;
     let bool: boolean | null = null;
     let tempUser: userType | null = null;

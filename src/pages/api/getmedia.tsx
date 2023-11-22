@@ -17,16 +17,17 @@ const s3 = new S3Client({
     region,
 })
 
-export default async function handleTest(req: NextApiRequest, res: NextApiResponse) {
-    const body = req.query;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    // console.log("REQ.BODY", req.query)
+    const Key = req.query.Key as string;
     const get_params = {
         Bucket,
-        Key: body.sendkey as string,
+        Key,
     }
 
 
     const commGet = new GetObjectCommand(get_params);
-    const imgUrl = await getSignedUrl(s3, commGet, { expiresIn: 3600 });
-    res.status(200).json({ imgUrl, Key: body.sendkey as string })
+    const url = await getSignedUrl(s3, commGet, { expiresIn: 3600 });
+    res.status(200).json({ url, Key })
 
 }

@@ -5,7 +5,9 @@ import "@pages/globalsTwo.css";
 import Nav from "@component/nav/Nav";
 import Providers from "./providers";
 import GeneralContextProvider from '@/components/context/GeneralContextProvider';
-import DashboardContextProvider from '@/components/context/DashBoardContextProvider';
+import BlogContextProvider from "@context/BlogContextProvider";
+import PostContextProvider from "@context/PostContextProvider";
+
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -25,10 +27,12 @@ export default function RootLayout({
       <body className="bg-slate-600 relative lg:container mx-auto w-full" style={{ position: "relative" }} >
         <Providers>
           <GeneralContextProvider>
-            <DashboardContextProvider>
-              <Nav />
-              {children}
-            </DashboardContextProvider>
+            <BlogContextProvider>
+              <PostContextProvider>
+                <Nav />
+                {children}
+              </PostContextProvider>
+            </BlogContextProvider>
           </GeneralContextProvider>
         </Providers>
       </body>

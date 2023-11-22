@@ -1,6 +1,6 @@
 import React from 'react';
 import type { userType, fileType, postType } from "@lib/Types";
-import CreateBlog from "@/components/dashboard/createblog/CreateBlog";
+import MainCreatBlog from "@/components/dashboard/createblog/MainCreatBlog";
 
 export default function page() {
     const mainStyle = "lg:container mx-auto px-2 py-2";
@@ -8,7 +8,7 @@ export default function page() {
 
     return (
         <div className={mainStyle}>
-            <CreateBlog />
+            <MainCreatBlog />
         </div>
     )
 }

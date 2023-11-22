@@ -131,10 +131,10 @@ blockquote.reply::before {
 .section > p::first-letter,
 .FileSummary p::first-letter,
 p.paraCreator::first-letter {
-  color: rgba(255, 190, 150, 0.9);
+  color: rgba(28, 11, 1, 0.9);
   font-weight: bold;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  margin-right: 0.55rem;
+  margin-right: 0.25rem;
   margin-bottom: 0.5rem;
   -webkit-initial-letter: 1.25;
   initial-letter: 1.25;
@@ -570,19 +570,23 @@ p.style {
 }
 .inputSection {
   display: flex;
+  line-height: 2rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   margin-block: 1rem;
   padding-inline: 2rem;
+  gap: 1rem;
 }
 .inputArticle {
   display: flex;
+  line-height: 2rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   margin-block: 1rem;
-  padding-inline: 1rem;
+  padding-inline: 2rem;
+  gap: 1rem;
 }
 section.inputConclusion {
   display: flex;
@@ -609,7 +613,7 @@ section.list ul {
 }
 @media screen and (max-width: 920px) {
   .inputSection {
-    padding-inline: 0.5rem;
+    padding-inline: 1rem;
   }
   section.list {
     padding: 0.5rem;
@@ -617,7 +621,7 @@ section.list ul {
   }
   .inputArticle {
     margin-block: 1rem;
-    padding-inline: 0.5rem;
+    padding-inline: 1rem;
   }
   section.inputConclusion {
     margin-block: 1rem;
@@ -633,7 +637,7 @@ section.list ul {
   }
   .inputArticle {
     margin-block: 0.75rem;
-    padding-inline: 0.2rem;
+    padding-inline: 0.5rem;
   }
   section.inputConclusion {
     margin-block: 1rem;

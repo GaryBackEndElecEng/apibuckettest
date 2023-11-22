@@ -40,7 +40,9 @@ export async function POST(req: NextRequest) {
     }
 }
 export async function GET(req: NextRequest) {
-    const Key = req.nextUrl.searchParams.get("Key") as string;
+    const { searchParams } = new URL(req.url);
+    const Key = searchParams.get("Key") as string;
+    // console.log("Key", Key,req.url)-DOESNT WORK WITH AWS KEY
     if (!Key) return NextResponse.json({ error: "no Key" })
     const params = {
         Bucket,

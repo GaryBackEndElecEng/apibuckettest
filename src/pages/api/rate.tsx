@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const item = req.body;
+        const item = JSON.parse(req.body);
         const rate: rateType = item as rateType;
         if (rate) {
             try {

@@ -8,6 +8,9 @@ import Image from 'next/image';
 import { useBlogContext } from '@/components/context/BlogContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import CreateInputs from "@component/dashboard/createblog/CreateInputs";
+import styles from "@dashboard/editblog/editblog.module.css";
+import "@pages/globalsTwo.css"
+import { SeparatePara } from "@lib/ultils";
 
 
 type fetchType = {
@@ -18,7 +21,7 @@ type mainCreateFileType = {
     user: userType,
     file: fileType
 }
-export default function CreateFile({ user, file }: mainCreateFileType) {
+export default function EditFile({ user, file }: mainCreateFileType) {
     const { setFile_, setBlogMsg, blogMsg, input_s } = useBlogContext();
     const [message, setMessage] = React.useState<msgType>({} as msgType);
     const [loaded, setLoaded] = React.useState<boolean>(false);
@@ -74,8 +77,8 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
     return (
         <React.Fragment>
             {file &&
-                <div className={mainStyle}>
-                    <form className={form}>
+                <div className={styles.mainFile}>
+                    <form>
 
                         <TextField
                             fullWidth={false}
@@ -91,6 +94,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                             variant="filled"
                             value={file ? file?.title : " "}
                             onChange={(e) => setFile_({ ...file, title: e.target.value as string })}
+                            style={{ fontWeight: "bold" }}
                         />
                         <div className="flex flex-row my-2 mx-auto gap-2">
                             <label htmlFor="published">published</label>
@@ -100,6 +104,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                                 name="published"
                                 value={file ? String(file.published) : "false"}
                                 onChange={(e) => setFile_({ ...file, published: Boolean(e.target.value) })}
+
                             />
                         </div>
                         <TextField
@@ -120,13 +125,14 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
 
                                 setFile_({ ...file, content: e.target.value as string })
                             }}
+                            className={styles.content}
                         />
 
                         {file && user &&
                             <button onClick={(e) => handleFile(e)} className="rounded-full px-3 py-auto my-3 bg-slate-600 text-white" type="submit">save file</button >
                         }
                     </form>
-                    <div className="flex flex-col mx-auto px-1 my-3">
+                    <div className={styles.mainFile}>
                         {file && file.name && <input
                             accept={"image/png image/jpg image/jpeg"}
                             type="file"
@@ -149,20 +155,21 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                             </div>
                         }
                     </div>
-                    <div className="flex flex-col px-2 my-2">
+                    <div className={styles.displayFile}>
 
+
+                        <div className="text-center text-xl mb-2">{file.name && file.name}</div>
+                        <h2 className={styles.fileTitle}>{file.title && file.title.toUpperCase()}</h2>
+                        {file.imageUrl && <Image src={file.imageUrl} width={800} height={400} alt="www"
+                            className={styles.fileImg}
+                            priority
+                            style={{ width: "auto" }}
+                        />}
+                        {file.content && <SeparatePara para={file.content} class_={styles.content} />}
                         <React.Fragment>
-                            <div className="text-center text-xl mb-2">{file.name && file.name}</div>
-                            <div className="text-center text-xl my-2">{file.title && file.title}</div>
-                            {file.imageUrl && <Image src={file.imageUrl} width={600} height={400} alt="www"
-                                className="aspect-video"
-                                style={{ width: "auto" }}
-                            />}
-                            {file.content && <p className="px-2 my-1 text-md">{file.content}</p>}
-                            <React.Fragment>
-                                <CreateInputs user={user} fileId={file.id} />
-                            </React.Fragment>
+                            <CreateInputs user={user} fileId={file.id} />
                         </React.Fragment>
+
 
 
                     </div>

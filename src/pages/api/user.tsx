@@ -24,7 +24,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const user = req.body as userType;
+        const user = JSON.parse(req.body) as userType;
         try {
             const newUser = await prisma.user.create({
                 data: {
@@ -72,9 +72,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         const command = new GetObjectCommand(params);
                         temUser.image = await getSignedUrl(s3, command, { expiresIn: 3600 });
                     }
-                    res.status(200).json(temUser)
+                    res.status(200).json({ user: temUser, message: "retrieved" })
                 } else {
-                    res.status(404).json({ message: "no user" })
+                    res.status(404).json({ message: "no user", user: null })
                 }
             } catch (error) {
                 console.error(new Error("issues @api/user get"))
@@ -82,11 +82,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 await prisma.$disconnect()
             }
         } else {
-            res.status(404).json({ message: "no key" })
+            res.status(404).json({ message: "no key", user: null })
         }
     }
     if (req.method === "PUT") {
-        const user = req.body as userType;
+        const user = JSON.parse(req.body) as userType;
         try {
             const newUser = await prisma.user.update({
                 where: {
@@ -110,8 +110,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
                 if (url) tempUser.image = url;
             }
-            console.log("TEMPUSER", tempUser)
-            return res.status(200).json(tempUser)
+
+            return res.status(200).json({ user: tempUser, message: "updated" })
         } catch (error) {
             console.error(new Error(`${getErrorMessage(error)}@api/user`))
 
