@@ -5,25 +5,28 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import Image from 'next/image';
-import { DashboardContext } from "@context/DashBoardContextProvider";
+import { useBlogContext } from "@context/BlogContextProvider";
+import { useGeneralContext } from '@context/GeneralContextProvider';
+import { getErrorMessage } from '@/lib/errorBoundaries';
 
 export default function CreatePost() {
-    const { user, file } = React.useContext(DashboardContext);
+    const { file_ } = useBlogContext();
+    const { user } = useGeneralContext()
     const [post, setPost] = React.useState<postType>({} as postType);
     const [message, setMessage] = React.useState<msgType>({} as msgType);
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
     React.useEffect(() => {
-        if (user && file && post.userId) {
-            setPost({ ...post, bloglink: `/blog/${file.id}`, userId: user.id as string })
+        if (user && file_ && post.userId) {
+            setPost({ ...post, bloglink: `/blog/${file_.id}`, userId: user.id as string })
         }
-    }, [user, file]);
+    }, [user, file_, setPost]);
 
     React.useEffect(() => {
-        if (post && post.name && post.content && post.s3Key && user && file) {
+        if (post && post.name && post.content && post.s3Key && user && file_) {
             setComplete(true);
         }
-    }, [post, user, setComplete, file]);
+    }, [post, user, setComplete, file_]);
 
     const handlepost = async (e: React.FormEvent<HTMLFormElement>
     ) => {
@@ -35,7 +38,8 @@ export default function CreatePost() {
                 setPost(body);
                 setLoaded(true);
             } catch (error) {
-                console.log(new Error("did not send"))
+                const message = getErrorMessage(error);
+                console.log(`${message}@post`)
             }
         }
 
@@ -114,11 +118,11 @@ export default function CreatePost() {
                         handleOnChange(e)
                     }}
                 />}
-                {message.msg &&
+                {message && message.msg &&
                     <div className="relative h-[10vh] flex flex-col items-center justify-center">
-                        {message.loaded ?
+                        {message && message.loaded ?
                             <div className=" absolute inset-0 flex flex-col text-blue-900 text-xl">
-                                {message.msg}
+                                {message && message.msg}
                             </div>
                             :
                             <div className=" absolute inset-0 flex flex-col text-orange-900 text-xl">
