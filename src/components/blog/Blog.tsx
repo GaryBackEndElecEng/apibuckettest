@@ -21,7 +21,7 @@ export default function Blog({ file, user }: { file: fileType, user: userType | 
                     :
                     <Image src={logo} width={350} height={200} alt="www.ablogroom.com" />
                 }
-                <p className="TWO">
+                <p className="TWO paraCreator">
                     {file.content}
                 </p>
                 <UserCardTwo user={user} />

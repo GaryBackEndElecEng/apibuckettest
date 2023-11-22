@@ -5,14 +5,14 @@
   align-items: center;
   margin-inline: auto;
 }
+
 .card {
   position: relative;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  box-shadow: 1px 1px 5px 2px hsl(196, 97%, 49%),
-    -1px -1px 5px 2px hsl(192, 91%, 50%);
+  filter: drop-shadow(1px 1px 7px black);
   padding: 1rem;
   border-radius: 6px;
   margin-inline: 1rem;
@@ -21,7 +21,7 @@
 .card > img {
   width: 100%;
   aspect-ratio: auto;
-  padding-inline: 20px;
+  padding-inline: 0px;
 }
 .grid {
   display: grid;
@@ -72,15 +72,26 @@
   box-shadow: 1px 1px 5px 2px hsl(248, 97%, 49%),
     -1px -1px 5px 2px hsl(247, 91%, 70%);
 }
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 980px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.5rem;
   }
+  .mainBlogItem {
+    margin-inline: 0rem;
+  }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 490px) {
   .grid {
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 0.25rem;
+  }
+  .card {
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: 5px;
+  }
+  .mainBlogItem {
+    padding-inline: 0rem;
   }
 }

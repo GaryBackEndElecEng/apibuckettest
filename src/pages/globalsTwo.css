@@ -1,6 +1,6 @@
 :root {
   --colorWorld: url("/images/colorWorld.png");
-  --bg-one: hsla(204, 96%, 11%, 0.88);
+  --bg-one: rgb(195, 196, 197);
   --bg-two: hsla(204, 96%, 11%, 0.88);
 }
 body {
@@ -27,6 +27,7 @@ body {
   width: 80%;
   background: whitesmoke;
   position: relative;
+  gap: 1rem;
 }
 
 form.listform {
@@ -133,8 +134,9 @@ blockquote.reply::before {
 p.paraCreator::first-letter {
   color: rgba(28, 11, 1, 0.9);
   font-weight: bold;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  /* font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; */
   margin-right: 0.25rem;
+  margin-left: 0.5rem;
   margin-bottom: 0.5rem;
   -webkit-initial-letter: 1.25;
   initial-letter: 1.25;
@@ -296,12 +298,12 @@ div.allBlog_container {
 .allBlogs_mainText {
   background: rgba(0, 0, 10, 0.5);
 }
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 980px) {
   .likeRateCard {
     padding-inline: 1rem;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 490px) {
   .card {
     padding-inline: 0;
   }
@@ -329,7 +331,7 @@ div.allBlog_container {
   background: hsl(184, 15%, 77%);
   border-radius: 0px 30px 30px 0px;
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 490px) {
   .learningIsLiving > q::before {
     top: -40%;
   }
@@ -516,7 +518,7 @@ p.style {
   border-radius: 10px 10px 10px 10px;
   background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
 }
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 980px) {
   .flexrowxs {
     display: flex;
     justify-content: space-evenly;
@@ -611,7 +613,7 @@ section.list ul {
   margin-top: 0.75rem;
   text-indent: 10px;
 }
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 980px) {
   .inputSection {
     padding-inline: 1rem;
   }
@@ -628,7 +630,7 @@ section.list ul {
     padding-inline: 0.5rem;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
   .inputSection {
     padding-inline: 5px;
   }
@@ -645,7 +647,7 @@ section.list ul {
   }
 }
 /*---INPUT CLASSES--- */
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 980px) {
   .container {
     margin-inline: 0.25rem;
     width: 100%;
@@ -657,7 +659,15 @@ section.list ul {
     width: 100%;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
+  .container {
+    margin-inline: 1px;
+    padding-inline: 5px;
+  }
+  .flexcol {
+    padding-inline: auto;
+    margin-inline: auto;
+  }
 }
 
 /* -----DASHBOARD -------*/

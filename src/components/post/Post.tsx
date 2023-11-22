@@ -18,9 +18,13 @@ export default function Post({ post, user }: { post: postType, user: userType | 
             <Link href={`/posts/${post.id}`} className="postLink">
 
                 {post.imageUrl ?
-                    <Image src={post.imageUrl} width={350} height={200} alt="www.ablogroom.com" />
+                    <Image src={post.imageUrl} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }}
+                        className={styles.postImage}
+                    />
                     :
-                    <Image src={logo} width={350} height={200} alt="www.ablogroom.com" />
+                    <Image src={logo} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }}
+                        className={styles.postImage}
+                    />
                 }
                 <p className="my-2 leading-8 w-1/2">
                     {post.content}

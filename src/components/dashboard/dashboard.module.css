@@ -147,6 +147,7 @@
     width: 100%;
   }
   .gridThree {
+    margin-inline: 1rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-flow: dense;
@@ -161,6 +162,7 @@
 }
 @media screen and (max-width: 450px) {
   .gridThree {
+    margin-inline: 0.5rem;
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     grid-auto-flow: dense;

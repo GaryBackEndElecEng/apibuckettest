@@ -38,7 +38,7 @@ export default function BlogItem({ file, user }: MainItemType) {
         <div className={styles.card}>
             <h2 className="text-style">{file && file.title.toUpperCase()}</h2>
             {file && file.imageUrl && <Image src={file.imageUrl} width={600} height={400} alt="www.ablogroom.com" className="fileImage" />}
-            <p>{file.content}</p>
+            <p className="paraCreator">{file.content}</p>
             <div className="flexcol">
                 {file.inputs &&
                     file.inputs.map((input, index) => (

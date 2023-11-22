@@ -78,5 +78,13 @@
   .mainFile > form {
     width: 90%;
   }
+  .displayFile {
+    padding-inline: 1rem;
+  }
+}
+@media screen and (max-width: 450px) {
+  .displayFile {
+    padding-inline: 0.75rem;
+  }
 }
 /*---------EDITFILE------------ */
