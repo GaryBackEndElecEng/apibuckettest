@@ -4,7 +4,6 @@ import styles from "@dashboard/dashboard.module.css";
 import type { userType } from '@lib/Types';
 import { getErrorMessage } from "@lib/errorBoundaries";
 import Link from "next/link";
-import "@pages/globalsTwo.css";
 import { IoArrowDownSharp } from "react-icons/io5";
 import { IoArrowUp } from "react-icons/io5";
 import type { Session } from "next-auth";
@@ -26,9 +25,12 @@ export default function DashBoard_({ session }: { session: Session | null }) {
 
     React.useEffect(() => {
         const getuser = async () => {
+            const controller = new AbortController();
             try {
                 //UrlSearchParams=> only email
-                const res = await fetch(`/api/useremail?email=${userEmail}`);
+                const res = await fetch(`/api/useremail?email=${userEmail}`, {
+                    signal: controller.signal
+                });
                 const body: resType | undefined = await res.json();
                 if (res.ok && body) {
 
@@ -42,6 +44,8 @@ export default function DashBoard_({ session }: { session: Session | null }) {
             } catch (error) {
                 console.error(`${getErrorMessage(error)}`);
                 alert(`${getErrorMessage(error)}`)
+            } finally {
+                return () => controller.abort()
             }
         }
         if (userEmail && !user) {
@@ -60,7 +64,7 @@ export default function DashBoard_({ session }: { session: Session | null }) {
     }
 
     return (
-        <main className={styles.dashContainer}>
+        <main className={`${styles.dashContainer} bg-slate-400`}>
             <div className={styles.gridThree}>
                 <div className={styles.gridElement}>grid</div>
                 <div className={styles.gridElement} style={{ position: "relative" }}>

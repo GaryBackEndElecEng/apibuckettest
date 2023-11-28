@@ -20,7 +20,7 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={styles.dashboardLayout}>
+        <main className={`${styles.dashboardLayout} bg-slate-900`}>
 
             {children}
 

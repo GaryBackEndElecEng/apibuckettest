@@ -37,9 +37,9 @@ export default async function Page() {
                 {files && users && files.map((file, index) => {
                     const user: userType | undefined = users.find(user => (user.id === file.userId))
                     return (
-                        <div key={index}>
+                        <React.Fragment key={index}>
                             <Blog file={file} user={user} />
-                        </div>
+                        </React.Fragment>
                     )
 
                 })}

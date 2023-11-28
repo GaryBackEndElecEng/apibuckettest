@@ -23,7 +23,7 @@ export default function PostItem({ post }: postItemType) {
             {post &&
                 <div className={styles.postItemSub}>
                     <h2>{post.name}</h2>
-                    {post.imageUrl && <Image src={post.imageUrl} width={600} height={400} alt={post.name} />}
+                    {post.imageUrl && <Image src={post.imageUrl} width={600} height={400} alt={post.name} priority />}
                     <p>{post.content}</p>
 
                     <button className={styles.btnPostItem} onClick={(e) => handleRout(e, post)}>edit</button>

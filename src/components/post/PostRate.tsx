@@ -46,7 +46,9 @@ export default function PostRate({ post }: mainPostLikeType) {
     return (
         <div className={styles.mainPostRate}>
             <GenericMsg postMsg={postMsg} setPostMsg={setPostMsg} />
+
             <div >
+                <h3 className="text-center underline underline-offset-7 text-bold mb-1"> Rate Me!</h3>
                 <div>
                     <h3>Average rating</h3>
                     <GenStars rate={calcAvg(post.rates)} />

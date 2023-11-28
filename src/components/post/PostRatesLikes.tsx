@@ -7,6 +7,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import { useGeneralContext } from '@context/GeneralContextProvider';
 import PostRate from "@component/post/PostRate";
 import PostLike from "@component/post/PostLike";
+import styles from "./post.module.css";
 
 export default function PostRatesLikes({ post }: { post: postType }) {
     const { pageHits } = useGeneralContext();
@@ -29,13 +30,17 @@ export default function PostRatesLikes({ post }: { post: postType }) {
     return (
         <React.Fragment>
 
-            <h1>Interest</h1>
-            <div className="flex flex-row my-2 mx-auto gap-1">
-                <span>hits: </span>
-                {post && <span>{calcPostHits(hits, String(post.id))}</span>}
+            <h1>Interest:
+                <span>
+                    <span className="font-bold">hits: </span>
+                    {post && <span>{calcPostHits(hits, String(post.id))}</span>}
+                </span>
+            </h1>
+            <div className={styles.gridPostRateLikes}>
+
+                {post.likes && <PostLike post={post} />}
+                {post.rates && <PostRate post={post} />}
             </div>
-            {post.likes && <PostLike post={post} />}
-            {post.rates && <PostRate post={post} />}
         </React.Fragment>
     )
 }

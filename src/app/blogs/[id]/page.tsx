@@ -90,18 +90,18 @@ export default async function BlogPage({ params }: { params: { id: string } }) {
 
 
         return (
-            <React.Fragment >
-                <div className={styles.MasterBlogIndex}>
-                    <div className={styles.blogIndexContainer}>
-                        {file && user &&
 
-                            <div className={styles.mainBlogItem}>
-                                <BlogItem file={fileInsert} user={userInsert} />
-                            </div>
-                        }
-                    </div>
+            <div className={styles.MasterBlogIndex}>
+                <div className={styles.blogIndexContainer}>
+                    {file && user &&
+
+
+                        <BlogItem file={fileInsert} user={userInsert} />
+
+                    }
                 </div>
-            </React.Fragment>
+            </div>
+
         )
     } else {
         return (<div><h2> could not find....</h2></div>)

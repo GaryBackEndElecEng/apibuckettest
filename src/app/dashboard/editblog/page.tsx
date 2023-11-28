@@ -3,15 +3,41 @@ import { Session, getServerSession } from 'next-auth';
 import authOptions from "@lib/authOptions";
 import Login from "@component/comp/Login";
 import MasterEditBlog from "@component/dashboard/editblog/MasterEditBlog";
-import styles from "@component/dashboard/editblog/editblog.module.css";
+import { PrismaClient } from '@prisma/client';
+import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import styles from "@component/dashboard/editblog/editblog.module.css"
+import { getErrorMessage } from '@/lib/errorBoundaries';
+import { fileType, userType } from '@/lib/Types';
+// export const config = { runtime: 'experimental-edge' }
 
-export default async function page() {
-    const session = await getServerSession(authOptions);
-    if (session) {
+const Bucket = process.env.BUCKET_NAME as string
+const region = process.env.BUCKET_REGION as string
+const accessKeyId = process.env.SDK_ACCESS_KEY as string
+const secretAccessKey = process.env.SDK_ACCESS_SECRET as string
+const s3 = new S3Client({
+
+    credentials: {
+        accessKeyId,
+        secretAccessKey,
+    },
+    region,
+})
+const prisma = new PrismaClient();
+
+export async function generatStaticParams() {
+    const userFiles = await getFiles();
+    return userFiles.map(file => ({ fileId: file.id }))
+}
+
+export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+    const fileId = searchParams.fileId as string;
+    const user = await getUser();
+    const file = await getFile(fileId);
+    if (user) {
         return (
-            <div>
-                <MasterEditBlog session={session} />
-            </div>
+            <MasterEditBlog user={user} file={file} />
+
         )
     } else {
         return (
@@ -20,5 +46,83 @@ export default async function page() {
             </div>
         )
     }
+}
+
+export async function getUser() {
+    const session = await getServerSession(authOptions);
+    if (session && session.user && session.user.email) {
+        const email = session.user.email
+        try {
+            const user = await prisma.user.findUnique({
+                where: { email: email }
+            });
+            if (user) {
+                let tempUser = user;
+                if (tempUser.imgKey) {
+                    const params = {
+                        Key: tempUser.imgKey,
+                        Bucket
+                    }
+                    const command = new GetObjectCommand(params);
+                    tempUser.image = await getSignedUrl(s3, command, { expiresIn: 3600 })
+                }
+                return tempUser as userType
+            }
+        } catch (error) {
+            const message = getErrorMessage(error);
+            console.error(`${message}@editblog@page@getuser`)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+}
+export async function getFile(fileId: string) {
+    try {
+        const file = await prisma.file.findUnique({
+            where: { id: fileId },
+            include: {
+                inputs: true,
+                likes: true,
+                rates: true
+            }
+        });
+        if (file) {
+            let tempFile = file as fileType;
+            if (tempFile.imageKey) {
+                const params = {
+                    Key: tempFile.imageKey,
+                    Bucket
+                }
+                const command = new GetObjectCommand(params);
+                tempFile.imageUrl = await getSignedUrl(s3, command, { expiresIn: 3600 })
+            }
+            const neInputs = await Promise.all(
+                tempFile.inputs.map(async (input) => {
+                    if (input.s3Key) {
+                        const params = {
+                            Key: input.s3Key,
+                            Bucket
+                        }
+                        const command = new GetObjectCommand(params);
+                        input.url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                    }
+                    return input
+                })
+            );
+            const newFile = ({ ...tempFile, inputs: neInputs }) as fileType
+            return newFile
+        }
+    } catch (error) {
+        const message = getErrorMessage(error);
+        console.error(`${message}@editblog@page@getuser`)
+    } finally {
+        await prisma.$disconnect()
+    }
+}
+
+export async function getFiles() {
+    const files = await prisma.file.findMany();
+    await prisma.$disconnect()
+    return files
 }
 

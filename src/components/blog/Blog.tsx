@@ -13,13 +13,13 @@ import "@pages/globalsTwo.css";
 export default function Blog({ file, user }: { file: fileType, user: userType | undefined }) {
     const logo = "/images/gb_logo.png";
     return (
-        <div className={`blogCard`}>
+        <div className={styles.blogCard}>
             <Link href={`/blogs/${file.id}`} className="blogsLink flexcol">
                 <h3 className="text-center text-2xl mb-3">{file.title.toUpperCase()}</h3>
                 {file.imageUrl ?
-                    <Image src={file.imageUrl} width={350} height={200} alt="www.ablogroom.com" />
+                    <Image src={file.imageUrl} width={350} height={200} alt="www.ablogroom.com" priority />
                     :
-                    <Image src={logo} width={350} height={200} alt="www.ablogroom.com" />
+                    <Image src={logo} width={350} height={200} alt="www.ablogroom.com" priority />
                 }
                 <p className="TWO paraCreator">
                     {file.content.slice(0, 36)}...

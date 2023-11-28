@@ -1,7 +1,7 @@
 "use client";
 import { fileType, userType, likeIcon, pageHitType } from '@/lib/Types'
 import React from 'react'
-import styles from "@component/blog/blog.module.css";
+import styles from "./blogdetailStyle.module.css";
 import Image from 'next/image';
 import getFormattedDate from "@lib/getFormattedDate";
 import { calcAvg, calcLikes, calcHits } from "@lib/ultils";
@@ -28,7 +28,7 @@ export default function BlogDetail({ file, getuser }: MainItemType) {
     }, [file, getuser, setUser, setFile_]);
 
     return (
-        <div className={styles.detailContainer}>
+        <div className={`${styles.detailContainer} `}>
             <div className={styles.card}>
                 <h2 className="text-style">{file_ ? file_.title.toUpperCase() : file.title.toUpperCase()}</h2>
                 {file_ && file_.imageUrl && <Image src={file_.imageUrl} width={600} height={400} alt="www.ablogroom.com" className="fileImage" />}
@@ -42,9 +42,9 @@ export default function BlogDetail({ file, getuser }: MainItemType) {
                         ))
                     }
                 </div>
-                <div className="line-break" />
+                <div className="line-break-sm" />
                 {user && <UserCard user={user} />}
-                <div className="line-break" />
+                <div className="line-break-sm" />
 
 
             </div>

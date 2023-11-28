@@ -2,7 +2,7 @@
 import React from "react";
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import styles from "@component/dashboard/blogdetail/blogdetail.module.css";
+import styles from "@component/blog/blog.module.css";
 
 
 
@@ -19,7 +19,7 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={styles.detailIndexContainer}>
+        <main className={styles.blogSIngleIDLayoutContainer}>
 
             {children}
 

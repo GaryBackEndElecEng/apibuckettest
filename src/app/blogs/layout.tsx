@@ -19,7 +19,7 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={styles.blogsLayoutContainer}>
+        <main className={`${styles.blogsLayoutContainer} bg-slate-700`}>
 
             {children}
 

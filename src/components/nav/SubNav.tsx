@@ -29,10 +29,13 @@ export default function SubNav() {
                     body: JSON.stringify(params),
                     signal: controller.signal
                 });
+                const body: { message: string } = await res.json()
                 if (res.ok) {
-                    setMsg({ loaded: true, msg: "recieved" });
+                    setMsg({ loaded: true, msg: body.message });
+                } else if (res.status > 200 && res.status < 500) {
+                    setMsg({ loaded: false, msg: body.message })
                 } else {
-                    setMsg({ loaded: false, msg: "issue@pagehit" })
+                    setMsg({ loaded: false, msg: "server error" })
                 }
                 return () => controller.abort()
             }

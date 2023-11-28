@@ -19,7 +19,7 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={styles.layoutPostsContainer}>
+        <main className={styles.layoutSinglePostContainer}>
 
             {children}
 

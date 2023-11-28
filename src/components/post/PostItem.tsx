@@ -1,7 +1,7 @@
 " use client"
 import { postType, userType } from '@/lib/Types'
 import React from 'react';
-import UserProfile from "@component/post/UserProfile";
+import UserProfileTwo from "@component/post/UserProfileTwo";
 import "@pages/globalsTwo.css";
 import Image from 'next/image';
 import PostRatesLikes from '@component/post/PostRatesLikes';
@@ -19,12 +19,14 @@ export default function PostItem({ post, user }: { post: postType, user: userTyp
             {post.imageUrl &&
                 <Image src={post.imageUrl} width={900} height={600}
                     alt={post.name}
-                    className={styles.postImage} />
+                    className={styles.postImage}
+                    priority
+                />
             }
 
             <p className="paraCreator">{post.content}</p>
             <div className="line-break-sm" />
-            <UserProfile user={user} />
+            <UserProfileTwo user={user} />
             <div className="line-break-sm" />
             {post && <PostRatesLikes post={post} />}
 

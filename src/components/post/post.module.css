@@ -1,10 +1,22 @@
 .layoutPostsContainer {
-  margin: 0;
+  margin-inline: auto;
+  margin-block: 2rem;
+  padding-inline: 2rem;
+  padding-block: 1rem;
+  width: 80%;
+  height: auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.layoutSinglePostContainer {
+  margin: auto;
+  align-self: center;
+  justify-self: center;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  height: auto;
+  display: grid;
+  place-items: center;
 }
 .postsIndexContainer {
   margin-inline: auto;
@@ -17,25 +29,20 @@
   margin-block: 3rem;
 }
 .containerPostItem {
+  align-self: center;
+  justify-self: center;
   margin-block: 1.5rem;
   margin-inline: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 65%;
+  display: grid;
+  place-content: center;
+  width: 100%;
   position: relative;
-  border: 3px solid black;
 }
 .mainBlogItem {
   margin-inline: 0.5rem;
   margin-block: auto;
 }
-.masterPosts {
-  margin-inline: auto;
-  margin-block: 1.75rem;
-  position: relative;
-}
+
 .noname {
   color: lightgrey;
 }
@@ -43,7 +50,7 @@
 .mainPostItemCard {
   margin: auto;
   position: relative;
-  width: 60%;
+  width: 100%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -92,11 +99,38 @@
   border-radius: 15px 15px 15px 15px;
   border: 2px solid black;
 }
-.grid {
+.postGrid {
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(3, minmax(350px, 1fr));
   gap: 1.5rem;
+  place-items: center;
+  place-content: center;
   background: rgba(36, 35, 35, 0.1);
+}
+.postGrid > div {
+  margin: auto;
+  justify-self: center;
+  align-self: center;
+}
+.userProfileTwo {
+  margin-inline: auto;
+  padding-block: auto;
+  padding-inline: 1.5rem;
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 1px 1px 5px 2px hsl(138, 100%, 4%),
+    -1px -1px 5px 2px hsl(138, 71%, 3%);
+  padding: 0.25rem;
+  border-radius: 6px;
+  margin-inline: 0.5rem;
+  margin-block: 1rem;
+  color: white;
+  background: black;
+  gap: 1rem;
 }
 .user {
   margin-inline: auto;
@@ -127,13 +161,53 @@
   border: 1px solid black;
   filter: drop-shadow(1px 1px 5px black);
 }
+.profileImage {
+  float: left;
+  shape-outside: circle();
+  margin-top: 0.5rem;
+  margin-left: 0.25rem;
+  border-radius: 50%;
+  border: 1px solid black;
+  filter: drop-shadow(1px 1px 5px black);
+}
+.gridPostRateLikes {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 350px));
+  grid-template-rows: minmax(150px, 220px);
+  grid-auto-flow: dense;
+  place-items: center;
+
+  gap: 2rem;
+}
+.gridPostRateLikes > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 1px 1px 6px 2px black;
+  padding: 1rem;
+  border-radius: 15px 15px 15px 15px;
+  width: 100%;
+  height: 100%;
+  background: white;
+}
+.rateForm {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-evenly;
+  align-items: center;
+}
 .buttonsm {
   border-radius: 15px 15px 15px 15px;
-  padding-inline: 2rem;
+  padding-inline: 1.25rem;
   padding-block: 0.25rem;
   background: black;
   color: white;
   text-align: center;
+  font-size: 80%;
 }
 .mainPostLike {
   position: relative;
@@ -146,30 +220,42 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px 10px 10px 10px;
 }
 /*--------- ICONS--------- */
 
 .good {
   color: hsl(0, 100%, 30%);
+  border: 1px solid black;
+  border-radius: 20%;
 }
 .great {
   color: hsl(0, 80%, 80%);
-  border: 1px solid white;
+  border: 1px solid black;
+  border-radius: 20%;
 }
 .loveit {
   color: hsl(0, 100%, 40%);
   filter: drop-shadow(1px 1px 10px orange);
   border-radius: 50%;
+  border: 1px solid black;
 }
 .poor {
   color: hsl(300, 100%, 20%);
+  border: 1px solid black;
+  border-radius: 50%;
 }
 .average {
   color: hsl(60, 100%, 50%);
+  border: 1px solid black;
+  border-radius: 50%;
 }
 .amazed {
   color: hsl(0, 100%, 50%);
   filter: drop-shadow(1px 1px 8px pink);
+  border-radius: 50%;
+  border: 1px solid black;
   border-radius: 50%;
 }
 .noname {
@@ -186,7 +272,8 @@
   position: relative;
 }
 .mainPostRate > div {
-  margin: auto;
+  margin-inline: auto;
+  margin-block: 2.5rem;
 }
 .PostRateForm {
   display: flex;
@@ -196,19 +283,24 @@
 }
 
 @media screen and (max-width: 980px) {
-  .mainPostItemCard {
-    margin-inline: 0.5rem;
-    margin-block: 1rem;
-    width: 80%;
+  .layoutPostsContainer {
+    width: 100%;
+    padding-inline: 0.5rem;
   }
+
   .containerPostItem {
     /* width: 100%; */
     margin-inline: 10px;
   }
-  .grid {
+  .postGrid {
     grid-template-columns: repeat(1, minmax(350px, 1fr));
     gap: 0.5rem;
     width: auto;
+  }
+  .postGrid > div {
+    width: 100%;
+    justify-self: stretch;
+    align-self: stretch;
   }
   .card {
     width: 100%;
@@ -216,36 +308,47 @@
   }
   .mainPostItemCard {
     margin: auto;
-    width: 100%;
   }
   .postImage {
     padding-inline: 0.25rem;
     width: 100%;
     aspect-ratio: 16 / 9;
   }
+  .userProfileTwo {
+    margin-inline: auto;
+    padding-block: auto;
+    padding-inline: 1rem;
+  }
+  .gridPostRateLikes {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+  }
 }
 @media screen and (max-width: 480px) {
-  .mainPostItemCard {
-    margin-inline: 5px;
-    margin-block: 0.75rem;
+  .layoutPostsContainer {
     width: 100%;
+    padding-inline: 0.25rem;
   }
   .containerPostItem {
     width: 98%;
   }
-  .grid {
+  .postGrid {
     grid-template-columns: repeat(1, minmax(350px, 1fr));
     gap: 0.25rem;
   }
   .card {
     width: auto;
   }
-  .mainPostItemCard {
-    margin-inline: 1px;
-    padding-inline: 5px;
-    width: auto;
-  }
+
   .postImage {
     padding-inline: 0.15rem;
+  }
+  .gridPostRateLikes {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-auto-flow: dense;
   }
 }

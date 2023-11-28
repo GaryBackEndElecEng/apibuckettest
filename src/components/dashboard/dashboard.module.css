@@ -1,10 +1,11 @@
 .dashboardLayout {
-  width: 100%;
-  margin: auto;
+  width: 80%;
+  margin-inline: auto;
+  margin-block: 2rem;
   display: grid;
   place-items: center;
+  place-content: center;
   position: relative;
-  margin-inline: 10px;
 }
 .buttonsm {
   padding-inline: 1rem;
@@ -16,7 +17,7 @@
   color: white;
 }
 .dashContainer {
-  width: 80%;
+  width: 100%;
   margin-inline: auto;
   position: relative;
   display: flex;
@@ -24,7 +25,6 @@
   justify-content: center;
   align-items: center;
   margin-block: 2rem;
-  background: rgba(1, 37, 35, 0.5);
 }
 .gridThree {
   display: grid;
@@ -71,6 +71,7 @@
   padding-block: 0.25rem;
   filter: drop-shadow(1px 1px 5px white);
   background: black;
+  border-radius: 25px 25px 25px 25px;
   color: white;
 }
 .openUpdateUser {
@@ -114,7 +115,12 @@
     height: 60vh;
   }
 }
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 940px) {
+  .dashboardLayout {
+    margin: auto;
+    width: 100%;
+    padding-inline: 1rem;
+  }
   .openUpdateUser {
     height: 80vh;
   }
@@ -147,6 +153,9 @@
   }
 }
 @media screen and (max-width: 440px) {
+  .dashboardLayout {
+    padding-inline: 10px;
+  }
   .openUpdateUser {
     height: 110vh;
   }

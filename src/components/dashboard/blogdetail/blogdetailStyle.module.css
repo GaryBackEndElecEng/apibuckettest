@@ -1,0 +1,43 @@
+.detailLayoutContainer {
+  width: 100%;
+  margin-inline: auto;
+  margin-block: 1rem;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  position: relative;
+  padding-inline: 1rem;
+  padding-block: 1rem;
+  background: rgb(234, 239, 239);
+}
+.detailContainer {
+  margin-inline: 0.25rem;
+  width: 100%;
+}
+.card {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-inline: 0;
+  padding-inline: 5px;
+  gap: 1rem;
+}
+.detailpageContainer {
+  margin: auto;
+  align-self: center;
+  justify-self: center;
+}
+@media screen and (max-width: 940px) {
+  .detailLayoutContainer {
+    width: 100%;
+    padding-inline: 0.75rem;
+  }
+}
+@media screen and (max-width: 440px) {
+  .detailLayoutContainer {
+    width: 100%;
+    padding-inline: 5px;
+  }
+}

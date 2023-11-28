@@ -16,38 +16,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const test = await prisma.pageHit.findFirst({
                     where: {
                         page: pagehit.page
-                    }
+                    },
+
                 });
-                if (test) {
-                    const retPageHit = await prisma.pageHit.update({
-                        where: {
-                            page: test.page
-                        },
-                        data: {
-                            name: pagehit.name,
-                            count: test.count + 1
-                        }
-                    });
-                    res.status(200).json(retPageHit)
-
-                } else if (pagehit.page) {
-                    const newPage = await prisma.pageHit.create({
-                        data: {
-                            name: pagehit.name,
-                            page: pagehit.page,
-                            count: 1
-                        }
-                    });
-                    res.status(200)
-                } else {
-                    await prisma.$disconnect()
-                    res.status(404)
-
-                }
+                await prisma.pageHit.upsert({
+                    where: {
+                        page: pagehit.page
+                    },
+                    create: {
+                        page: pagehit.page,
+                        count: 1,
+                        name: pagehit.name
+                    },
+                    update: {
+                        count: test ? test.count + 1 : 1,
+                        name: pagehit.name
+                    }
+                })
+                res.status(200).json({ message: "update" })
 
             } catch (error) {
-                console.error(`@pagehit: ${getErrorMessage(error)}`);
-                res.status(404)
+                const message = getErrorMessage(error);
+                console.error(`@pagehit: ${message}`);
+                res.status(404).json({ message: message })
             } finally {
                 await prisma.$disconnect()
             }

@@ -72,8 +72,9 @@ export default function PostLike({ post }: mainPostLikeType) {
 
     return (
         <div className={styles.mainPostLike}>
+            <h3 className="text-center underline underline-offset-7 text-bold mb-1">Like Me!</h3>
             {postMsg && <GenericMsg postMsg={postMsg} setPostMsg={setPostMsg} />}
-            <div className={styles.subMainPostLike}>
+            <div className={`${styles.subMainPostLike} bg-slate-500 text-white`}>
                 {
                     iconArr && iconArr.map((obj, index) => {
 

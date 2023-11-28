@@ -52,7 +52,7 @@ export default function PostRate({ file }: mainPostLikeType) {
                     <h3>Average rating</h3>
                     <GenStars rate={calcAvg(file.rates)} />
                 </div>
-                <form className={styles.inputImage}
+                <form className={styles.rateForm}
                     onSubmit={handleSubmit}>
                     <select
                         className="p-1 border border-emerald-500 rounded-lg bg-slate-600 text-white"

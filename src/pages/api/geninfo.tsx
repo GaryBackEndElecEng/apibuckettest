@@ -34,6 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const GenInfo = await prisma.generalInfo.findMany();
             if (GenInfo) {
                 res.status(200).json(GenInfo)
+            } else {
+                const genInfo: generalInfoType = {} as generalInfoType
+                res.status(400).json(genInfo)
             }
 
         } catch (error) {

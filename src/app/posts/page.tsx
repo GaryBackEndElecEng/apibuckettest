@@ -65,19 +65,19 @@ export default async function Page() {
     return (
 
         <div className={styles.postsIndexContainer}>
-            <div className={styles.masterPosts}>
-                <div className={`${styles.grid} mx-auto place-items-start bg-slate-300`}>
-                    {posts && users && posts.map((post, index) => {
-                        const user: userType | undefined = users.find(user => (user.id === post.userId))
-                        return (
-                            <div key={index}>
-                                <Post post={post} user={user} />
-                            </div>
-                        )
 
-                    })}
-                </div>
+            <div className={`${styles.postGrid} mx-auto  bg-slate-300`}>
+                {posts && users && posts.map((post, index) => {
+                    const user: userType | undefined = users.find(user => (user.id === post.userId))
+                    return (
+                        <div key={index} >
+                            <Post post={post} user={user} />
+                        </div>
+                    )
+
+                })}
             </div>
+
         </div>
 
     )

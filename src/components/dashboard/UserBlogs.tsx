@@ -20,8 +20,11 @@ export default function UserBlogs({ user }: { user: userType | null }) {
     React.useEffect(() => {
         if (user) {
             const getUserBlogs = async () => {
+                const controller = new AbortController();
                 try {
-                    const res = await fetch(`/api/userblogs?userId=${user.id}`);
+                    const res = await fetch(`/api/userblogs?userId=${user.id}`, {
+                        signal: controller.signal
+                    });
                     const body: userFetchType = await res.json();
                     if (res.ok) {
                         setUserBlogs(body.files);
@@ -33,6 +36,8 @@ export default function UserBlogs({ user }: { user: userType | null }) {
                 } catch (error) {
                     const message = getErrorMessage(error);
                     setBlogMsg({ loaded: false, msg: message })
+                } finally {
+                    return () => controller.abort()
                 }
             }
             getUserBlogs();

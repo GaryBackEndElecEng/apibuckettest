@@ -1,7 +1,6 @@
 "use client";
 import React from 'react';
 import { calcAvg, calcLikes, calcfileHits } from '@/lib/ultils';
-import "@pages/globalsTwo.css"
 import { fileLikeType, fileRateType, fileType, likeIcon } from '@/lib/Types';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import axios from "axios";
@@ -9,6 +8,7 @@ import GenStars from "@component/comp/GenStars";
 import { useGeneralContext } from '@context/GeneralContextProvider';
 import BlogRate from "@component/blog/BlogRate";
 import BlogLike from "@component/blog/BlogLike";
+import styles from "./blog.module.css";
 
 export default function BlogRatesLikes({ file }: { file: fileType }) {
     const [likeIcons, setlikeIcons] = React.useState<likeIcon[]>([]);
@@ -16,13 +16,10 @@ export default function BlogRatesLikes({ file }: { file: fileType }) {
 
 
     return (
-        <div className="likeRateCard">
-            <h3>Info</h3>
-            <div className="flexrow">
+        <div className={styles.likeRateCard}>
+            <h3 className="text-bold underline underline-offset-8 text-center text-2xl">Info</h3>
 
-                {file && pageHits && <small>hits:{calcfileHits(pageHits, file)}</small>}
-            </div>
-            <div className="flexrow">
+            <div className="flexcol w-full">
                 <div>{
                     likeIcons && likeIcons.map((ico, index) => (
                         <div className="flexcolsm" key={index}>
@@ -32,8 +29,17 @@ export default function BlogRatesLikes({ file }: { file: fileType }) {
                         </div>
                     ))
                 }</div>
-                <BlogRate file={file} />
-                <BlogLike file={file} />
+
+            </div>
+            <div className={styles.gridRateLike}>
+                <div>
+                    <h3 className="text-slate-600 text-center font-bold mb-1">Rate Me <span className="text-red-800 mx-1">!</span></h3>
+                    <BlogRate file={file} />
+                </div>
+                <div>
+                    <h3 className="text-slate-600 text-center font-bold mb-1">Like Me <span className="text-red-800 mx-1">!</span></h3>
+                    <BlogLike file={file} />
+                </div>
             </div>
         </div>
     )

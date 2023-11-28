@@ -1,14 +1,24 @@
 .blogsLayoutContainer {
   margin-inline: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 67%;
+  display: grid;
+  place-content: center;
+  place-items: center;
   margin-block: 3rem;
+  padding-inline: 2rem;
+}
+.blogSIngleIDLayoutContainer {
+  margin: auto;
+  width: 100%;
+  justify-self: center;
+  align-self: center;
+  display: grid;
+  place-content: center;
+  place-items: center;
 }
 .blogsIndexContainer {
   margin-inline: auto;
-  width: 60%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +33,7 @@
   width: 100%;
 }
 .blogIndexContainer {
-  flex: 0.5;
+  margin: auto;
   display: grid;
   place-items: center;
   position: relative;
@@ -46,6 +56,16 @@
   width: auto;
   position: relative;
 }
+.blogCard {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  background: whitesmoke;
+  box-shadow: 1px 1px 15px 2px black, -1px -1px 15px 2px black;
+  padding: 1rem;
+  border-radius: 6px;
+}
 
 .card {
   position: relative;
@@ -64,10 +84,17 @@
   aspect-ratio: auto;
   padding-inline: 0px;
 }
+.fileImage {
+  aspect-ratio: 16 / 9;
+  width: auto;
+  box-shadow: 1px 1px 5px 1px grey;
+  border-radius: 7px 7px 7px 7px;
+  margin-inline: 0.5rem;
+}
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(350px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
   background: rgba(36, 35, 35, 0.1);
 }
 .userCard {
@@ -77,6 +104,11 @@
   background: black;
   color: white;
   border-radius: 20px 20px 20px 20px;
+}
+.userCard img {
+  border-radius: 50%;
+  filter: drop-shadow(1px 1px 7px white);
+  border: 1px solid grey;
 }
 .profileImage {
   border-radius: 50%;
@@ -126,42 +158,108 @@
   box-shadow: 1px 1px 5px 2px hsl(248, 97%, 49%),
     -1px -1px 5px 2px hsl(247, 91%, 70%);
 }
+.textStyle {
+  background-image: url("/images/colorWorld.png");
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: movethru 10s infinite;
+  font-size: 130%;
+}
+.likeRateCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 1px 1px 5px 2px lightgrey;
+  padding: 1rem;
+  border-radius: 6px 25px 6px 25px;
+  width: 100%;
+  padding-inline: 2rem;
+  gap: 1rem;
+}
+.gridRateLike {
+  margin: auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  grid-template-rows: minmax(200px, 350px);
+  grid-auto-flow: dense;
+  place-items: center;
+  place-content: center;
+  gap: 2rem;
+}
+.gridRateLike > div {
+  margin: auto;
+  width: 100%;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 1px 1px 6px 2px grey;
+}
+
+/* blogsLayoutContainer */
 @media screen and (max-width: 980px) {
+  .blogsLayoutContainer {
+    margin: auto;
+    width: 100%;
+    padding-inline: 1rem;
+  }
   .blogIndexContainer {
-    width: 80%;
+    width: 100%;
     margin-inline: 0;
   }
   .detailContainer {
     margin-inline: 1rem;
-    width: 80%;
+    width: 100%;
   }
   .grid {
-    grid-template-columns: repeat(2, minmax(350px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.5rem;
   }
   .mainBlogItem {
     margin-inline: 0rem;
   }
+  .gridRateLike {
+    margin: auto;
+    gap: 2rem;
+  }
 }
 @media screen and (max-width: 920px) {
+  .blogsLayoutContainer {
+    margin: auto;
+    width: 100%;
+    padding-inline: 0.5rem;
+  }
   .grid {
-    grid-template-columns: repeat(1, minmax(350px, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 0.5rem;
   }
-  .blogIndexContainer {
-    width: 80%;
-  }
+
   .mainBlogItem {
     margin: auto;
     padding-inline: 2rem;
   }
+  .gridRateLike {
+    margin: auto;
+    grid-template-columns: repeat(1, minmax(400px, 1fr));
+    gap: 2rem;
+  }
 }
 @media screen and (max-width: 490px) {
-  .blogIndexContainer {
-    margin-inline: 1rem;
-    margin-block: 2rem;
+  .blogsLayoutContainer {
+    margin: auto;
     width: 100%;
+    padding-inline: 5px;
   }
+
   .detailContainer {
     margin-inline: 0.5rem;
     width: 100%;
@@ -169,6 +267,11 @@
   .grid {
     grid-template-columns: repeat(1, minmax(200px, 1fr));
     gap: 0.25rem;
+  }
+  .gridRateLike {
+    margin: auto;
+    grid-template-columns: repeat(1, minmax(300px, 1fr));
+    grid-template-rows: minmax(200px, 400px);
   }
   .card {
     width: 100%;
@@ -181,8 +284,9 @@
   }
 }
 @media screen and (max-width: 420px) {
-  .blogIndexContainer {
-    margin-block: 2rem;
+  .blogsLayoutContainer {
+    margin: auto;
     width: 100%;
+    padding-inline: 1px;
   }
 }
