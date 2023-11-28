@@ -73,22 +73,109 @@
   background: black;
   color: white;
 }
-.profileOpen {
+.openUpdateUser {
   opacity: 1;
+  z-index: 1;
   transform: translateX(0%) scale(1);
   animation: bringIn 1s ease-in-out;
+  height: 60vh;
 }
-/* .profileClose {
-  display: none;
-} */
+.closeUdateUser {
+  opacity: 0;
+  transform: translateX(-100%) scale(0.4);
+  z-index: -1;
+  height: 0;
+  animation: bringDown 1s ease-in-out;
+}
+@keyframes bringDown {
+  from {
+    transform: translateX(0%) scale(1);
+    opacity: 0.3;
+    height: 60vh;
+  }
+  to {
+    transform: translateX(-100%) scale(0.4);
+    opacity: 0;
+    z-index: -1;
+    height: 0;
+  }
+}
 @keyframes bringIn {
   from {
     transform: translateX(-50%) scale(0.4);
     opacity: 0.3;
+    z-index: 1;
+    height: 0;
   }
-  from {
+
+  to {
     transform: translateX(0%) scale(1);
     opacity: 1;
+    height: 60vh;
+  }
+}
+@media screen and (max-width: 920px) {
+  .openUpdateUser {
+    height: 80vh;
+  }
+  @keyframes bringDown {
+    from {
+      transform: translateX(0%) scale(1);
+      opacity: 0.3;
+      height: 80vh;
+    }
+    to {
+      transform: translateX(-100%) scale(0.4);
+      opacity: 0;
+      z-index: -1;
+      height: 0;
+    }
+  }
+  @keyframes bringIn {
+    from {
+      transform: translateX(-50%) scale(0.4);
+      opacity: 0.3;
+      z-index: 1;
+      height: 0;
+    }
+
+    to {
+      transform: translateX(0%) scale(1);
+      opacity: 1;
+      height: 80vh;
+    }
+  }
+}
+@media screen and (max-width: 440px) {
+  .openUpdateUser {
+    height: 110vh;
+  }
+  @keyframes bringDown {
+    from {
+      transform: translateX(0%) scale(1);
+      opacity: 0.3;
+      height: 110vh;
+    }
+    to {
+      transform: translateX(-100%) scale(0.4);
+      opacity: 0;
+      z-index: -1;
+      height: 0;
+    }
+  }
+  @keyframes bringIn {
+    from {
+      transform: translateX(-50%) scale(0.4);
+      opacity: 0.3;
+      z-index: 1;
+      height: 0;
+    }
+
+    to {
+      transform: translateX(0%) scale(1);
+      opacity: 1;
+      height: 110vh;
+    }
   }
 }
 

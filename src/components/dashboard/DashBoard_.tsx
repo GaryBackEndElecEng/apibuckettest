@@ -5,7 +5,8 @@ import type { userType } from '@lib/Types';
 import { getErrorMessage } from "@lib/errorBoundaries";
 import Link from "next/link";
 import "@pages/globalsTwo.css";
-
+import { IoArrowDownSharp } from "react-icons/io5";
+import { IoArrowUp } from "react-icons/io5";
 import type { Session } from "next-auth";
 import { useBlogContext } from "@/components/context/BlogContextProvider";
 import BlogMsg from "@component/dashboard/createblog/BlogMsg";
@@ -50,6 +51,7 @@ export default function DashBoard_({ session }: { session: Session | null }) {
 
     const handleOpen = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.preventDefault();
+
         if (open) {
             setOpen(false);
         } else {
@@ -75,14 +77,23 @@ export default function DashBoard_({ session }: { session: Session | null }) {
                 <div className={styles.gridElement}>grid</div>
             </div>
             <div className="text-xl text-center my-1 mt-2 text-slate-200">Update profile</div>
-            <details className={open ? styles.profileOpen : styles.profileClose}>
-                <summary className={styles.userSummary}
+            {open ?
+                <button className={styles.userSummary}
                     onClick={(e) => handleOpen(e)}
                 >
-                    Profile Update
-                </summary>
+                    <IoArrowDownSharp /> Profile Update
+                </button>
+                :
+                <button className={styles.userSummary}
+                    onClick={(e) => handleOpen(e)}
+                >
+                    <IoArrowUp /> Profile Update
+                </button>
+            }
+            <div className={open ? styles.openUpdateUser : styles.closeUdateUser}>
+
                 <UpdateUser user={user} />
-            </details>
+            </div>
             <UserBlogs user={user} />
         </main>
     )

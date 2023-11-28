@@ -23,15 +23,18 @@ export default function SubNav() {
         if (pathname) {
             const params: pageHitType = { name: "none", page: pathname }
             const sendPgHit = async () => {
+                const controller = new AbortController();
                 const res = await fetch("/api/pagehit", {
                     method: "POST",
-                    body: JSON.stringify(params)
+                    body: JSON.stringify(params),
+                    signal: controller.signal
                 });
                 if (res.ok) {
-                    setMsg({ loaded: true, msg: "recieved" })
+                    setMsg({ loaded: true, msg: "recieved" });
                 } else {
                     setMsg({ loaded: false, msg: "issue@pagehit" })
                 }
+                return () => controller.abort()
             }
             sendPgHit();
         }

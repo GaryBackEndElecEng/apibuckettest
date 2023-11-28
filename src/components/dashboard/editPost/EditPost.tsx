@@ -9,7 +9,7 @@ import { useBlogContext } from "@context/BlogContextProvider";
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { usePostContext } from '@context/PostContextProvider';
 import PostMsg from "@component/dashboard/createPost/PostMsg";
-import styles from "@component/dashboard/editPost/editpost.module.css";
+import styles from "@component/dashboard/editPost/editPostStyle.module.css";
 
 type postFetchType = {
     post: postType,
