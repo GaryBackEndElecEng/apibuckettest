@@ -10,6 +10,13 @@
 :root {
   --colorWorld: url("/images/colorWorld.png");
 }
+.rootBody {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
 .flexrow {
   display: flex;
   direction: row;
@@ -447,4 +454,12 @@ p.style {
   margin-block: 4rem;
   margin-inline: 3rem;
   background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+}
+.line-breaksm {
+  width: 75%;
+  height: 1rem;
+  margin-block: 3rem;
+  margin-inline: 1rem;
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+  filter: drop-shadow(2px 2px 5px grey);
 }

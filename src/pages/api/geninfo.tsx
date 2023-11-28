@@ -32,10 +32,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         try {
             const GenInfo = await prisma.generalInfo.findMany();
-            res.status(200).json(GenInfo)
+            if (GenInfo) {
+                res.status(200).json(GenInfo)
+            }
 
         } catch (error) {
-            console.error(`@geninfo: ${getErrorMessage(error)}`)
+            const message = getErrorMessage(error)
+            if (message) {
+                console.error(`@geninfo: ${message}`)
+            }
         } finally {
             await prisma.$disconnect()
         }

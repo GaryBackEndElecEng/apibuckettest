@@ -6,7 +6,7 @@ export default function Nav() {
 
 
     return (
-        <main className={`${styles.navContainer}`}>
+        <main className={`${styles.navContainer}`} style={{ border: "1px solid orange" }}>
             <SubNav />
         </main>
     )

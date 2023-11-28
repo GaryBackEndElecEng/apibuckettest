@@ -17,14 +17,15 @@ type inputFormType = {
     input: inputType,
     setImgLoaded: React.Dispatch<React.SetStateAction<boolean>>,
     imgLoaded: boolean,
-    user: userType,
+    user: userType | null,
     fileId: string | undefined,
     setIsSelected: React.Dispatch<React.SetStateAction<boolean>>,
+    setInput: React.Dispatch<React.SetStateAction<inputType | undefined>>
 
 };
 //-------------THIS IS LOOPED!!-----------------//
-export default function InputForm({ input, imgLoaded, setImgLoaded, user, setIsSelected }: inputFormType) {
-    const { setInput, setInput_s, input_s, setBlogMsg } = useBlogContext();
+export default function InputForm({ input, setInput, imgLoaded, setImgLoaded, user, setIsSelected }: inputFormType) {
+    const { setInput_s, input_s, setBlogMsg } = useBlogContext();
 
 
 
@@ -41,7 +42,8 @@ export default function InputForm({ input, imgLoaded, setImgLoaded, user, setIsS
             });
             const body: fetchType = await res.json();
             if (res.ok && input_s) {
-                setInput_s([...input_s, body.input]);
+                const reduce = input_s.filter(inp => (inp.id !== input.id));
+                setInput_s([...reduce, body.input]);
                 setInput(undefined);
                 setBlogMsg({ loaded: true, msg: body.message });
                 setIsSelected(false);
@@ -79,7 +81,7 @@ export default function InputForm({ input, imgLoaded, setImgLoaded, user, setIsS
 type GenFormType = {
     setInput: React.Dispatch<React.SetStateAction<inputType | undefined>>,
     setImgLoaded: React.Dispatch<React.SetStateAction<boolean>>,
-    user: userType,
+    user: userType | null,
     input: inputType | undefined
 };
 

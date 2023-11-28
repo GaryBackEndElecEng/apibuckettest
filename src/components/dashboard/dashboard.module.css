@@ -1,3 +1,11 @@
+.dashboardLayout {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+  margin-inline: 10px;
+}
 .buttonsm {
   padding-inline: 1rem;
   padding-block: 0.25rem;
@@ -43,6 +51,47 @@
   background: black;
   color: white;
 }
+.deleteFile {
+  position: absolute;
+  top: 1.75rem;
+  right: 0.5rem;
+  border-radius: 50%;
+  padding: 0.25rem;
+}
+.mainPopup {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.btnPopup {
+  margin-inline: 1rem;
+  margin-block: 2rem;
+  padding-inline: 2rem;
+  padding-block: 0.25rem;
+  filter: drop-shadow(1px 1px 5px white);
+  background: black;
+  color: white;
+}
+.profileOpen {
+  opacity: 1;
+  transform: translateX(0%) scale(1);
+  animation: bringIn 1s ease-in-out;
+}
+/* .profileClose {
+  display: none;
+} */
+@keyframes bringIn {
+  from {
+    transform: translateX(-50%) scale(0.4);
+    opacity: 0.3;
+  }
+  from {
+    transform: translateX(0%) scale(1);
+    opacity: 1;
+  }
+}
+
 /*---Dash Signup---------- */
 .signupMain {
   display: grid;

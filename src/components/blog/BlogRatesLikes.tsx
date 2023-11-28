@@ -2,44 +2,26 @@
 import React from 'react';
 import { calcAvg, calcLikes, calcfileHits } from '@/lib/ultils';
 import "@pages/globalsTwo.css"
-import { likeType, pageHitType, rateType, likeIcon } from '@/lib/Types';
+import { fileLikeType, fileRateType, fileType, likeIcon } from '@/lib/Types';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import axios from "axios";
 import GenStars from "@component/comp/GenStars";
+import { useGeneralContext } from '@context/GeneralContextProvider';
+import BlogRate from "@component/blog/BlogRate";
+import BlogLike from "@component/blog/BlogLike";
 
-export default function BlogRatesLikes({ rates, likes, fileId }: { likes: likeType[], rates: rateType[], fileId: string | undefined }) {
-    const [pageHits, setPageHits] = React.useState<pageHitType[]>([]);
+export default function BlogRatesLikes({ file }: { file: fileType }) {
     const [likeIcons, setlikeIcons] = React.useState<likeIcon[]>([]);
+    const { pageHits } = useGeneralContext();
 
-    React.useEffect(() => {
-        if (fileId) {
-            const getPageHits = async () => {
-                try {
-                    const { data } = await axios.get("/api/pagehit");
-                    const body: pageHitType[] = data;
-                    setPageHits(body);
-                } catch (error) {
-                    console.log(`${getErrorMessage(error)}@pagehit`);
-                }
-            }
-            getPageHits();
-        }
-    }, [fileId]);
-    React.useEffect(() => {
-        if (likes) {
-            const getIcos = calcLikes(likes);
-            setlikeIcons(getIcos)
-        }
-    }, [likes]);
 
     return (
         <div className="likeRateCard">
             <h3>Info</h3>
             <div className="flexrow">
-                {rates && <small>average rate:{calcAvg(rates)}</small>}
-                {fileId && pageHits && <small>hits:{calcfileHits(pageHits, fileId)}</small>}
+
+                {file && pageHits && <small>hits:{calcfileHits(pageHits, file)}</small>}
             </div>
-            <GenStars rate={calcAvg(rates)} />
             <div className="flexrow">
                 <div>{
                     likeIcons && likeIcons.map((ico, index) => (
@@ -50,7 +32,8 @@ export default function BlogRatesLikes({ rates, likes, fileId }: { likes: likeTy
                         </div>
                     ))
                 }</div>
-
+                <BlogRate file={file} />
+                <BlogLike file={file} />
             </div>
         </div>
     )

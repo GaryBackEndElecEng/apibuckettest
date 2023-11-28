@@ -44,12 +44,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
                 if (url) tempPost.imageUrl = url;
             }
-            res.status(200).json(tempPost)
+            return res.status(200).json({ post: tempPost, message: "created" })
         } catch (error) {
             const message = getErrorMessage(error)
             console.error(`${message}@post`)
         } finally {
-            await prisma.$disconnect()
+            return await prisma.$disconnect()
         }
     }
     if (req.method === "GET") {
@@ -71,7 +71,66 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         const command = new GetObjectCommand(params);
                         temPost.s3Key = await getSignedUrl(s3, command, { expiresIn: 3600 });
                     }
-                    res.status(200).json(temPost)
+                    res.status(200).json({ post: temPost, message: "retieved" })
+                }
+            } catch (error) {
+                const message = getErrorMessage(error)
+                console.error(`${message}@post`)
+            } finally {
+                return await prisma.$disconnect()
+            }
+        } else {
+            return res.status(404).json({ message: "no postkey" })
+        }
+    }
+    if (req.method === "PUT") {
+        const post = JSON.parse(req.body) as postType;
+        if (post) {
+            try {
+                const newPost = await prisma.post.update({
+                    where: {
+                        id: post.id,
+                        userId: post.userId
+                    },
+                    data: {
+                        name: post.name,
+                        content: post.content,
+                        s3Key: post.s3Key,
+                        bloglink: post.bloglink
+                    }
+                });
+                let tempPost = newPost;
+                if (tempPost.s3Key) {
+                    const params = {
+                        Bucket,
+                        Key: tempPost.s3Key
+                    }
+                    const command = new GetObjectCommand(params);
+                    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                    if (url) tempPost.imageUrl = url;
+                }
+                return res.status(200).json({ post: tempPost, message: "updated" })
+            } catch (error) {
+                const message = getErrorMessage(error)
+                console.error(`${message}@post`)
+            } finally {
+                return await prisma.$disconnect()
+            }
+        } else {
+            return res.status(400).json({ post: null, message: "bad request" })
+        }
+    }
+    if (req.method === "DELETE") {
+        const postId = req.query.postId as string;
+        if (postId) {
+            try {
+                const post = await prisma.post.delete({
+                    where: {
+                        id: parseInt(postId)
+                    }
+                });
+                if (post) {
+                    return res.status(200).json({ post: post, message: "deleted" })
                 }
             } catch (error) {
                 const message = getErrorMessage(error)
@@ -80,7 +139,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 await prisma.$disconnect()
             }
         } else {
-            res.status(404).json({ message: "no postkey" })
+            return res.status(404).json({ message: "not deleted (no id found)", post: null })
         }
     }
+    await prisma.$disconnect()
 }

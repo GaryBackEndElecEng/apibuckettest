@@ -2,6 +2,7 @@
 import React from "react";
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import styles from "@component/dashboard/dashboard.module.css";
 
 
 
@@ -19,7 +20,7 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className="lg:container mx-auto ">
+        <main className={styles.dashboardLayout}>
 
             {children}
 

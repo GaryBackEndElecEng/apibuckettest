@@ -1,3 +1,10 @@
+.editBlogLayout {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
 .mainEditBlog {
   margin: auto;
   display: flex;
@@ -19,6 +26,7 @@
   margin-block: 2rem;
   align-items: center;
   width: 80%;
+  background: whitesmoke;
 }
 .mainFile > form {
   margin: auto;
@@ -70,8 +78,21 @@
   padding-inline: 0.25rem;
   margin-inline: 0.5rem;
 }
+.loginfix {
+  margin-inline: auto;
+  margin-block: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rem;
+  background: black;
+}
 
 @media screen and (max-width: 940px) {
+  .loginfix {
+    padding-inline: 10rem;
+    padding-block: 20rem;
+  }
   .mainFile {
     width: 100%;
   }
@@ -83,6 +104,10 @@
   }
 }
 @media screen and (max-width: 450px) {
+  .loginfix {
+    padding-inline: 10rem;
+    padding-block: 20rem;
+  }
   .displayFile {
     padding-inline: 0.75rem;
   }

@@ -2,56 +2,40 @@
 import React from 'react';
 import { calcAvg, calcLikes, calcPostHits } from '@/lib/ultils';
 import "@pages/globalsTwo.css"
-import { likeType, pageHitType, rateType, likeIcon } from '@/lib/Types';
+import { postLikeType, pageHitType, postRateType, likeIcon, postType } from '@/lib/Types';
 import { getErrorMessage } from '@/lib/errorBoundaries';
-import axios from "axios";
-import GenStars from "@component/comp/GenStars";
+import { useGeneralContext } from '@context/GeneralContextProvider';
+import PostRate from "@component/post/PostRate";
+import PostLike from "@component/post/PostLike";
 
-export default function PostRatesLikes({ rates, likes, postId }: { likes: likeType[], rates: rateType[], postId: number | undefined }) {
-    const [pageHits, setPageHits] = React.useState<pageHitType[]>([]);
+export default function PostRatesLikes({ post }: { post: postType }) {
+    const { pageHits } = useGeneralContext();
     const [likeIcons, setlikeIcons] = React.useState<likeIcon[]>([]);
+    const [hits, setHits] = React.useState<pageHitType[]>([]);
 
     React.useEffect(() => {
-        if (postId) {
-            const getPageHits = async () => {
-                try {
-                    const { data } = await axios.get("/api/pagehit");
-                    const body: pageHitType[] = data;
-                    setPageHits(body);
-                } catch (error) {
-                    console.log(`${getErrorMessage(error)}@pagehit`);
-                }
-            }
-            getPageHits();
-        }
-    }, [postId]);
-    React.useEffect(() => {
-        if (likes) {
-            const getIcos = calcLikes(likes);
+        if (post && post.likes) {
+            const getIcos = calcLikes(post.likes);
             setlikeIcons(getIcos)
         }
-    }, [likes]);
+    }, [post]);
+
+    React.useEffect(() => {
+        if (pageHits) {
+            setHits(pageHits)
+        }
+    }, [pageHits]);
 
     return (
-        <div className="likeRateCard">
-            <h3>Info</h3>
-            <div className="flexrow">
-                {rates && <small>average rate:{calcAvg(rates)}</small>}
-                {postId && pageHits && <small>hits:{calcPostHits(pageHits, postId)}</small>}
-            </div>
-            <GenStars rate={calcAvg(rates)} />
-            <div className="flexrow">
-                <div>{
-                    likeIcons && likeIcons.map((ico, index) => (
-                        <div className="flexcolsm" key={index}>
-                            <small>name:{ico.name}</small>
-                            <small>hits:{ico.count}</small>
-                            {ico.icon}
-                        </div>
-                    ))
-                }</div>
+        <React.Fragment>
 
+            <h1>Interest</h1>
+            <div className="flex flex-row my-2 mx-auto gap-1">
+                <span>hits: </span>
+                {post && <span>{calcPostHits(hits, String(post.id))}</span>}
             </div>
-        </div>
+            {post.likes && <PostLike post={post} />}
+            {post.rates && <PostRate post={post} />}
+        </React.Fragment>
     )
 }

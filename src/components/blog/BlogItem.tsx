@@ -10,6 +10,7 @@ import UserCard from "@component/blog/UserCard";
 import "@pages/globalsTwo.css";
 import { getPageHits } from '@/lib/fetchTypes';
 import BlogRatesLikes from "@component/blog/BlogRatesLikes";
+import { useGeneralContext } from '@context/GeneralContextProvider';
 
 
 type MainItemType = {
@@ -17,22 +18,8 @@ type MainItemType = {
     user: userType
 }
 export default function BlogItem({ file, user }: MainItemType) {
-    const [pageHits, setPageHits] = React.useState<pageHitType[] | undefined>(undefined)
+    const { pageHits } = useGeneralContext();
     const arrLikeIcon: likeIcon[] | null = file.likes ? calcLikes(file.likes) : null;
-    const [getHits, setGetHits] = React.useState<number | null>(null);
-
-    React.useEffect(() => {
-        const getPages = async () => {
-            const pages = await getPageHits();
-            if (!pages) return
-            setPageHits(pages);
-            if (file.id) {
-                const calcs = calcHits(pages, file.id);
-                setGetHits(calcs);
-            }
-        }
-        getPages();
-    }, [file]);
 
     return (
         <div className={styles.card}>
@@ -54,10 +41,10 @@ export default function BlogItem({ file, user }: MainItemType) {
             <div className="flexrow">
                 <small>{file.name}</small>
                 {file.date && <small>{getFormattedDate(file.date)}</small>}
-                {pageHits && getHits && <small>hits:{getHits}</small>}
+                {pageHits && <small>hits:{calcHits(pageHits, file.id as string)}</small>}
             </div>
             <div className="line-break-sm" />
-            <BlogRatesLikes rates={file.rates} likes={file.likes} fileId={file.id} />
+            <BlogRatesLikes file={file} />
             <div className="line-break-sm" />
 
         </div>

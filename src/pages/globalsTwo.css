@@ -3,9 +3,21 @@
   --bg-one: rgb(195, 196, 197);
   --bg-two: hsla(204, 96%, 11%, 0.88);
 }
+.rootBody {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
 body {
+  margin: 0;
   background: var(--bg-one);
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .blogsLink,
 .postLink {

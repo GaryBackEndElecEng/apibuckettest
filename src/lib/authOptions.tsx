@@ -22,51 +22,34 @@ const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async signIn({ user, account, profile, email, credentials, }) {
-            //activate only after the signin is successful
             if (credentials) {
                 return true
             } else if (account) return true
-            return false
+            // else if (isAllowedToSignIn) return true
+            else return false
 
         },
         async redirect({ url, baseUrl }) {
-
-            // Allows relative callback URLs in the middleware(match)
-
-            if (url.startsWith("/register")) {
-                return `${baseUrl}/dashboard`
-            } else if (url.startsWith("/")) {
-                return url
-            }
-
+            // Allows relative callback URLs: The redirect callback may be invoked more than once in the same flow.
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+            // Allows callback URLs on the same origin
+            else if (new URL(url).origin === baseUrl) return url
             return baseUrl
+        },
+        async jwt({ token, user, account, profile, }) {
 
+            // profile:null, user:protocol user
 
+            return token
         },
         async session({ session, user, token }) {
-            // console.log("session",session,token,user) //works
-            // console.log(token)
-            return {
-                ...session,
-                user: {
-                    ...session.user,
-                    // id: user.id,
-                    // randomKey: token.id
-                }
-
-            }
-        },
-        async jwt({ token, user }) {
-            // console.log("token from authOptions",token,user)// works jwt executes first before session
-            if (user) {
-                // const u = user as userType;
-                return {
-                    ...token,
-                    // id: u.id,
-                }
-            }
-            return token
+            // console.log("session:user", user, token)// PROTOCOL USER
+            //session is called when useSession/getServerSession
+            // do {session:session,toke:token} for more info
+            return session
         }
+
+
 
     },
     session: {
@@ -100,30 +83,33 @@ const authOptions: NextAuthOptions = {
 
             async authorize(credentials, req) {
                 let cred = credentials
-                if (!cred?.email || !cred?.password) {
-                    return null
-                }
-                const user = await prisma.user.findUnique({
-                    where: {
-                        email: cred.email
-                    }
-                });
-                //   console.log(user)// worked
-                if (!user) {
-                    await prisma.$disconnect()
-                    return null
-                }
-                if (user.password) {
-                    const check = await hashComp(cred?.password, user?.password) ? true : false;
-                    if (!check) {
+                // console.log("CRED", cred)//GOOD{email,password,csrfToken}
+                if (cred && cred.email) {
+
+                    const user = await prisma.user.findUnique({
+                        where: {
+                            email: cred.email
+                        }
+                    });
+                    //   console.log(user)// worked
+                    if (!user) {
                         await prisma.$disconnect()
                         return null
                     }
+                    if (user.password) {
+                        const check = await hashComp(cred?.password, user?.password) ? true : false;
+                        if (!check) {
+                            await prisma.$disconnect()
+                            return null
+                        }
+                    }
+                    // console.log("CRED USER", user)//GOOD
+                    return { id: user.id, email: user.email, name: user.name }
+
                 } else {
                     await prisma.$disconnect()
                     return null
                 }
-                return { id: user.id + "", email: user.email, name: user.name }
 
             }
 
@@ -137,7 +123,7 @@ const authOptions: NextAuthOptions = {
         logo: logo, // Absolute URL to image
     },
 
-    // debug: process.env.NODE_ENV === "development"
+    debug: process.env.NODE_ENV === "development"
 
 }
 export default authOptions;

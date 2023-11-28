@@ -26,24 +26,29 @@
 .message {
   position: absolute;
   min-height: 10vh;
-  top: -20%;
-  inset: 0rem;
+  top: -40%;
+  inset: 3rem;
   z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px 20px 20px 20px;
 }
 .messagePassed,
 .messageNotPassed {
+  margin: auto;
   display: grid;
   place-items: center;
-  padding-inline: 12rem;
-  padding-block: 5rem;
+  background: grey;
 }
 .messagePassed > h3 {
-  color: white;
+  color: black;
   border: 1px solid blue;
   border-radius: 15px 15px 15px 15px;
   padding-inline: 2rem;
   padding-block: auto;
-  background: black;
+  z-index: 2000;
+  filter: drop-shadow(1px 1px 6px grey);
 }
 .messageNotPassed > h3 {
   color: red;
@@ -51,5 +56,16 @@
   border-radius: 15px 15px 15px 15px;
   padding-inline: 2rem;
   padding-block: auto;
+  z-index: 2000;
   background: white;
+  filter: drop-shadow(1px 1px 4px red);
+}
+.redirectpage {
+  margin: auto;
+  padding-inline: 10rem;
+  width: 100%;
+  padding-block: 20rem;
+  background: black;
+  display: grid;
+  place-items: center;
 }

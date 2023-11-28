@@ -8,6 +8,8 @@ import Image from 'next/image';
 import { useBlogContext } from '@/components/context/BlogContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import CreateInputs from "@component/dashboard/createblog/CreateInputs";
+import Link from 'next/link';
+import styles from "@component/dashboard/createblog/createablog.module.css"
 
 
 type fetchType = {
@@ -69,13 +71,13 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
 
     }
     // console.log(file, "LOADED", loaded, "USERID", userId)
-    const mainStyle = " mx-auto px-2 py-2 flex flex-col gap-2";
-    const form = "flex flex-col gap-3 mx-auto";
+    const mainStyle = "lg:container mx-auto px-2 py-2 flex flex-col gap-2 bg-white";
+    const form = "flex flex-col gap-3 mx-auto w-full items-center justify-center bg-slate-200";
     return (
-        <React.Fragment>
+        <div className={styles.mainCreatablog}>
             {file &&
-                <div className={mainStyle}>
-                    <form className={form}>
+                <div>
+                    <form className={styles.fileForm}>
 
                         <TextField
                             fullWidth={false}
@@ -91,6 +93,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                             variant="filled"
                             value={file ? file?.title : " "}
                             onChange={(e) => setFile_({ ...file, title: e.target.value as string })}
+                            style={{ width: "max-content" }}
                         />
                         <div className="flex flex-row my-2 mx-auto gap-2">
                             <label htmlFor="published">published</label>
@@ -120,6 +123,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
 
                                 setFile_({ ...file, content: e.target.value as string })
                             }}
+                            style={{ width: "100%" }}
                         />
 
                         {file && user &&
@@ -149,26 +153,33 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                             </div>
                         }
                     </div>
-                    <div className="flex flex-col px-2 my-2">
+                    <div className={styles.fileCreateInput}>
 
-                        <React.Fragment>
-                            <div className="text-center text-xl mb-2">{file.name && file.name}</div>
-                            <div className="text-center text-xl my-2">{file.title && file.title}</div>
-                            {file.imageUrl && <Image src={file.imageUrl} width={600} height={400} alt="www"
-                                className="aspect-video"
-                                style={{ width: "auto" }}
-                            />}
-                            {file.content && <p className="px-2 my-1 text-md">{file.content}</p>}
-                            <React.Fragment>
-                                <CreateInputs user={user} fileId={file.id} />
-                            </React.Fragment>
-                        </React.Fragment>
+                        <div className="text-center text-xl mb-2">{file.name && file.name}</div>
+                        <div className="text-center text-xl my-2">{file.title && file.title}</div>
+                        {file.imageUrl && <Image src={file.imageUrl} width={600} height={400} alt="www"
+                            className="aspect-video"
+                            style={{ width: "auto" }}
+                        />}
+                        {file.content && <p className="px-2 my-1 text-md">{file.content}</p>}
+                        <CreateInputs user={user} fileId={file.id} />
 
-
+                        <div className="flex flex-col items-center justify-center my-2 mx-auto">
+                            <div className="flexrow">
+                                <Link href={`/dashboard/blogdetail/${file.id}`}
+                                    className="mx-auto my-1">
+                                    <button className={`mx-auto ${styles.btnSubmit}`}>view blog</button>
+                                </Link>
+                                <Link href={`/dashboard`}
+                                    className="mx-auto my-1">
+                                    <button className={`mx-auto ${styles.btnSubmit}`}>Dashboard</button>
+                                </Link>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
             }
-        </React.Fragment>
+        </div>
     )
 }

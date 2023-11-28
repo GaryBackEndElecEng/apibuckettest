@@ -21,6 +21,7 @@ export default function DashBoard_({ session }: { session: Session | null }) {
 
     const { setUser, user } = useGeneralContext();
     const { setBlogMsg, blogMsg } = useBlogContext()
+    const [open, setOpen] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         const getuser = async () => {
@@ -42,32 +43,44 @@ export default function DashBoard_({ session }: { session: Session | null }) {
                 alert(`${getErrorMessage(error)}`)
             }
         }
-        if (userEmail) {
+        if (userEmail && !user) {
             getuser()
         }
-    }, [setUser, userEmail, setBlogMsg]);
+    }, [setUser, userEmail, setBlogMsg, user]);
+
+    const handleOpen = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        e.preventDefault();
+        if (open) {
+            setOpen(false);
+        } else {
+            setOpen(true);
+        }
+    }
 
     return (
         <main className={styles.dashContainer}>
-            <BlogMsg />
             <div className={styles.gridThree}>
                 <div className={styles.gridElement}>grid</div>
-                <div className={styles.gridElement}>
+                <div className={styles.gridElement} style={{ position: "relative" }}>
+                    <BlogMsg />
                     <div className="flexrow">
                         <Link href={"/dashboard/createBlog"}>
                             <button className={`button.xs ${styles.buttonsm}`} >Create a blog</button>
                         </Link>
-                        <h2>create edit blog within list</h2>
-                        <Link href={"/dashboard/createPost"}>
-                            <button className={`button.xs ${styles.buttonsm}`}>Create a post</button>
+                        <Link href={"/dashboard/posts"}>
+                            <button className={`button.xs ${styles.buttonsm}`}>posts</button>
                         </Link>
                     </div>
                 </div>
                 <div className={styles.gridElement}>grid</div>
             </div>
             <div className="text-xl text-center my-1 mt-2 text-slate-200">Update profile</div>
-            <details>
-                <summary className={styles.userSummary}>Profile Update</summary>
+            <details className={open ? styles.profileOpen : styles.profileClose}>
+                <summary className={styles.userSummary}
+                    onClick={(e) => handleOpen(e)}
+                >
+                    Profile Update
+                </summary>
                 <UpdateUser user={user} />
             </details>
             <UserBlogs user={user} />

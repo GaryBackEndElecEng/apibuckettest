@@ -1,76 +1,249 @@
-.card,
-.mainPostItemCard {
+.layoutPostsContainer {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.postsIndexContainer {
+  margin-inline: auto;
+  width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-block: 3rem;
+}
+.containerPostItem {
+  margin-block: 1.5rem;
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 65%;
+  position: relative;
+  border: 3px solid black;
+}
+.mainBlogItem {
+  margin-inline: 0.5rem;
+  margin-block: auto;
+}
+.masterPosts {
+  margin-inline: auto;
+  margin-block: 1.75rem;
+  position: relative;
+}
+.noname {
+  color: lightgrey;
+}
+
+.mainPostItemCard {
+  margin: auto;
+  position: relative;
+  width: 60%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   filter: drop-shadow(1px 1px 6px black);
-  padding: 1rem;
+  padding-inline: 3rem;
+  padding-block: 0.5rem;
   border-radius: 16px 16px 16px 16px;
   margin-inline: 0.25rem;
   background: whitesmoke;
+  border: 1px solid black;
 }
-
-.postImage {
-  width: 100%;
-  padding-inline: 0.25rem;
-  aspect-ratio: 16 / 9;
-  filter: drop-shadow(1px 1px 6px black);
-  border-radius: 15px 15px 15px 15px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  background: rgba(36, 35, 35, 0.1);
-}
-.user {
+.card {
+  margin: auto;
   position: relative;
+  width: 80%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  box-shadow: 1px 1px 5px 2px hsl(138, 96%, 11%),
-    -1px -1px 5px 2px hsl(135, 96%, 20%);
+  filter: drop-shadow(1px 1px 6px black);
+  padding-inline: 3rem;
+  padding-block: 0.5rem;
+  border-radius: 16px 16px 16px 16px;
+  margin-inline: 0.25rem;
+  background: whitesmoke;
+  border: 1px solid black;
+}
+.postLink {
+  margin: 0;
+  width: auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  color: black;
+  text-decoration: none;
+}
+
+.postImage {
+  margin-inline: auto;
+  /* width: 100%; */
+  padding-inline: auto;
+  aspect-ratio: 16 / 9;
+  filter: drop-shadow(1px 1px 6px black);
+  border-radius: 15px 15px 15px 15px;
+  border: 2px solid black;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(350px, 1fr));
+  gap: 1.5rem;
+  background: rgba(36, 35, 35, 0.1);
+}
+.user {
+  margin-inline: auto;
+  padding-block: auto;
+  padding-inline: 1.5rem;
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  box-shadow: 1px 1px 5px 2px hsl(138, 100%, 4%),
+    -1px -1px 5px 2px hsl(138, 71%, 3%);
   padding: 0.25rem;
   border-radius: 6px;
   margin-inline: 0.5rem;
   margin-block: 1rem;
+  color: white;
+  background: black;
+  gap: 1rem;
 }
-.user > p > img {
+.user > img {
   float: left;
   shape-outside: circle();
   margin-top: 0.5rem;
   margin-left: 0.25rem;
   border-radius: 50%;
+
   border: 1px solid black;
-  box-shadow: 1px 1px 5px 2px hsl(248, 97%, 49%),
-    -1px -1px 5px 2px hsl(247, 91%, 70%);
+  filter: drop-shadow(1px 1px 5px black);
 }
-@media screen and (max-width: 920px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem;
-  }
-  .card,
+.buttonsm {
+  border-radius: 15px 15px 15px 15px;
+  padding-inline: 2rem;
+  padding-block: 0.25rem;
+  background: black;
+  color: white;
+  text-align: center;
+}
+.mainPostLike {
+  position: relative;
+  margin-inline: auto;
+  margin-block: 1rem;
+  float: center;
+}
+.subMainPostLike {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+/*--------- ICONS--------- */
+
+.good {
+  color: hsl(0, 100%, 30%);
+}
+.great {
+  color: hsl(0, 80%, 80%);
+  border: 1px solid white;
+}
+.loveit {
+  color: hsl(0, 100%, 40%);
+  filter: drop-shadow(1px 1px 10px orange);
+  border-radius: 50%;
+}
+.poor {
+  color: hsl(300, 100%, 20%);
+}
+.average {
+  color: hsl(60, 100%, 50%);
+}
+.amazed {
+  color: hsl(0, 100%, 50%);
+  filter: drop-shadow(1px 1px 8px pink);
+  border-radius: 50%;
+}
+.noname {
+  color: lightgrey;
+}
+/*--------------POST RATE---------- */
+.mainPostRate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-block: 1rem;
+  min-height: 10vh;
+  position: relative;
+}
+.mainPostRate > div {
+  margin: auto;
+}
+.PostRateForm {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 980px) {
   .mainPostItemCard {
-    margin-inline: 5px;
-    padding-inline: 5px;
+    margin-inline: 0.5rem;
+    margin-block: 1rem;
+    width: 80%;
+  }
+  .containerPostItem {
+    /* width: 100%; */
+    margin-inline: 10px;
+  }
+  .grid {
+    grid-template-columns: repeat(1, minmax(350px, 1fr));
+    gap: 0.5rem;
+    width: auto;
+  }
+  .card {
+    width: 100%;
+    position: relative;
+  }
+  .mainPostItemCard {
+    margin: auto;
+    width: 100%;
   }
   .postImage {
     padding-inline: 0.25rem;
+    width: 100%;
+    aspect-ratio: 16 / 9;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
+  .mainPostItemCard {
+    margin-inline: 5px;
+    margin-block: 0.75rem;
+    width: 100%;
+  }
+  .containerPostItem {
+    width: 98%;
+  }
   .grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(350px, 1fr));
     gap: 0.25rem;
   }
-  .card,
+  .card {
+    width: auto;
+  }
   .mainPostItemCard {
     margin-inline: 1px;
     padding-inline: 5px;
+    width: auto;
   }
   .postImage {
     padding-inline: 0.15rem;

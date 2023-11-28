@@ -15,19 +15,19 @@ export default function Post({ post, user }: { post: postType, user: userType | 
     return (
         <div className={`mx-auto ${styles.card}`}>
             <h3 className="text-center mb-3">{post.name}</h3>
-            <Link href={`/posts/${post.id}`} className="postLink">
+            <Link href={`/posts/${post.id}`} className={styles.postLink}>
 
                 {post.imageUrl ?
                     <Image src={post.imageUrl} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }}
                         className={styles.postImage}
                     />
                     :
-                    <Image src={logo} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }}
+                    <Image src={logo} width={320} height={200} alt="www.ablogroom.com" style={{ width: "auto" }}
                         className={styles.postImage}
                     />
                 }
-                <p className="my-2 leading-8 w-1/2">
-                    {post.content}
+                <p className="my-2 leading-8 w-full mx-2">
+                    {post.content.slice(0, 50)}...
                 </p>
                 <UserProfile user={user} />
                 <div className="flex flex-row mx-auto gap-2">

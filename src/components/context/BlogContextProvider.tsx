@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import type { msgType, userType, pageHitType, contactType, postType, generalInfoType, fileType, inputType, } from "@lib/Types";
+import type { msgType, pageHitType, fileLikeType, fileRateType, fileType, inputType, } from "@lib/Types";
 import { getErrorMessage } from "@lib/errorBoundaries";
 const base_url = process.env.NEXT_PUBLIC_baseurl;
 
@@ -20,7 +20,11 @@ type blog_ContextType = {
     setFile_: React.Dispatch<React.SetStateAction<fileType | undefined>>,
     file_: fileType | undefined,
     setUserBlogs: React.Dispatch<React.SetStateAction<fileType[]>>,
-    userBlogs: fileType[]
+    userBlogs: fileType[],
+    setFileLikes: React.Dispatch<React.SetStateAction<fileLikeType[]>>,
+    fileLikes: fileLikeType[],
+    setFileRates: React.Dispatch<React.SetStateAction<fileRateType[]>>,
+    fileRates: fileRateType[],
 
 
 }
@@ -36,11 +40,13 @@ const BlogContextProvider = (props: any) => {
     const [generalMsg, setGeneralMsg] = React.useState<msgType>();
     const [message, setMessage] = React.useState<msgType>();
     const [userBlogs, setUserBlogs] = React.useState<fileType[]>([]);
+    const [fileRates, setFileRates] = React.useState<fileRateType[]>([]);
+    const [fileLikes, setFileLikes] = React.useState<fileLikeType[]>([]);
 
 
 
     return (
-        <BlogContext.Provider value={{ blogMsg, setBlogMsg, input, setInput, file_, setFile_, setInput_s, input_s, userBlogs, setUserBlogs, generalMsg, setGeneralMsg, message, setMessage }}>
+        <BlogContext.Provider value={{ blogMsg, setBlogMsg, input, setInput, file_, setFile_, setInput_s, input_s, userBlogs, setUserBlogs, generalMsg, setGeneralMsg, message, setMessage, fileLikes, setFileLikes, fileRates, setFileRates }}>
             {props.children}
         </BlogContext.Provider>
     )

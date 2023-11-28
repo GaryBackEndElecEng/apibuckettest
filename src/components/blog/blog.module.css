@@ -1,9 +1,50 @@
+.blogsLayoutContainer {
+  margin-inline: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 3rem;
+}
+.blogsIndexContainer {
+  margin-inline: auto;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 3rem;
+}
+.MasterBlogIndex {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+.blogIndexContainer {
+  flex: 0.5;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.detailContainer {
+  margin-inline: 1rem;
+  margin-block: 2rem;
+  width: 67%;
+  display: grid;
+  place-items: center;
+}
 .mainBlogItem {
+  flex: 0.75;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   margin-inline: auto;
+  margin-block: 2rem;
+  width: auto;
+  position: relative;
 }
 
 .card {
@@ -25,9 +66,22 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(350px, 1fr));
   gap: 1rem;
   background: rgba(36, 35, 35, 0.1);
+}
+.userCard {
+  margin: auto;
+  filter: drop-shadow(1px 1px 4px black);
+  padding: 1rem;
+  background: black;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+}
+.profileImage {
+  border-radius: 50%;
+  filter: drop-shadow(1px 1px 7px white);
+  border: 1px solid grey;
 }
 .user {
   position: relative;
@@ -73,17 +127,47 @@
     -1px -1px 5px 2px hsl(247, 91%, 70%);
 }
 @media screen and (max-width: 980px) {
+  .blogIndexContainer {
+    width: 80%;
+    margin-inline: 0;
+  }
+  .detailContainer {
+    margin-inline: 1rem;
+    width: 80%;
+  }
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(350px, 1fr));
     gap: 0.5rem;
   }
   .mainBlogItem {
     margin-inline: 0rem;
   }
 }
-@media screen and (max-width: 490px) {
+@media screen and (max-width: 920px) {
   .grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(350px, 1fr));
+    gap: 0.5rem;
+  }
+  .blogIndexContainer {
+    width: 80%;
+  }
+  .mainBlogItem {
+    margin: auto;
+    padding-inline: 2rem;
+  }
+}
+@media screen and (max-width: 490px) {
+  .blogIndexContainer {
+    margin-inline: 1rem;
+    margin-block: 2rem;
+    width: 100%;
+  }
+  .detailContainer {
+    margin-inline: 0.5rem;
+    width: 100%;
+  }
+  .grid {
+    grid-template-columns: repeat(1, minmax(200px, 1fr));
     gap: 0.25rem;
   }
   .card {
@@ -92,6 +176,13 @@
     padding-inline: 5px;
   }
   .mainBlogItem {
+    margin: auto;
     padding-inline: 0rem;
+  }
+}
+@media screen and (max-width: 420px) {
+  .blogIndexContainer {
+    margin-block: 2rem;
+    width: 100%;
   }
 }

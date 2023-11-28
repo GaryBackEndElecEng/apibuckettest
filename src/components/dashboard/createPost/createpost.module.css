@@ -1,0 +1,145 @@
+.createPostLayout {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.mainCreatorPost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: auto;
+  width: 65%;
+  filter: drop-shadow(1px 14px 4px grey);
+}
+.mainCreatorPost > h2 {
+  text-decoration: underline;
+  text-underline-offset: 1rem;
+  font-weight: bold;
+  text-shadow: 3px 6px white;
+  font-size: 180%;
+}
+.mainCreatePost {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 2rem;
+  padding-block: 4rem;
+  padding-inline: 3rem;
+  margin-inline: 1rem;
+  background: whitesmoke;
+  border-radius: 2%;
+}
+.createForm {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-block: 2rem;
+  margin-inline: 20rem;
+  width: 100%;
+}
+.displayContent {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-block: 1rem;
+  margin-inline: 10rem;
+}
+.displayContent > h1 {
+  margin: auto;
+  text-decoration: underline;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-underline-offset: 10px;
+  font-weight: bold;
+}
+.displayContent > img {
+  margin: auto;
+  border-radius: 15px 15px 15px 15px;
+  filter: drop-shadow(1px 1px 7px white);
+  border: 1px solid black;
+  aspect-ratio: 16 / 9;
+  width: auto;
+}
+.displayContent > p {
+  margin-block: 1rem;
+  margin-inline: 2rem;
+  line-height: 1.5rem;
+}
+.btnCreateSubit {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 1.75rem;
+  padding-block: 0.5rem;
+  margin-block: 2rem;
+  border-radius: 15px 15px 15px 15px;
+  filter: drop-shadow(1px 1px 6px grey);
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 980px) {
+  .mainCreatorPost {
+    margin: auto;
+    width: 80%;
+  }
+  .mainCreatePost {
+    margin-block: 0.5rem;
+    margin-inline: 0.5rem;
+  }
+  .createForm {
+    margin-block: 1rem;
+    margin-inline: 7rem;
+  }
+  .displayContent {
+    margin-block: 1rem;
+    margin-inline: 3rem;
+  }
+  .displayContent > p {
+    margin-block: 1rem;
+    margin-inline: 1rem;
+    line-height: 1.5rem;
+    padding-inline: 1rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .mainCreatorPost {
+    margin: auto;
+    width: 94%;
+  }
+  .mainCreatePost {
+    margin-block: 0.25rem;
+    margin-inline: 5px;
+  }
+  .createForm {
+    margin-block: 1rem;
+    margin-inline: 1rem;
+  }
+  .displayContent {
+    margin-block: 1rem;
+    margin-inline: 5px;
+  }
+  .displayContent > p {
+    margin-block: 1rem;
+    margin-inline: 5px;
+    line-height: 1.5rem;
+    padding-inline: 2px;
+  }
+}

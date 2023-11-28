@@ -17,8 +17,8 @@ type generalContextType = {
     client: userType | null,
     setUser: React.Dispatch<React.SetStateAction<userType | null>>
     user: userType | null,
-    setPageHit: React.Dispatch<React.SetStateAction<pageHitType | undefined>>,
-    pageHit: pageHitType | undefined,
+    setPageHits: React.Dispatch<React.SetStateAction<pageHitType[]>>,
+    pageHits: pageHitType[],
     setGetError: React.Dispatch<React.SetStateAction<string>>,
     getError: string
     setContact: React.Dispatch<React.SetStateAction<contactType>>,
@@ -27,6 +27,10 @@ type generalContextType = {
     genInfo: generalInfoType[],
 
 
+}
+type fetchPageHits = {
+    pageHits: pageHitType[],
+    message: string
 }
 export const GeneralContext = React.createContext<generalContextType>({} as generalContextType);
 
@@ -40,41 +44,42 @@ const GeneralContextProvider = (props: any) => {
     const [genMsg, setGenMsg] = React.useState<msgType>({ loaded: false, msg: "" })
     const [clientId, setClientId] = React.useState<string | null>(null);
     const [signup, setSignup] = React.useState<boolean>(false);
-    const [pageHit, setPageHit] = React.useState<pageHitType | undefined>();
+    const [pageHits, setPageHits] = React.useState<pageHitType[]>([]);
 
     const [genInfo, setGenInfo] = React.useState<generalInfoType[]>([]);
     const [contact, setContact] = React.useState<contactType>({} as contactType);
     const [getError, setGetError] = React.useState<string>("");
 
-
-
-
-
-
     React.useEffect(() => {
-        const getGenInfo = async () => {
-
+        const getPageHits = async () => {
+            const controller = new AbortController();
             try {
-                const { data } = await axios.get(`/api/geninfo`);
-                //components
-                const body: generalInfoType[] = await data as generalInfoType[];
+                const res = await fetch(`/api/pagehit`, {
+                    signal: controller.signal
+                });
 
-                setGenInfo(body);
+                //components
+                if (res.ok) {
+                    const body: fetchPageHits = await res.json();
+                    setPageHits(body.pageHits);
+                    setMsg({ loaded: true, msg: body.message })
+                }
+                return () => controller.abort();
             } catch (error) {
                 let message: string = `${getErrorMessage(error)}@api/genInfo`
-                setGetError(message)
+                setMsg({ loaded: false, msg: message })
                 return console.log(message)
             }
         }
 
-        // getGenInfo();
+        // getPageHits();
 
     }, []);
 
 
 
     return (
-        <GeneralContext.Provider value={{ msg, setMsg, clients, setClients, setPageHit, pageHit, client, setClient, contact, setContact, genInfo, setGenInfo, getError, setGetError, user, setUser }}>
+        <GeneralContext.Provider value={{ msg, setMsg, clients, setClients, setPageHits, pageHits, client, setClient, contact, setContact, genInfo, setGenInfo, getError, setGetError, user, setUser }}>
             {props.children}
         </GeneralContext.Provider>
     )

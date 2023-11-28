@@ -11,7 +11,7 @@ type GenFormType = {
 type ImgFormType = {
     setInput: React.Dispatch<React.SetStateAction<inputType | undefined>>,
     input: inputType | undefined,
-    user: userType,
+    user: userType | null,
     setImgLoaded: React.Dispatch<React.SetStateAction<boolean>>,
     setBlogMsg: React.Dispatch<React.SetStateAction<msgType>>
 };
@@ -61,7 +61,7 @@ export function SecPlusForm({ input, setInput }: GenFormType) {
                         value={check && check.content ? check.content : ""}
                         onChange={(e) => setInput({ ...check, content: e.target.value as string })}
                         className="w-full"
-                        style={{ fontFamily: "bold" }}
+                        style={{ fontFamily: "bold", width: "100%" }}
                     />
                 </div>
             )
@@ -112,7 +112,7 @@ export function HeaderPlusForm({ input, setInput }: GenFormType) {
                     variant="filled"
                     value={check && check.content ? check.content : ""}
                     onChange={(e) => setInput({ ...check, content: e.target.value as string })}
-                    style={{ fontFamily: "bold" }}
+                    style={{ fontFamily: "bold", width: "max-content" }}
                 />
             </div>
         )
@@ -132,7 +132,7 @@ export function ImgForm({ input, setInput, user, setImgLoaded, setBlogMsg }: Img
 
         const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
             e.preventDefault();
-            if (check) {
+            if (check && user) {
                 if (e.target?.files) {
                     const file: File = e.target.files[0]
                     const Key = `${user.name?.trim()}/${input.fileId}/${uuidv4().split("-")[0]}-${file.name}`;

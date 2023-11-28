@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL_AWS")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL_AWS")
+  shadowDatabaseUrl = env("DATABASE_URL_AWS")
 }
 
 model Account {
@@ -76,8 +77,8 @@ model File {
   imageUrl  String?
   inputs    InputType[]
   links     Link[]
-  likes     Like[]
-  rates     Rate[]
+  likes     BlogLike[]
+  rates     BlogRate[]
 }
 
 model InputType {
@@ -93,17 +94,17 @@ model InputType {
 }
 
 model Post {
-  id       Int      @id @default(autoincrement())
+  id       Int        @id @default(autoincrement())
   name     String
   content  String
   imageUrl String?
   s3Key    String?
-  date     DateTime @default(now()) @db.Date
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date     DateTime   @default(now()) @db.Date
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
   bloglink String?
-  likes    Like[]
-  rates    Rate[]
+  likes    PostLike[]
+  rates    PostRate[]
 }
 
 model PageHit {
@@ -134,25 +135,38 @@ model Link {
   fileId  String
 }
 
-model Like {
+model PostLike {
   id     Int    @id @default(autoincrement())
   name   String
   count  Int
-  file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade)
-  fileId String
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
 
   @@unique([id, name])
 }
 
-model Rate {
+model PostRate {
+  id     Int  @id @default(autoincrement())
+  rate   Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+}
+
+model BlogLike {
+  id     Int    @id @default(autoincrement())
+  name   String
+  count  Int
+  file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId String
+
+  @@unique([id, name])
+}
+
+model BlogRate {
   id     Int    @id @default(autoincrement())
   rate   Int
   file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade)
   fileId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId Int
 }
 
 model GeneralInfo {

@@ -24,9 +24,9 @@ const s3 = new S3Client({
 const prisma = new PrismaClient();
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-    const params = req.query;
-    const email: string | undefined = params.email as string
     if (req.method === "GET") {
+        const params = req.query;
+        const email: string | undefined = params.email as string
         try {
 
             if (email) {
@@ -41,9 +41,12 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             }
 
         } catch (error) {
-            return res.status(500).json({ message: `${getErrorMessage(error)}`, user: null })
+            const message = getErrorMessage(error);
+            console.error(`${message}`)
+            return res.status(500).json({ user: null, message: message })
         } finally {
-            await prisma.$disconnect()
+            return await prisma.$disconnect()
         }
     }
+    await prisma.$disconnect()
 }

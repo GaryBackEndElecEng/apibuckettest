@@ -1,5 +1,5 @@
 import { useBlogContext } from '@/components/context/BlogContextProvider'
-import { inputType, inputNames, userType } from '@/lib/Types';
+import { inputType, inputNames, userType, targetType } from '@/lib/Types';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import React from 'react';
 import BlogMsg from "@component/dashboard/createblog/BlogMsg";
@@ -8,6 +8,10 @@ import styles from "@component/dashboard/createblog/createablog.module.css";
 import InputForm from "@component/dashboard/createblog/InputForm";
 import GenInput from "@dashboard/createblog/GenInput";
 import "@pages/globalsTwo.css"
+import GenericMsg from "@component/comp/GenericMsg";
+import { FaTrash } from "react-icons/fa6";
+import { MdEditSquare } from "react-icons/md";
+import { IconButton } from "@mui/material";
 
 type fetchInType = {
     input: inputType,
@@ -19,7 +23,7 @@ type fetchInTypes = {
 }
 type MainInputsType = {
     fileId: string | undefined,
-    user: userType
+    user: userType | null
 }
 //NOTE SETUP GET INPUTS(FILEID)=>SETINPUTS() IN DASHBOARD FROM SERVER IN DASHBOARD USING GETSERVERSIDE.
 //NOTE InputForm ( CREATES AND UPDATE INPUTS=>SAVE AND UPDATE(PUT))
@@ -27,8 +31,8 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
     const { input_s, setInput_s, setBlogMsg, blogMsg, setInput, input } = useBlogContext();
     const [imgLoaded, setImgLoaded] = React.useState<boolean>(false);
     const [selectType, setSelectType] = React.useState<string>("select");
-    const [isSelected, setIsSelected] = React.useState<boolean>(false)
-
+    const [isSelected, setIsSelected] = React.useState<boolean>(false);
+    const [isDeleted, setIsDeleted] = React.useState<targetType>({ loaded: false, id: null })
 
     React.useEffect(() => {
         const getInputs = async () => {
@@ -86,6 +90,46 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
 
 
     }
+
+    const handleEdit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, inp: inputType | undefined) => {
+        e.preventDefault();
+        if (inp) {
+            setInput(inp);
+            setIsSelected(true);
+            setIsDeleted({ loaded: true, id: inp.id as number });
+            setBlogMsg({ loaded: true, msg: "ready to edit" })
+
+        } else {
+            setBlogMsg({ loaded: false, msg: "No ID- not deleted" })
+        }
+    }
+
+    const handleDelete = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number | undefined) => {
+        e.preventDefault();
+
+        if (id) {
+            try {
+                const res = await fetch(`/api/input?inputId=${id}`, { method: "DELETE" });
+                const body: fetchInType = await res.json();
+                if (res.ok) {
+                    if (input_s) {
+                        const reduce = input_s.filter(inpt => (inpt.id !== id));
+                        setInput_s(reduce)
+                        setBlogMsg({ loaded: true, msg: `${body.input.name}-${body.message}` });
+                        setIsDeleted({ loaded: true, id: id });
+                    }
+                } else if (res.status > 200 && res.status < 500) {
+                    setBlogMsg({ loaded: false, msg: `${body.input.name}-${body.message}` })
+                }
+            } catch (error) {
+                const message = getErrorMessage(error);
+                console.error(`${message}@input@GenInput@delete`)
+            }
+        } else {
+            setBlogMsg({ loaded: false, msg: "No ID- not deleted" })
+            console.log("ID not seen")
+        }
+    }
     return (
         <div className={styles.mainCreateInputs}>
 
@@ -96,7 +140,27 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                         return (
 
                             <div key={index} className={styles.genInputContainer}>
-                                <GenInput input={check} />
+                                {isDeleted.loaded && isDeleted.id === check.id && <GenericMsg setPostMsg={setBlogMsg} postMsg={blogMsg} />}
+                                <div className={styles.editDeleteContainer}>
+                                    <IconButton onClick={(e) => handleDelete(e, check.id)}
+                                        className={styles.deleteInput}
+                                    >
+                                        <FaTrash
+                                        />
+                                    </IconButton>
+                                    <IconButton onClick={(e) => handleEdit(e, check)}
+                                        className={styles.editInput}
+                                    >
+                                        <MdEditSquare
+                                        />
+                                    </IconButton>
+                                </div>
+                                <GenInput
+                                    input={check}
+                                    setInput={setInput}
+                                    setIsSelected={setIsSelected}
+                                    setIsDeleted={setIsDeleted}
+                                />
                             </div>
 
                         )
@@ -136,6 +200,7 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                             setIsSelected={setIsSelected}
                             fileId={fileId}
                             user={user}
+                            setInput={setInput}
                             imgLoaded={imgLoaded}
                             setImgLoaded={setImgLoaded}
                             input={input}

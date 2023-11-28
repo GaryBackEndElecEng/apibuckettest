@@ -1,5 +1,12 @@
+.createaBlogLayout {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
 .mainCreatablog {
-  background: whitesmoke;
+  background: hsla(196, 73%, 35%, 0.5);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -9,6 +16,12 @@
 }
 .mainCreatablog > div {
   margin: auto;
+  width: 67%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: whitesmoke;
 }
 .showFileName {
   margin: auto;
@@ -16,6 +29,7 @@
   z-index: 1;
   padding: 10rem;
   height: auto;
+  background: white;
   transition: all 0.75s ease-in-out;
 }
 .hideFileName {
@@ -24,13 +38,31 @@
   z-index: -1;
   height: auto;
   padding: 0;
+  background: white;
   transition: all 0.75s ease-in-out;
 }
+
 .creatablogForm {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+}
+.fileForm {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: white;
+}
+.fileCreateInput {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: whitesmoke;
 }
 .creatablogForm input {
   font-weight: bold;
@@ -63,6 +95,7 @@
   justify-content: space-evenly;
   align-items: center;
   gap: 1rem;
+  width: 100%;
   position: relative;
 }
 .mainSelectInput > div {
@@ -71,11 +104,7 @@
 .showInputForm {
   opacity: 1;
   margin: auto;
-  /* display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-direction: column;
-  gap: 1rem; */
+  width: 100%;
   margin-block: 1rem;
   transform: scale(1);
   transition: all 0.75s ease-in-out;
@@ -97,6 +126,7 @@
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
   margin-block: 1rem;
   transform: scale(1);
   transition: all 0.75s ease-in-out;
@@ -118,12 +148,13 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
   gap: 1.5rem;
   width: 100%;
   position: relative;
 }
 .genInputImg > h4 {
-  align-self: flex-start;
+  align-self: center;
   margin-inline: 1rem;
   font-weight: bold;
   text-underline-offset: 10px;
@@ -133,12 +164,74 @@
   font-weight: bold;
   align-self: flex-start;
 }
+.loginfix {
+  margin-inline: auto;
+  margin-block: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rem;
+  background: black;
+}
+.editDeleteContainer {
+  position: relative;
+  height: 6vh;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  z-index: 1000;
+}
+.deleteInput {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  padding: 1px;
+}
+.editInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  filter: drop-shadow(1px 1px 3px black);
+  padding: 1px;
+}
+.deleteInput:hover,
+.editInput:hover {
+  border-radius: 50%;
+  background: white;
+  color: red;
+  padding: 1px;
+}
 @media screen and (max-width: 940px) {
+  .mainCreatablog > div {
+    margin-inline: auto;
+    margin-block: 2.5rem;
+    width: 80%;
+  }
+  .loginfix {
+    padding-inline: 15rem;
+    padding-block: 20rem;
+  }
   .mainCreateInputs {
     padding-inline: 0.5rem;
+    width: 100%;
+    background: whitesmoke;
   }
 }
 @media screen and (max-width: 460px) {
+  .mainCreatablog > div {
+    margin-inline: auto;
+    margin-block: 2.5rem;
+    width: 100%;
+  }
+  .loginfix {
+    padding-inline: 10rem;
+    padding-block: 20rem;
+  }
   .mainCreateInputs {
     padding-inline: 0.25rem;
   }

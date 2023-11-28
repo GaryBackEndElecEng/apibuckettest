@@ -1,0 +1,28 @@
+.homeMainPage {
+  display: grid;
+  place-items: center;
+  margin: auto;
+  min-height: 100vh;
+  width: auto;
+}
+.homeUserGrid {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(350px, 1fr));
+  grid-auto-flow: dense;
+  gap: 3rem;
+}
+@media screen and (max-width: 980px) {
+  .homeUserGrid {
+    grid-template-columns: repeat(2, minmax(350px, 1fr));
+    grid-auto-flow: dense;
+    gap: 1rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .homeUserGrid {
+    grid-template-columns: repeat(1, minmax(350px, 1fr));
+    grid-auto-flow: dense;
+    gap: 1rem;
+  }
+}

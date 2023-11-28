@@ -34,7 +34,7 @@ export async function POST(
                         email: email
                     },
                     data: {
-                        name: name ? name : check.name,
+                        name: name ? name.trim() : (check.name as string).trim(),
                         password: hashPswd ? hashPswd : check.password,
                         imgKey: imgKey ? imgKey : check.imgKey
                     }
@@ -43,7 +43,7 @@ export async function POST(
             } else {
                 const user = await prisma.user.create({
                     data: {
-                        name: name ? name : null,
+                        name: name ? name.trim() : null,
                         email: email,
                         password: hashPswd,
                         imgKey: imgKey ? imgKey : null

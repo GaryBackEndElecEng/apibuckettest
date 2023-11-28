@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
-import { likeType, rateType, likeIcon, likeArr, pageHitType } from "./Types";
+import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType } from "./Types";
 import "@pages/globalsTwo.css"
+import React from "react";
 
 
 
@@ -31,9 +32,9 @@ export function calcAvg(rates: rateType[]): number {
 export function calcLikes(likes: likeType[]): likeIcon[] {
     let arr: likeIcon[] = []
     likeArr.forEach(nam => {
-        const item = likes.find(like => like.name.includes(nam.name))
+        const item = likes.filter(like => like.name.includes(nam.name))
         if (item) {
-            arr.push({ name: nam.name, icon: nam.icon, count: item.count })
+            arr.push({ name: nam.name, icon: nam.icon, count: item.length })
         }
     });
     return arr
@@ -47,7 +48,7 @@ export function calcHits(pageHits: pageHitType[], fileId: string): number {
     })
     return num
 }
-export function calcPostHits(pageHits: pageHitType[], postId: number): number {
+export function calcPostHits(pageHits: pageHitType[], postId: string): number {
     let num = 0;
     const Page: string = `posts/${postId}`
     pageHits.map((page) => {
@@ -57,9 +58,9 @@ export function calcPostHits(pageHits: pageHitType[], postId: number): number {
     })
     return num
 }
-export function calcfileHits(pageHits: pageHitType[], fileId: string): number {
+export function calcfileHits(pageHits: pageHitType[], file: fileType): number {
     let num = 0;
-    const Page: string = `blogs/${fileId}`
+    const Page: string = `blogs/${file.id}`
     pageHits.map((page) => {
         if (page.page.includes(Page) && page.count) {
             num = num + page.count;
@@ -105,4 +106,31 @@ export function SeparatePara({ para, class_ }: { para: string, class_: string })
         });
     }
     return retArr
+}
+
+export function useWindowSize() {
+    const [windowSize, setWindowSize] = React.useState(1920);
+    React.useEffect(() => {
+        if (window && window.innerWidth) {
+            const handleWindowSizeChange = () => {
+                setWindowSize(window.innerWidth)
+            };
+            window.addEventListener("resize", handleWindowSizeChange);
+            return () => {
+                window.removeEventListener("resize", handleWindowSizeChange)
+            }
+        }
+    }, []);
+    return windowSize
+}
+
+export function NameSep(nam: string) {
+    let arr = nam.split("");
+    let newName: string = nam;
+    arr.forEach((let_, index) => {
+        if (index > 0 && (let_.toUpperCase() === let_)) {
+            newName = `${arr.slice(0, index).join("")} ${arr.slice(index, arr.length - 1).join("")} `
+        }
+    });
+    return newName
 }

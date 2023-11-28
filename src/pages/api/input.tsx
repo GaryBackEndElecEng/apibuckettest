@@ -66,6 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     fileId: input.fileId
                 },
                 data: {
+                    id: input.id,
                     name: input.name,
                     type: input.type,
                     content: input.content,
@@ -142,7 +143,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             } catch (error) {
                 const message = getErrorMessage(error)
-                console.error(new Error("server issues@api/file"))
+                console.error(`${message}@input@delete`)
                 return res.status(500).json({ input: null, message: `${message}@input` })
             } finally {
                 await prisma.$disconnect()

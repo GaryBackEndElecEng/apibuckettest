@@ -1,0 +1,7 @@
+.detailIndexContainer {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+}

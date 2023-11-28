@@ -8,13 +8,14 @@ import CreateFile from "@component/dashboard/createblog/CreateFile";
 import { TextField } from '@mui/material';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { useGeneralContext } from '@/components/context/GeneralContextProvider';
+import { Session } from 'next-auth';
 
 type fetchType = {
     file: fileType,
     message: string,
 }
 
-export default function CreateBlog() {
+export default function CreateBlog({ session }: { session: Session }) {
     const { file_, setFile_, setBlogMsg } = useBlogContext();
     const { user } = useGeneralContext()
     const [isCreated, setIsCreated] = React.useState<boolean>(false)
@@ -75,7 +76,7 @@ export default function CreateBlog() {
                             type="text"
                             variant="filled"
                             value={file_ ? file_?.name : "full name"}
-                            onChange={(e) => setFile_({ ...file_ as fileType, name: e.target.value as string })}
+                            onChange={(e) => setFile_({ ...file_ as fileType, name: e.target.value.trim() as string })}
                         />
                         <button className={styles.btnSubmit} type="submit">create now</button>
                     </form>

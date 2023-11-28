@@ -64,8 +64,8 @@ export type fileType = {
     imageKey: string | null,
     imageUrl: string | null,
     inputs: inputType[],
-    likes: likeType[],
-    rates: rateType[]
+    likes: fileLikeType[],
+    rates: fileRateType[]
 }
 export type postType = {
     id?: number,
@@ -76,8 +76,8 @@ export type postType = {
     date?: Date,
     userId: string,
     bloglink: string | null,
-    likes: likeType[],
-    rates: rateType[]
+    likes: postLikeType[],
+    rates: postRateType[]
 }
 export type contactType = {
     id?: number,
@@ -98,17 +98,35 @@ export type generalInfoType = {
     desc: string
 }
 export type rateType = {
-    id: number,
+    id?: number,
     rate: number,
-    fileId: string,
-    postId: number
 }
 export type likeType = {
-    id: number,
+    id?: number,
     name: string,
     count: number,
-    fileId: string,
+}
+export type postRateType = {
+    id?: number,
+    rate: number,
     postId: number
+}
+export type postLikeType = {
+    id?: number,
+    name: string,
+    count: number,
+    postId: number
+}
+export type fileRateType = {
+    id?: number,
+    rate: number,
+    fileId: string
+}
+export type fileLikeType = {
+    id?: number,
+    name: string,
+    count: number,
+    fileId: string
 }
 export type likeIcon = {
     name: string,
@@ -148,6 +166,11 @@ export const inputNames: inputType[] = [
     { type: "subHeading", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "section", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "list", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "link", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "article", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "conclusion", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
 ]
+export type targetType = {
+    loaded: boolean,
+    id: number | null
+}

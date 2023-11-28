@@ -11,6 +11,7 @@ import CreateInputs from "@component/dashboard/createblog/CreateInputs";
 import styles from "@dashboard/editblog/editblog.module.css";
 import "@pages/globalsTwo.css"
 import { SeparatePara } from "@lib/ultils";
+import Link from 'next/link';
 
 
 type fetchType = {
@@ -18,8 +19,8 @@ type fetchType = {
     message: string,
 }
 type mainCreateFileType = {
-    user: userType,
-    file: fileType
+    user: userType | null,
+    file: fileType | undefined
 }
 export default function EditFile({ user, file }: mainCreateFileType) {
     const { setFile_, setBlogMsg, blogMsg, input_s } = useBlogContext();
@@ -54,11 +55,11 @@ export default function EditFile({ user, file }: mainCreateFileType) {
     const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>
     ) => {
         e.preventDefault();
-        if (e.target.files) {
-            const file_ = e.target.files[0]
+        if (e.target.files && user && file) {
+            const fileImg = e.target.files[0]
             const formData = new FormData();
-            formData.set("file", file_);
-            const Key = `${user.name?.trim()}/${file.id}/${uuidv4()}-${file_.name}`;
+            formData.set("file", fileImg);
+            const Key = `${user.name?.trim()}/${file.id}/${uuidv4()}-${fileImg.name}`;
             formData.set("Key", Key);
             const { data } = await axios.post("/api/media", formData)
             if (data.status === 200) {
@@ -170,7 +171,10 @@ export default function EditFile({ user, file }: mainCreateFileType) {
                             <CreateInputs user={user} fileId={file.id} />
                         </React.Fragment>
 
-
+                        <Link href={`/dashboard/blogdetail/${file.id}`}
+                            className="mx-auto my-2 ">
+                            <button className="mx-auto button bg-black text-white">view blog</button>
+                        </Link>
 
                     </div>
 

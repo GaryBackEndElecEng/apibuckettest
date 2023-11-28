@@ -1,6 +1,7 @@
 import React from 'react'
 import Register from "@/components/register/Register";
 import type { Metadata } from 'next';
+import styles from "@component/register/register.module.css";
 // import { metaRegister } from "@meta/Blog";
 
 // export const metadata: Metadata = metaRegister;
@@ -9,7 +10,7 @@ import type { Metadata } from 'next';
 const Page = () => {
     return (
 
-        <div className=" lg:mx-auto lg:container relative mt-20 flex flex-col items-center mx-0  ">
+        <div className={styles.mainRegister}>
             <Register />
         </div>
 

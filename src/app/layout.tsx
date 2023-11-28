@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-300 relative lg:container mx-auto w-full" style={{ position: "relative" }} >
+      <body className="bg-slate-300 rootBody" >
         <Providers>
           <GeneralContextProvider>
             <BlogContextProvider>

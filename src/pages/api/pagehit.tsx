@@ -9,16 +9,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (req.method === "POST") {
 
-        const pagehit: pageHitType | undefined = req.body;
+        const pagehit: pageHitType | undefined = JSON.parse(req.body);
+
         if (pagehit) {
             try {
-                const test = await prisma.pageHit.findUnique({
+                const test = await prisma.pageHit.findFirst({
                     where: {
                         page: pagehit.page
                     }
                 });
                 if (test) {
-                    const GenInfo = await prisma.pageHit.update({
+                    const retPageHit = await prisma.pageHit.update({
                         where: {
                             page: test.page
                         },
@@ -27,10 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                             count: test.count + 1
                         }
                     });
-                    if (GenInfo) {
-                        res.status(200).json(GenInfo)
-                    }
-                } else {
+                    res.status(200).json(retPageHit)
+
+                } else if (pagehit.page) {
                     const newPage = await prisma.pageHit.create({
                         data: {
                             name: pagehit.name,
@@ -38,22 +38,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                             count: 1
                         }
                     });
-                    res.status(200).json(newPage)
+                    res.status(200)
+                } else {
+                    await prisma.$disconnect()
+                    res.status(404)
+
                 }
 
             } catch (error) {
-                console.error(`@pagehit: ${getErrorMessage(error)}`)
+                console.error(`@pagehit: ${getErrorMessage(error)}`);
+                res.status(404)
             } finally {
                 await prisma.$disconnect()
             }
         } else {
             res.status(404).json({ message: "bad request, no general info@ pagehit" })
+
         }
     }
     if (req.method === "GET") {
         try {
             const pageHits = await prisma.pageHit.findMany();
-            return res.status(200).json(pageHits)
+            res.status(200).json({ pageHits: pageHits, message: "recieved pgHits" });
+
         } catch (error) {
             console.error(`@pagehit: ${getErrorMessage(error)}`)
         } finally {

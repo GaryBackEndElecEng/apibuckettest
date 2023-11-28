@@ -68,7 +68,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             const updateFile = await prisma.file.update({
                 where: {
-                    id: file.id
+                    id: file.id,
+                    userId: file.userId
                 },
                 data: {
                     name: file.name,
@@ -76,7 +77,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     content: file.content,
                     imageKey: file.imageKey,
                     published: file.published,
-                    userId: file.userId,
                     fileUrl: file.fileUrl,
                     imageUrl: file && file.imageUrl ? file.imageUrl : null
                 }
@@ -94,7 +94,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             return res.status(200).json({ file: tempFile, message: "updated" })
         } catch (error) {
-            console.error(new Error("server issues@api/file"))
+            const message = getErrorMessage(error);
+            console.error(`${message}`)
+            return res.status(500).json({ file: null, message: message })
         } finally {
             await prisma.$disconnect()
         }
@@ -106,7 +108,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const file = await prisma.file.findUnique({
                     where: {
                         id: fileId
-                    }
+                    },
                 });
                 if (file) {
                     let temFile = file;
@@ -121,7 +123,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     return res.status(200).json({ file: temFile, message: "retrieved" })
                 }
             } catch (error) {
-                console.error(new Error("issues @api/file get"))
+                const message = getErrorMessage(error);
+                console.error(`${message}`)
+                return res.status(500).json({ file: null, message: message })
             } finally {
                 await prisma.$disconnect()
             }
@@ -143,12 +147,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     return res.status(200).json({ file: file, message: "deleted" })
                 }
             } catch (error) {
-                console.error(new Error("issues @api/file get"))
+                const message = getErrorMessage(error);
+                console.error(`${message}`)
+                return res.status(500).json({ file: null, message: message })
             } finally {
-                await prisma.$disconnect()
+                return await prisma.$disconnect()
             }
         } else {
             return res.status(404).json({ file: null, message: "no filekey" })
         }
     }
+    await prisma.$disconnect()
 }
