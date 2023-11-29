@@ -1,5 +1,5 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { PrismaClient } from "@prisma/client";
 import { fileType, userType } from '@/lib/Types';
 import Blog from "@component/blog/Blog";
@@ -8,7 +8,8 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // import { v4 as uuidv4 } from "uuid";
 import styles from "@component/blog/blog.module.css";
 import PostHeader from "@component/post/PostHeader";
-// import "../globalsTwo.css"
+import { notFound } from "next/navigation";
+
 
 
 
@@ -34,15 +35,22 @@ export default async function Page() {
 
         <div className={styles.blogsIndexContainer}>
             <div className={`${styles.grid}  mx-auto place-items-center `}>
-                {files && users && files.map((file, index) => {
-                    const user: userType | undefined = users.find(user => (user.id === file.userId))
-                    return (
-                        <React.Fragment key={index}>
-                            <Blog file={file} user={user} />
-                        </React.Fragment>
-                    )
+                <Suspense fallback="Loading....">
+                    {(files && users) ? files.map((file, index) => {
+                        const user: userType | undefined = users.find(user => (user.id === file.userId))
+                        return (
 
-                })}
+                            <React.Fragment key={index}>
+                                <Blog file={file} user={user} />
+                            </React.Fragment>
+
+                        )
+
+                    })
+                        :
+                        notFound()
+                    }
+                </Suspense>
             </div>
         </div>
 

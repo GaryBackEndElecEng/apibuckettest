@@ -12,14 +12,25 @@ import MediaLinks from "@component/nav/MediaLinks";
 import { useGeneralContext } from '../context/GeneralContextProvider';
 import { signOut } from "next-auth/react";
 import DropDownTrigger from "./DropDownTrigger";
+import { useWindowSize, useChange } from '@/lib/ultils';
+import { useRouter } from "next/navigation";
 
 export default function SubNav() {
+    const router = useRouter();
     const [show, setShow] = React.useState<boolean>(false);
+    const [isOpenAndSmall, setIsOpenAndSmall] = React.useState<boolean>(false);
     const pathname = usePathname();
     const logo = "/images/gb_logo.png";
     const { setMsg, msg } = useGeneralContext();
+    const size = useWindowSize();
+    // const hasChanged = useChange(pathname)
+    // React.useEffect(() => {
+    //     setShow(false);
+    // }, [hasChanged])
+
 
     React.useEffect(() => {
+
         if (pathname) {
             const params: pageHitType = { name: "none", page: pathname }
             const sendPgHit = async () => {
@@ -51,9 +62,18 @@ export default function SubNav() {
             return setShow(false);
         }
     }
+    const handleMouse = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        e.preventDefault();
+
+        if (show && size !== "lg") {
+            setIsOpenAndSmall(true);
+            setShow(false);
+        }
+
+    }
 
     return (
-        <main className={`${styles.navMain}`}>
+        <main className={`${styles.navMain}`} onMouseLeave={(e) => handleMouse(e)}>
             <Image src={logo} width={50} height={50} alt="www.ablogroom.com" onClick={(e) => handleShow(e)} priority />
             <MediaLinks />
             <div className={styles.subNav}>

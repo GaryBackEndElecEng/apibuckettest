@@ -8,6 +8,7 @@ import { userType } from '@/lib/Types';
 import MainUserPage from "@component/userpage/MainUserPage";
 import { redirect } from 'next/navigation';
 import Redirect from "@component/comp/Redirect";
+import { notFound } from "next/navigation";
 
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
@@ -40,9 +41,7 @@ export default async function Userpage({ params }: { params: { name: string } })
             </div>
         )
     } else {
-        return (
-            <Redirect />
-        )
+        notFound()
     }
 }
 

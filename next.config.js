@@ -27,9 +27,8 @@ const nextConfig = {
           {
             key: "Access-Control-Allow-Origin",
             value:
-              "newmasterconnect.herokuapp.com,www.masterconnect.ca,ww.master-connect.ca,www.garymasterconnect.com,cdn.jsdelivr.net,compute-1.amazonaws.com,master-sale.herokuapp.com,awsprismabucket105646-dev.s3.amazonaws.com",
+              "newmasterconnect.herokuapp.com,www.masterconnect.ca,ww.master-connect.ca,www.garymasterconnect.com,cdn.jsdelivr.net,compute-1.amazonaws.com,master-sale.herokuapp.com,awsprismabucket105646-dev.s3.amazonaws.com,garyposttestupload.s3.us-east-1.amazonaws.com",
           },
-
           {
             key: "Access-Control-Allow-Methods",
             value: "GET,DELETE,PATCH,POST,PUT",
@@ -37,7 +36,15 @@ const nextConfig = {
           {
             key: "Access-Control-Allow-Headers",
             value:
-              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version,XSRF-TOKEN,Access-Control-Allow-Origin",
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version,XSRF-TOKEN,Access-Control-Allow-Origin,X-Amz,",
+          },
+          {
+            key: "Content-Type",
+            value: "fileType",
+          },
+          {
+            key: "x-amx-acl",
+            value: "public-read",
           },
         ],
       },
@@ -72,7 +79,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "amazon.com",
+        hostname: "garyposttestupload.s3.us-east-1.amazonaws.com",
         port: "",
         // pathname: '/account123/**',
       },

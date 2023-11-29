@@ -4,6 +4,9 @@
   width: 100%;
   display: grid;
   place-items: center;
+  padding-inline: 2rem;
+  padding-block: 2rem;
+  border-radius: 20px 20px 20px 20px;
 }
 .pageContainer {
   margin: auto;
@@ -11,10 +14,32 @@
   display: grid;
   place-items: center;
 }
+.mainUserHeader {
+  height: 26vh;
+  width: 100%;
+  color: white;
+  background-size: 200% 200%;
+  background-position: 50% 50%;
+  filter: grayscale(80%) hue-rotate(90deg);
+  position: relative;
+  border-radius: 15px 15px 15px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.profileImage {
+  border: 1px solid white;
+  filter: drop-shadow(1px 2px 10px white);
+  border-radius: 50%;
+}
 .mainUserpage {
   margin: auto;
+  width: 100%;
   display: grid;
   place-items: center;
+  border-radius: inherit;
 }
 .userpage {
   margin: auto;
@@ -139,7 +164,25 @@
   border-radius: 10px 10px 10px 10px;
   filter: drop-shadow(1px 1px 5px white);
 }
+.linebreakHeader {
+  width: 75%;
+  height: 3px;
+  margin-block: 1rem;
+  background: linear-gradient(to left, blue, orange);
+  border-radius: 10px 10px 10px 10px;
+  filter: drop-shadow(1px 1px 5px white);
+}
 @media screen and (max-width: 980px) {
+  .mainUserHeader {
+    height: 28vh;
+  }
+  .userHeaderContainer {
+    margin-block: 1rem;
+    margin-inline: 0.5rem;
+  }
+  .userHeaderContainer > section {
+    inset: 0;
+  }
   .MainUserCard {
     display: flex;
     flex-direction: column;
@@ -178,6 +221,20 @@
   }
 }
 @media screen and (max-width: 480px) {
+  .mainUserHeader {
+    height: 38vh;
+  }
+  .userHeaderContainer {
+    margin-inline: 0.25rem;
+  }
+  .userHeaderContainer > section {
+    inset: 0;
+  }
+  .userHeaderContainer > main {
+    margin: auto;
+    padding-block: 1.5rem;
+    padding-inline: 1.25rem;
+  }
   .pageContainer {
     margin: auto;
     padding-inline: 20px;
@@ -185,6 +242,12 @@
   }
   .userGrid {
     grid-template-columns: repeat(1, minmax(350px, 1fr));
+  }
+  .userGrid > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: cen;
+    align-items: center;
   }
   .mainPostcard {
     margin: auto;

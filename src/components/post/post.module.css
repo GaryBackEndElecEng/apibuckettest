@@ -8,6 +8,7 @@
   display: grid;
   place-items: center;
   position: relative;
+  border-radius: 20px 20px 20px 20px;
 }
 .layoutSinglePostContainer {
   margin: auto;
@@ -17,6 +18,7 @@
   height: auto;
   display: grid;
   place-items: center;
+  border-radius: inherit;
 }
 .postsIndexContainer {
   margin-inline: auto;
@@ -27,6 +29,7 @@
   justify-content: flex-start;
   align-items: center;
   margin-block: 3rem;
+  border-radius: inherit;
 }
 .containerPostItem {
   align-self: center;
@@ -37,10 +40,12 @@
   place-content: center;
   width: 100%;
   position: relative;
+  border-radius: inherit;
 }
 .mainBlogItem {
   margin-inline: 0.5rem;
   margin-block: auto;
+  border-radius: inherit;
 }
 
 .noname {
@@ -62,6 +67,7 @@
   margin-inline: 0.25rem;
   background: whitesmoke;
   border: 1px solid black;
+  border-radius: inherit;
 }
 .card {
   margin: auto;
@@ -78,6 +84,7 @@
   margin-inline: 0.25rem;
   background: whitesmoke;
   border: 1px solid black;
+  border-radius: inherit;
 }
 .postLink {
   margin: 0;
@@ -110,8 +117,8 @@
 }
 .postGrid > div {
   margin: auto;
-  justify-self: center;
-  align-self: center;
+  justify-self: stretch;
+  align-self: stretch;
 }
 .userProfileTwo {
   margin-inline: auto;
@@ -273,7 +280,7 @@
 }
 .mainPostRate > div {
   margin-inline: auto;
-  margin-block: 2.5rem;
+  margin-block: 0.5rem;
 }
 .PostRateForm {
   display: flex;

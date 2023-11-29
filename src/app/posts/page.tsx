@@ -1,5 +1,5 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { PrismaClient } from "@prisma/client";
 import { postType, userType } from '@/lib/Types';
 import Post from "@component/post/Post";
@@ -10,6 +10,7 @@ import styles from "@component/post/post.module.css";
 import PostHeader from "@component/post/PostHeader";
 // import "../globalsTwo.css";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 
 
@@ -67,15 +68,20 @@ export default async function Page() {
         <div className={styles.postsIndexContainer}>
 
             <div className={`${styles.postGrid} mx-auto  bg-slate-300`}>
-                {posts && users && posts.map((post, index) => {
-                    const user: userType | undefined = users.find(user => (user.id === post.userId))
-                    return (
-                        <div key={index} >
-                            <Post post={post} user={user} />
-                        </div>
-                    )
+                <Suspense fallback="Loading....">
+                    {posts ? users && posts.map((post, index) => {
+                        const user: userType | undefined = users.find(user => (user.id === post.userId))
+                        return (
+                            <div key={index} >
+                                <Post post={post} user={user} />
+                            </div>
+                        )
 
-                })}
+                    })
+                        :
+                        notFound()
+                    }
+                </Suspense>
             </div>
 
         </div>

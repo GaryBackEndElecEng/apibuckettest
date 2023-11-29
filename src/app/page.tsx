@@ -9,6 +9,7 @@ import { redirect } from 'next/navigation';
 import Redirect from "@component/comp/Redirect";
 import { userType } from "@/lib/Types";
 import UserCard from "@component/home/UserCard";
+import { notFound } from "next/navigation";
 
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string

@@ -9,7 +9,7 @@ import styles from "@component/blog/blog.module.css";
 import PostHeader from "@component/post/PostHeader";
 import BlogItem from "@component/blog/BlogItem";
 import { getErrorMessage } from '@/lib/errorBoundaries';
-// import "../../globalsTwo.css"
+import { notFound } from "next/navigation";
 
 
 
@@ -104,7 +104,7 @@ export default async function BlogPage({ params }: { params: { id: string } }) {
 
         )
     } else {
-        return (<div><h2> could not find....</h2></div>)
+        notFound();
     }
 }
 

@@ -72,7 +72,7 @@ const GeneralContextProvider = (props: any) => {
             }
         }
 
-        // getPageHits();
+        getPageHits();
 
     }, []);
 

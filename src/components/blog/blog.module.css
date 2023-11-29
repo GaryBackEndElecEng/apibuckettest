@@ -1,11 +1,15 @@
 .blogsLayoutContainer {
   margin-inline: 0;
-  width: 67%;
+  width: 80%;
   display: grid;
   place-content: center;
   place-items: center;
   margin-block: 3rem;
+  justify-content: stretch;
+  align-items: stretch;
   padding-inline: 2rem;
+  padding-block: 2rem;
+  border-radius: 15px 15px 15px 15px;
 }
 .blogSIngleIDLayoutContainer {
   margin: auto;
@@ -15,6 +19,7 @@
   display: grid;
   place-content: center;
   place-items: center;
+  border-radius: inherit;
 }
 .blogsIndexContainer {
   margin-inline: auto;
@@ -23,6 +28,7 @@
   justify-content: center;
   align-items: center;
   margin-block: 3rem;
+  border-radius: inherit;
 }
 .MasterBlogIndex {
   margin: auto;
@@ -31,12 +37,14 @@
   align-items: center;
   position: relative;
   width: 100%;
+  border-radius: inherit;
 }
 .blogIndexContainer {
   margin: auto;
   display: grid;
   place-items: center;
   position: relative;
+  border-radius: inherit;
 }
 .detailContainer {
   margin-inline: 1rem;
@@ -44,6 +52,7 @@
   width: 67%;
   display: grid;
   place-items: center;
+  border-radius: inherit;
 }
 .mainBlogItem {
   flex: 0.75;
@@ -64,7 +73,8 @@
   background: whitesmoke;
   box-shadow: 1px 1px 15px 2px black, -1px -1px 15px 2px black;
   padding: 1rem;
-  border-radius: 6px;
+  border-radius: 10px 10px 10px 10px;
+  border-radius: inherit;
 }
 
 .card {
@@ -78,6 +88,7 @@
   border-radius: 6px;
   margin-inline: 1rem;
   background: whitesmoke;
+  border-radius: inherit;
 }
 .card > img {
   width: 100%;
@@ -94,7 +105,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
+  gap: 3rem;
   background: rgba(36, 35, 35, 0.1);
 }
 .userCard {
@@ -204,6 +215,34 @@
   border-radius: 20px 20px 20px 20px;
   box-shadow: 1px 1px 6px 2px grey;
 }
+.notFoundContainer {
+  width: 100%;
+  height: 80vh;
+  display: grid;
+  place-items: center;
+  padding: 10rem;
+  border-radius: 20px 20px 20px 20px;
+}
+.notFoundContainer > div {
+  margin: auto;
+  background-size: 100% 100%;
+  background-position: 50% 50%;
+  border-radius: inherit;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.notFoundContainer > div > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+  border-radius: inherit;
+}
 
 /* blogsLayoutContainer */
 @media screen and (max-width: 980px) {
@@ -222,7 +261,6 @@
   }
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem;
   }
   .mainBlogItem {
     margin-inline: 0rem;
@@ -238,9 +276,12 @@
     width: 100%;
     padding-inline: 0.5rem;
   }
+  .blogCard {
+    align-self: stretch;
+  }
   .grid {
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 0.5rem;
+    place-items: center;
   }
 
   .mainBlogItem {
@@ -266,7 +307,6 @@
   }
   .grid {
     grid-template-columns: repeat(1, minmax(200px, 1fr));
-    gap: 0.25rem;
   }
   .gridRateLike {
     margin: auto;

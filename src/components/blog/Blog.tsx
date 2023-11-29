@@ -10,6 +10,7 @@ import "@pages/globalsTwo.css";
 
 
 
+
 export default function Blog({ file, user }: { file: fileType, user: userType | undefined }) {
     const logo = "/images/gb_logo.png";
     return (

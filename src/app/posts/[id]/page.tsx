@@ -11,6 +11,7 @@ import PostHeader from "@component/post/PostHeader";
 import PostItem from "@component/post/PostItem";
 // import "../../globalsTwo.css"
 import { getErrorMessage } from '@/lib/errorBoundaries';
+import { notFound } from 'next/navigation';
 
 
 
@@ -92,7 +93,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         )
     } else {
         return (
-            <div><h3>Could not find</h3></div>
+            notFound()
         )
     }
 }

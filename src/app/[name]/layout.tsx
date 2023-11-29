@@ -3,7 +3,8 @@ import React from "react";
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import styles from "@component/userpage/userpage.module.css";
-
+import UserHeader from "@component/userpage/UserHeader";
+import GeneralContextProvider from "@/components/context/GeneralContextProvider";
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,8 +21,10 @@ export default function DashboardLayout({
 }) {
     return (
         <main className={styles.layoutContainer}>
-
-            {children}
+            <GeneralContextProvider>
+                <UserHeader />
+                {children}
+            </GeneralContextProvider>
 
 
         </main>

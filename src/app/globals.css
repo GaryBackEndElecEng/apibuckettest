@@ -16,7 +16,7 @@
   margin: 0;
   display: grid;
   place-items: center;
-  place-content: center;
+  place-content: stretch;
 }
 .flexrow {
   display: flex;
@@ -69,6 +69,10 @@ p.paraCreator::first-letter {
   margin-bottom: 0.5rem;
   -webkit-initial-letter: 1.25;
   initial-letter: 1.25;
+}
+.paraCreator {
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
 }
 div.listContainer {
 }
@@ -202,6 +206,7 @@ p.paraCreator::first-letter {
 .summary,
 .section {
   font-size: 110%;
+  width: 100%;
 }
 .image {
   box-shadow: 1.5px 1.5px 10px 3px hsl(39, 90%, 51%),
@@ -368,9 +373,8 @@ h1 {
 }
 p {
   line-height: 1.25rem;
-  margin-block: 0.75rem;
+  margin-block: 1.25rem;
   padding-inline: 2rem;
-  margin-inline: 1rem;
 }
 p.style {
   background-image: var(--colorWorld);
@@ -519,4 +523,15 @@ p.style {
   width: auto;
   padding-inline: 2rem;
   gap: 1rem;
+}
+@media screen and (max-width: 940px) {
+  .paraCreator {
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .paraCreator {
+    padding-inline: 0.5rem;
+  }
 }

@@ -1,7 +1,7 @@
 "use client";
 import { inputType } from '@/lib/Types';
 import React from 'react';
-import "@pages/globalsTwo.css"
+// import "@pages/globalsTwo.css"
 import Image from 'next/image';
 import { ConvertToList, SeparatePara } from "@lib/ultils";
 import styles from "@component/blog/blog.module.css";
@@ -57,7 +57,7 @@ function GenInput({ input }: { input: inputType }) {
             )
         case "section":
             return (
-                <div className="inputSection">
+                <div className="">
                     {input.name && <h4>
                         {input.name}
                     </h4>}
@@ -78,12 +78,12 @@ function GenInput({ input }: { input: inputType }) {
             )
         case "article":
             return (
-                <div className="inputArticle">
+                <div className="">
                     {input.name && <h3>
                         {input.name}
                     </h3>}
                     <section>
-                        {input.content}
+                        <SeparatePara para={input.content} class_={"pSection"} />
                     </section>
                 </div>
             )
@@ -93,7 +93,7 @@ function GenInput({ input }: { input: inputType }) {
                     {input.name && <h4>
                         {input.name}
                     </h4>}
-                    {input.content}
+                    <SeparatePara para={input.content} class_={"pSection"} />
                 </section>
 
             )

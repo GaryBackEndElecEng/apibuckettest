@@ -4,10 +4,12 @@ import React from 'react';
 import styles from "@component/userpage/userpage.module.css";
 import { useBlogContext } from '../context/BlogContextProvider';
 import { usePostContext } from '../context/PostContextProvider';
-import UserCard from "./UserCard";
+import { Suspense } from "react";
+
 import BlogCard from "./BlogCard";
 import PostCard from "./PostCard";
 import Link from "next/link";
+import { useGeneralContext } from '../context/GeneralContextProvider';
 
 type userPageType = {
     user: userType,
@@ -19,6 +21,7 @@ export default function UserPage({ user, files, posts }: userPageType) {
 
     const { setUserBlogs, userBlogs } = useBlogContext();
     const { userPosts, setUserPosts } = usePostContext();
+    const { setUser } = useGeneralContext();
 
     React.useEffect(() => {
         if (files) {
@@ -27,37 +30,47 @@ export default function UserPage({ user, files, posts }: userPageType) {
         if (posts) {
             setUserPosts(posts)
         }
-    }, [files, posts, setUserBlogs, setUserPosts]);
+        if (user) {
+            setUser(user);
+        }
+    }, [files, posts, setUserBlogs, setUserPosts, user, setUser]);
 
     return (
         <div
             className={styles.userpage}
         >
-            <UserCard user={user} />
             <div className={styles.userGrid}>
                 <div>
-                    <h2>Blogs</h2>
+                    <div className="line-break-sm" />
+                    <h2 className="text-center text-2xl font-bold">{("Blogs").toUpperCase()}</h2>
+                    <div className="line-break-sm" />
                     <div className={styles.blogCardContainer}>
-                        {userBlogs && userBlogs.map((file, index) => (
-                            <React.Fragment key={index}>
-                                <Link href={`/blogs/${file.id}`}>
-                                    <BlogCard file={file} />
-                                </Link>
-                            </React.Fragment>
-                        ))}
+                        <Suspense fallback="Loading....">
+                            {userBlogs && userBlogs.map((file, index) => (
+                                <React.Fragment key={index}>
+                                    <Link href={`/blogs/${file.id}`}>
+                                        <BlogCard file={file} />
+                                    </Link>
+                                </React.Fragment>
+                            ))}
+                        </Suspense>
                     </div>
                 </div>
                 <div>
-                    <h2>Posts</h2>
+                    <div className="line-break-sm" />
+                    <h2 className="text-center text-2xl font-bold">{("Posts").toUpperCase()}</h2>
+                    <div className="line-break-sm" />
                     <div className={styles.postCardContainer}>
-                        {userPosts && userPosts.map((post, index) => (
-                            <React.Fragment key={index}>
-                                <Link href={`/posts/${post.id}`}>
-                                    <PostCard post={post} />
-                                </Link>
+                        <Suspense fallback="Loading....">
+                            {userPosts && userPosts.map((post, index) => (
+                                <React.Fragment key={index}>
+                                    <Link href={`/posts/${post.id}`}>
+                                        <PostCard post={post} />
+                                    </Link>
 
-                            </React.Fragment>
-                        ))}
+                                </React.Fragment>
+                            ))}
+                        </Suspense>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType } from "./Types";
-import "@pages/globalsTwo.css"
+// import "@pages/globalsTwo.css"
 import React from "react";
 
 
@@ -53,7 +53,7 @@ export function calcPostHits(pageHits: pageHitType[], postId: string): number {
     const Page: string = `posts/${postId}`
     pageHits.map((page) => {
         if (page.page.includes(Page) && page.count) {
-            num = num + page.count;
+            num = 1 + page.count;
         }
     })
     return num
@@ -108,8 +108,9 @@ export function SeparatePara({ para, class_ }: { para: string, class_: string })
     return retArr
 }
 
-export function useWindowSize() {
+export function useWindowReSize() {
     const [windowSize, setWindowSize] = React.useState(1920);
+    const [size, setSize] = React.useState<"xs" | "sm" | "lg" | "md">();
     React.useEffect(() => {
         if (window && window.innerWidth) {
             const handleWindowSizeChange = () => {
@@ -121,7 +122,54 @@ export function useWindowSize() {
             }
         }
     }, []);
-    return windowSize
+    React.useEffect(() => {
+        switch (true) {
+            case (windowSize > 980):
+                setSize("lg");
+                break;
+            case (windowSize < 980 && windowSize > 480):
+                setSize("md");
+                break;
+            case (windowSize < 480 && windowSize > 420):
+                setSize("sm");
+                break;
+            case (windowSize < 420):
+                setSize("xs");
+                break;
+            default:
+                return
+        }
+    }, [windowSize]);
+
+    return size
+}
+export function useWindowSize() {
+    const [width, setWidth] = React.useState<number>(1920);
+    const [size, setSize] = React.useState<"xs" | "sm" | "lg" | "md">();
+    React.useEffect(() => {
+        setWidth(window.innerWidth);
+
+    }, []);
+    React.useEffect(() => {
+        switch (true) {
+            case (width > 980):
+                setSize("lg");
+                break;
+            case (width < 980 && width > 480):
+                setSize("md");
+                break;
+            case (width < 480 && width > 420):
+                setSize("sm");
+                break;
+            case (width < 420):
+                setSize("xs");
+                break;
+            default:
+                return
+        }
+    }, [width]);
+    return size
+
 }
 
 export function NameSep(nam: string) {
@@ -133,4 +181,14 @@ export function NameSep(nam: string) {
         }
     });
     return newName
+}
+
+export function useChange(path: string | null) {
+    const [hasChanged, setHasChanged] = React.useState<boolean>(false);
+    React.useEffect(() => {
+        if (window && path) {
+            setHasChanged(true);
+        } else { setHasChanged(false) }
+    }, [path]);
+    return hasChanged
 }
