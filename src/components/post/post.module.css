@@ -72,13 +72,13 @@
 .card {
   margin: auto;
   position: relative;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   filter: drop-shadow(1px 1px 6px black);
-  padding-inline: 3rem;
+  padding-inline: 0.25rem;
   padding-block: 0.5rem;
   border-radius: 16px 16px 16px 16px;
   margin-inline: 0.25rem;

@@ -15,7 +15,7 @@ export default function Blog({ file, user }: { file: fileType, user: userType | 
     const logo = "/images/gb_logo.png";
     return (
         <div className={styles.blogCard}>
-            <Link href={`/blogs/${file.id}`} className="blogsLink flexcol">
+            <Link href={`/blogs/${file.id}`} className={styles.blogLink}>
                 <h3 className="text-center text-2xl mb-3">{file.title.toUpperCase()}</h3>
                 {file.imageUrl ?
                     <Image src={file.imageUrl} width={350} height={200} alt="www.ablogroom.com" priority />

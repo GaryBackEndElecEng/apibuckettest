@@ -72,9 +72,20 @@
   flex-direction: column;
   background: whitesmoke;
   box-shadow: 1px 1px 15px 2px black, -1px -1px 15px 2px black;
-  padding: 1rem;
+  padding-block: 1rem;
+  padding-inline: 2px;
   border-radius: 10px 10px 10px 10px;
-  border-radius: inherit;
+}
+.blogLink {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-items: center;
+}
+.blogLink > img {
+  aspect-ratio: 16 / 9;
+  width: auto;
 }
 
 .card {
@@ -109,9 +120,13 @@
   background: rgba(36, 35, 35, 0.1);
 }
 .userCard {
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
   filter: drop-shadow(1px 1px 4px black);
-  padding: 1rem;
+  padding-block: 10px;
+  padding-inline: 0.5rem;
   background: black;
   color: white;
   border-radius: 20px 20px 20px 20px;
@@ -269,6 +284,9 @@
     margin: auto;
     gap: 2rem;
   }
+  .userCard {
+    margin-inline: 1.5rem;
+  }
 }
 @media screen and (max-width: 920px) {
   .blogsLayoutContainer {
@@ -321,6 +339,9 @@
   .mainBlogItem {
     margin: auto;
     padding-inline: 0rem;
+  }
+  .userCard {
+    margin-inline: 0.5rem;
   }
 }
 @media screen and (max-width: 420px) {

@@ -72,9 +72,9 @@ export default async function Page() {
                     {posts ? users && posts.map((post, index) => {
                         const user: userType | undefined = users.find(user => (user.id === post.userId))
                         return (
-                            <div key={index} >
+                            <React.Fragment key={index} >
                                 <Post post={post} user={user} />
-                            </div>
+                            </React.Fragment>
                         )
 
                     })

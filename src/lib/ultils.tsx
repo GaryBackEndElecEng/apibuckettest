@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType } from "./Types";
-// import "@pages/globalsTwo.css"
 import React from "react";
 
 

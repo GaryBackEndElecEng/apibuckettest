@@ -73,6 +73,7 @@ p.paraCreator::first-letter {
 .paraCreator {
   padding-inline: 1.5rem;
   padding-block: 1rem;
+  line-height: 2rem;
 }
 div.listContainer {
 }
