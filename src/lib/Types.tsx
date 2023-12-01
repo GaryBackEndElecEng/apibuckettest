@@ -133,6 +133,11 @@ export type likeIcon = {
     count: number,
     icon: React.ReactNode
 }
+export type nameRateType = {
+    name: string,
+    avRate: number,
+    count: number
+}
 export const likeArr: { name: string, icon: React.ReactNode }[] = [
     { name: "happy", icon: <FaSmileBeam /> },
     { name: "thumbUp", icon: <FaRegThumbsUp /> },

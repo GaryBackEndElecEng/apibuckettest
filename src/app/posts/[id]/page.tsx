@@ -84,9 +84,9 @@ export default async function Page({ params }: { params: { id: string } }) {
             <div className={styles.containerPostItem}>
                 {post && user &&
 
-                    <div className={styles.mainBlogItem}>
-                        <PostItem post={post} user={user} />
-                    </div>
+
+                    <PostItem post={post} user={user} />
+
                 }
             </div>
 

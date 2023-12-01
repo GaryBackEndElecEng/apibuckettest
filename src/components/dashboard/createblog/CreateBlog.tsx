@@ -14,17 +14,22 @@ type fetchType = {
     file: fileType,
     message: string,
 }
+type creatablogType = {
+    newfile: fileType | undefined,
+    getuser: userType
+}
 
-export default function CreateBlog({ session }: { session: Session }) {
+export default function CreateBlog({ getuser, newfile }: creatablogType) {
     const { file_, setFile_, setBlogMsg } = useBlogContext();
-    const { user } = useGeneralContext()
+    const { user, setUser } = useGeneralContext()
     const [isCreated, setIsCreated] = React.useState<boolean>(false)
+
     React.useEffect(() => {
-        if (user && user.id) {
-            let tempFile: fileType = {} as fileType
-            setFile_({ ...tempFile, userId: user.id })
-        }
-    }, [user, setFile_]);
+        if (!getuser) return
+        setUser(getuser);
+        if (!newfile) return
+        setFile_(newfile);
+    }, [user, setFile_, newfile, getuser, setUser]);
 
 
 

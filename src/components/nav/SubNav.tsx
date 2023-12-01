@@ -20,14 +20,17 @@ export default function SubNav() {
     const [show, setShow] = React.useState<boolean>(false);
     const [isOpenAndSmall, setIsOpenAndSmall] = React.useState<boolean>(false);
     const pathname = usePathname();
+    let pathHasChanged = useChange(pathname);
     const logo = "/images/gb_logo.png";
-    const { setMsg, msg } = useGeneralContext();
+    const { setMsg, msg, setPageChange, pageChange } = useGeneralContext();
     const size = useWindowSize();
-    // const hasChanged = useChange(pathname)
-    // React.useEffect(() => {
-    //     setShow(false);
-    // }, [hasChanged])
 
+    React.useEffect(() => {
+        if (pathHasChanged) {
+            setPageChange(false);
+            setShow(false)
+        }
+    }, [setPageChange, pathHasChanged]);
 
     React.useEffect(() => {
 
@@ -43,6 +46,8 @@ export default function SubNav() {
                 const body: { message: string } = await res.json()
                 if (res.ok) {
                     setMsg({ loaded: true, msg: body.message });
+                    setPageChange(true);
+                    setShow(false);
                 } else if (res.status > 200 && res.status < 500) {
                     setMsg({ loaded: false, msg: body.message })
                 } else {
@@ -65,9 +70,10 @@ export default function SubNav() {
     const handleMouse = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.preventDefault();
 
-        if (show && size !== "lg") {
+        if (show) {
             setIsOpenAndSmall(true);
             setShow(false);
+            setPageChange(false);
         }
 
     }
@@ -97,3 +103,4 @@ export default function SubNav() {
         </main>
     )
 }
+

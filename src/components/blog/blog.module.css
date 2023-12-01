@@ -76,6 +76,7 @@
   padding-inline: 2px;
   border-radius: 10px 10px 10px 10px;
 }
+
 .blogLink {
   margin: 0;
   display: flex;
@@ -86,6 +87,8 @@
 .blogLink > img {
   aspect-ratio: 16 / 9;
   width: auto;
+  border-radius: inherit;
+  filter: drop-shadow(1px 1px 5px black);
 }
 
 .card {

@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import styles from "@dashboard/dashboard.module.css";
-import type { userType } from '@lib/Types';
+import type { fileType, postType, userType } from '@lib/Types';
 import { getErrorMessage } from "@lib/errorBoundaries";
 import Link from "next/link";
 import { IoArrowDownSharp } from "react-icons/io5";
@@ -11,47 +11,28 @@ import { useBlogContext } from "@/components/context/BlogContextProvider";
 import BlogMsg from "@component/dashboard/createblog/BlogMsg";
 import UpdateUser from '@/components/dashboard/UpdateUser';
 import { useGeneralContext } from '../context/GeneralContextProvider';
-import UserBlogs from "@dashboard/UserBlogs"
+import UserBlogs from "@dashboard/UserBlogs";
+import UserFilesRates from "./UserFilesRates";
+import UserPostsRates from "./UserPostsRates";
 
 type resType = { user: userType | null, message: string }
 
-export default function DashBoard_({ session }: { session: Session | null }) {
-    const getUser = session ? session.user : null;
-    const userEmail: string | null = session && session.user && session.user.email ? session.user.email : null;
+type DashboardType = {
+    getuser: userType,
+    files: fileType[],
+    posts: postType[]
+}
+
+export default function DashBoard_({ getuser, files, posts }: DashboardType) {
 
     const { setUser, user } = useGeneralContext();
-    const { setBlogMsg, blogMsg } = useBlogContext()
+    const { setBlogMsg, blogMsg, setUserBlogs, userBlogs } = useBlogContext()
     const [open, setOpen] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        const getuser = async () => {
-            const controller = new AbortController();
-            try {
-                //UrlSearchParams=> only email
-                const res = await fetch(`/api/useremail?email=${userEmail}`, {
-                    signal: controller.signal
-                });
-                const body: resType | undefined = await res.json();
-                if (res.ok && body) {
-
-                    setUser(body.user)
-                    setBlogMsg({ loaded: true, msg: body.message })
-
-                } else if (res.status > 200 && res.status < 500) {
-                    setBlogMsg({ loaded: false, msg: body && body.message })
-                }
-
-            } catch (error) {
-                console.error(`${getErrorMessage(error)}`);
-                alert(`${getErrorMessage(error)}`)
-            } finally {
-                return () => controller.abort()
-            }
-        }
-        if (userEmail && !user) {
-            getuser()
-        }
-    }, [setUser, userEmail, setBlogMsg, user]);
+        if (!getuser) return
+        setUser(getuser);
+    }, [getuser, setUserBlogs, setUser]);
 
     const handleOpen = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.preventDefault();
@@ -66,7 +47,12 @@ export default function DashBoard_({ session }: { session: Session | null }) {
     return (
         <main className={`${styles.dashContainer} bg-slate-400`}>
             <div className={styles.gridThree}>
-                <div className={styles.gridElement}>grid</div>
+                <div className={styles.gridElement}>
+                    <div className={styles.rateStyles}>
+                        <UserFilesRates files={files} />
+                        <UserPostsRates posts={posts} />
+                    </div>
+                </div>
                 <div className={styles.gridElement} style={{ position: "relative" }}>
                     <BlogMsg />
                     <div className="flexrow">
@@ -98,7 +84,7 @@ export default function DashBoard_({ session }: { session: Session | null }) {
 
                 <UpdateUser user={user} />
             </div>
-            <UserBlogs user={user} />
+            <UserBlogs user={user} getFiles={files} />
         </main>
     )
 }

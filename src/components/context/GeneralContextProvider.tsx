@@ -25,6 +25,8 @@ type generalContextType = {
     contact: contactType,
     setGenInfo: React.Dispatch<React.SetStateAction<generalInfoType[]>>,
     genInfo: generalInfoType[],
+    setPageChange: React.Dispatch<React.SetStateAction<boolean>>,
+    pageChange: boolean
 
 
 }
@@ -49,6 +51,7 @@ const GeneralContextProvider = (props: any) => {
     const [genInfo, setGenInfo] = React.useState<generalInfoType[]>([]);
     const [contact, setContact] = React.useState<contactType>({} as contactType);
     const [getError, setGetError] = React.useState<string>("");
+    const [pageChange, setPageChange] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         const getPageHits = async () => {
@@ -79,7 +82,7 @@ const GeneralContextProvider = (props: any) => {
 
 
     return (
-        <GeneralContext.Provider value={{ msg, setMsg, clients, setClients, setPageHits, pageHits, client, setClient, contact, setContact, genInfo, setGenInfo, getError, setGetError, user, setUser }}>
+        <GeneralContext.Provider value={{ msg, setMsg, clients, setClients, setPageHits, pageHits, client, setClient, contact, setContact, genInfo, setGenInfo, getError, setGetError, user, setUser, pageChange, setPageChange }}>
             {props.children}
         </GeneralContext.Provider>
     )

@@ -23,7 +23,7 @@ export default function Blog({ file, user }: { file: fileType, user: userType | 
                     <Image src={logo} width={350} height={200} alt="www.ablogroom.com" priority />
                 }
                 <p className="TWO paraCreator">
-                    {file.content.slice(0, 36)}...
+                    {file.content.slice(0, 63)}...
                 </p>
                 <UserCardTwo user={user} />
                 <div className="flex flex-row mx-auto gap-2">

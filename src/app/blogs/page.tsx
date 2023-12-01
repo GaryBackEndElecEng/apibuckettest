@@ -37,14 +37,16 @@ export default async function Page() {
             <div className={`${styles.grid}  mx-auto place-items-center `}>
                 <Suspense fallback="Loading....">
                     {(files && users) ? files.map((file, index) => {
-                        const user: userType | undefined = users.find(user => (user.id === file.userId))
-                        return (
+                        if (file.published === true) {
+                            const user: userType | undefined = users.find(user => (user.id === file.userId))
+                            return (
 
-                            <React.Fragment key={index}>
-                                <Blog file={file} user={user} />
-                            </React.Fragment>
+                                <React.Fragment key={index}>
+                                    <Blog file={file} user={user} />
+                                </React.Fragment>
 
-                        )
+                            )
+                        }
 
                     })
                         :

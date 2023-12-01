@@ -29,6 +29,12 @@
   align-self: center;
   justify-self: center;
 }
+.backLink {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 @media screen and (max-width: 940px) {
   .detailLayoutContainer {
     width: 100%;

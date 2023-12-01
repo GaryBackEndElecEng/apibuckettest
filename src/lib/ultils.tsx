@@ -185,9 +185,18 @@ export function NameSep(nam: string) {
 export function useChange(path: string | null) {
     const [hasChanged, setHasChanged] = React.useState<boolean>(false);
     React.useEffect(() => {
+        const initFunc = () => {
+            window.history.pushState(path, "");
+            window.dispatchEvent(new Event("popstate"))
+        }
         if (window && path) {
-            setHasChanged(true);
+            let lastUrl = window.history.state.tree[1]
+            window.addEventListener("popstate", initFunc);
+            setHasChanged(true)
+
+
         } else { setHasChanged(false) }
+        return () => window.removeEventListener("popstate", initFunc)
     }, [path]);
     return hasChanged
 }

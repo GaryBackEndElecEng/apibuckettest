@@ -12,7 +12,8 @@ import { Session, getServerSession } from 'next-auth';
 import { PrismaClient } from '@prisma/client';
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import styles from "@component/dashboard/blogdetail/blogdetailStyle.module.css"
+import styles from "@component/dashboard/blogdetail/blogdetailStyle.module.css";
+import Link from "next/link";
 // export const config = { runtime: 'experimental-edge' }
 
 const Bucket = process.env.BUCKET_NAME as string
@@ -49,6 +50,9 @@ export default async function PageDetail({ params }: { params: { id: string } })
         return (
             <div className={styles.detailPageContainer}>
                 <BlogDetail file={file} getuser={user as userType} />
+                <Link href={"/dashboard"} className={`my-3 text-center ${styles.backLink}`}>
+                    <button className="buttonsm bg-slate-600 text-white">back<span className="text-xl text-red-900 ml-1">?</span></button>
+                </Link>
             </div>
         )
     } else {

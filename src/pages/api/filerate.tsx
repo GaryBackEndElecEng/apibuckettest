@@ -31,8 +31,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     }
     if (req.method === "GET") {
+        const fileId = req.query.fileId as string
         try {
-            const rates = await prisma.blogRate.findMany();
+            const rates = await prisma.blogRate.findMany({
+                where: {
+                    fileId: fileId
+                }
+            });
             res.status(200).json({ rates: rates, message: "retrieved" })
         } catch (error) {
             console.error(`${getErrorMessage(error)}:@rate`)

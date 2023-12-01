@@ -61,7 +61,7 @@ export default function InputForm({ input, setInput, imgLoaded, setImgLoaded, us
     }
 
     return (
-        <div className={styles.mainInputForm}>
+        <div className={`${styles.mainInputForm} bg-slate-200`}>
             <GenForm
                 user={user}
                 setInput={setInput}

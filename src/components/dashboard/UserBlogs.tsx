@@ -8,42 +8,24 @@ import { AiFillDelete } from "react-icons/ai";
 import { IconButton } from '@mui/material';
 import BlogPopup from "./BlogPopup";
 import Link from 'next/link';
+import Publish from "./Publish";
 
 type userFetchType = {
     files: fileType[],
     message: string
 }
-export default function UserBlogs({ user }: { user: userType | null }) {
+type userBlogsType = {
+    user: userType | null,
+    getFiles: fileType[]
+}
+export default function UserBlogs({ user, getFiles }: userBlogsType) {
     const { userBlogs, setUserBlogs, setBlogMsg, blogMsg } = useBlogContext();
     const [showPopup, setShowPopup] = React.useState<{ loaded: boolean, id: string | undefined }>({ loaded: false, id: undefined })
 
     React.useEffect(() => {
-        if (user) {
-            const getUserBlogs = async () => {
-                const controller = new AbortController();
-                try {
-                    const res = await fetch(`/api/userblogs?userId=${user.id}`, {
-                        signal: controller.signal
-                    });
-                    const body: userFetchType = await res.json();
-                    if (res.ok) {
-                        setUserBlogs(body.files);
-                        setBlogMsg({ loaded: true, msg: body.message });
-                    } else if (res.status > 200 && res.status < 500) {
-                        setBlogMsg({ loaded: false, msg: body.message })
-                    }
-
-                } catch (error) {
-                    const message = getErrorMessage(error);
-                    setBlogMsg({ loaded: false, msg: message })
-                } finally {
-                    return () => controller.abort()
-                }
-            }
-            getUserBlogs();
-        }
-
-    }, [user, setUserBlogs, setBlogMsg]);
+        if (!getFiles) return
+        setUserBlogs(getFiles);
+    }, [getFiles, setUserBlogs])
 
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
         e.preventDefault();
@@ -58,6 +40,7 @@ export default function UserBlogs({ user }: { user: userType | null }) {
                 {
                     userBlogs && userBlogs.map((blog, index) => (
                         <div key={index} style={{ position: "relative" }}>
+                            <Publish file={blog} />
                             <IconButton
                                 className={styles.deleteFile}
                                 onClick={(e) => handleDelete(e, blog.id as string)}

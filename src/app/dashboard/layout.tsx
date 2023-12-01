@@ -3,6 +3,8 @@ import React from "react";
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import styles from "@component/dashboard/dashboard.module.css";
+import GeneralContextProvider, { GeneralContext } from "@/components/context/GeneralContextProvider";
+import BlogContextProvider from "@/components/context/BlogContextProvider";
 
 
 
@@ -21,8 +23,11 @@ export default function DashboardLayout({
 }) {
     return (
         <main className={`${styles.dashboardLayout} bg-slate-900`}>
-
-            {children}
+            <GeneralContextProvider>
+                <BlogContextProvider>
+                    {children}
+                </BlogContextProvider>
+            </GeneralContextProvider>
 
 
         </main>

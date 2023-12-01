@@ -27,6 +27,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
     const [complete, setComplete] = React.useState<boolean>(false);
 
 
+
     const handleFile = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         e.preventDefault();
@@ -70,13 +71,11 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
         }
 
     }
-    // console.log(file, "LOADED", loaded, "USERID", userId)
-    const mainStyle = "lg:container mx-auto px-2 py-2 flex flex-col gap-2 bg-white";
-    const form = "flex flex-col gap-3 mx-auto w-full items-center justify-center bg-slate-200";
+
     return (
         <div className={styles.mainCreatablog}>
             {file &&
-                <div>
+                <React.Fragment>
                     <form className={styles.fileForm}>
 
                         <TextField
@@ -153,7 +152,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                             </div>
                         }
                     </div>
-                    <div className={styles.fileCreateInput}>
+                    <div className={`${styles.fileCreateInput} bg-slate-300`}>
 
                         <div className="text-center text-xl mb-2">{file.name && file.name}</div>
                         <div className="text-center text-xl my-2">{file.title && file.title}</div>
@@ -178,7 +177,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                         </div>
                     </div>
 
-                </div>
+                </React.Fragment>
             }
         </div>
     )
