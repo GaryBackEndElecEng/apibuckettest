@@ -17,7 +17,8 @@
 .mainPosts {
   display: grid;
   grid-template-columns: repeat(3, minmax(350px, 1fr));
-  place-items: center;
+  align-items: flex-start;
+  justify-content: center;
   gap: 2rem;
 }
 .postsDashGrid {
@@ -56,6 +57,8 @@
   gap: 1rem;
   padding-inline: 1rem;
   padding-block: 3rem;
+  background: white;
+  border-radius: 15px 15px 15px 15px;
 }
 .postItemSub {
   margin: auto;

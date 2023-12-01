@@ -16,7 +16,7 @@ export default function PostItem({ post }: postItemType) {
 
     const handleRout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, post: postType) => {
         e.preventDefault();
-        router.push(`/dashboard/posts/editpost?id=${post.id}`)
+        router.push(`/dashboard/posts/editpost?postId=${post.id}`)
     }
     return (
         <div className={styles.postItemMain}>

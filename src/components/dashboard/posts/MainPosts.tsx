@@ -17,56 +17,25 @@ type userfetchType = {
     user: userType,
     message: string
 }
+type mainPostsType = {
+    getuser: userType,
+    getposts: postType[] | undefined
+}
 
-export default function MainPosts({ session }: { session: Session | null }) {
+export default function MainPosts({ getuser, getposts }: mainPostsType) {
 
     const { posts, setPosts, setPostMsg } = usePostContext();
     const { user, setUser } = useGeneralContext();
-    //--getting user--///
-    React.useEffect(() => {
-        if (session && session.user && session.user.email) {
-            const getUser = async () => {
-                const email = session.user?.email
-                try {
-                    const res = await fetch(`/api/useremail?email=${email}`);
-                    if (res.ok) {
-                        const body: userfetchType = await res.json();
-                        setPostMsg({ loaded: true, msg: body.message });
-                        setUser(body.user);
-                    }
-                } catch (error) {
-                    const message = getErrorMessage(error);
-                    console.error(`${message}@useremail`);
-                    setPostMsg({ loaded: false, msg: message })
-                }
-            }
-            getUser();
-        }
-    }, [session, setUser, setPostMsg]);
-
-    //-----USERS POSTS-------//
 
     React.useEffect(() => {
+        if (!getuser) return
+        setUser(getuser);
+        if (!getposts) return
+        setPosts(getposts);
+        setPostMsg({ loaded: true, msg: "recieved" })
+    }, [getuser, getposts, setUser, setPosts, setPostMsg]);
 
-        const getPosts = async () => {
-            if (user) {
-                try {
-                    const res = await fetch(`/api/userposts?userId=${user.id as string}`);
 
-                    if (res.ok) {
-                        const body: postsfetchType = await res.json();
-                        setPosts(body.posts);
-                        setPostMsg({ loaded: true, msg: body.message });
-                    }
-                } catch (error) {
-                    const message = getErrorMessage(error);
-                    console.error(`${message}@posts`);
-                    setPostMsg({ loaded: false, msg: message })
-                }
-            }
-        }
-        getPosts()
-    }, [user, setPosts, setPostMsg]);
 
 
     return (

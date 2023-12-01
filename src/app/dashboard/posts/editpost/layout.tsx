@@ -3,6 +3,8 @@ import React from "react";
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import styles from "@component/dashboard/editPost/editPostStyle.module.css";
+import GeneralContextProvider from "@/components/context/GeneralContextProvider";
+import PostContextProvider, { PostContext } from "@/components/context/PostContextProvider";
 
 
 
@@ -21,8 +23,11 @@ export default function DashboardLayout({
 }) {
     return (
         <main className={styles.editPostLayout}>
-
-            {children}
+            <GeneralContextProvider>
+                <PostContextProvider>
+                    {children}
+                </PostContextProvider>
+            </GeneralContextProvider>
 
 
         </main>

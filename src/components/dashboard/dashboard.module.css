@@ -48,12 +48,15 @@
   justify-content: center;
 }
 .rateStyles {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 1rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100, 1fr));
+  grid-auto-flow: dense;
+  gap: 0.5rem;
+  border-radius: 10px 10px 10px 10px;
+}
+.rateStyles > div {
+  padding-inline: 10px;
 }
 
 .gridElement button {
@@ -127,7 +130,7 @@
   z-index: 1;
   transform: translateX(0%) scale(1);
   animation: bringIn 1s ease-in-out;
-  height: 60vh;
+  height: 72vh;
 }
 .closeUdateUser {
   opacity: 0;
@@ -169,7 +172,7 @@
   width: 100%;
   float: left;
   overflow-y: scroll;
-  height: 20vh;
+  height: 16vh;
   padding-inline: 1rem;
 }
 /*--ShowRates--- */
@@ -293,6 +296,14 @@
   border-radius: 10px 10px 10px 10px;
   filter: drop-shadow(1px 1px 3px lightgrey);
 }
+.userForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+}
 .userImage {
   border-radius: 50%;
   padding: 0.25rem;
@@ -308,7 +319,7 @@
 /*---UserBlogs------- ---------- */
 .mainUserBlogs {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   margin-block: 1rem;

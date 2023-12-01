@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType } from "./Types";
+import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType, nameRateType, postType } from "./Types";
 import React from "react";
 
 
@@ -200,3 +200,56 @@ export function useChange(path: string | null) {
     }, [path]);
     return hasChanged
 }
+export function filterSort(arr: nameRateType[]) {
+    let cleanArr: nameRateType[] = [];
+    for (const [key, value] of Object.entries(arr)) {
+        const obj = cleanArr.find(obj => (obj.name === value.name));
+        if (!obj) {
+            cleanArr.push(value)
+        }
+    }
+    return cleanArr
+}
+
+export function ArrRateFileResult(files: fileType[]) {
+    let arr: nameRateType[] = []
+    files.map((file, index) => {
+        const len = file.rates && file.rates.length > 0 ? file.rates.length : 1;
+        const calcAv = file.rates.reduce((a, b) => (a + b.rate), 0);
+        const rateAv = Math.round(calcAv / len)
+        arr.push({ name: file.name, avRate: rateAv, count: len });
+        return
+    });
+    return filterSort(arr)
+}
+export function ArrRatePostResult(posts: postType[]) {
+    let arr: nameRateType[] = []
+    posts.map((post, index) => {
+        const len = post.rates && post.rates.length > 0 ? post.rates.length : 1;
+        const calcAv = post.rates.reduce((a, b) => (a + b.rate), 0);
+        const rateAv = Math.round(calcAv / len)
+        arr.push({ name: post.name, avRate: rateAv, count: len });
+        return
+    });
+    return filterSort(arr)
+}
+
+export function postHits(pages: pageHitType[], posts: postType[]): pageHitType[] {
+    const retResults = posts.map((post, index) => {
+        const getpageHits = pages.filter(page => (page.page.includes(`/posts/${post.id}`)));
+        const retCount = getpageHits.reduce((a, b) => (a + b.count), 0);
+        const newHit = { ...getpageHits[0], name: post.name, count: retCount }
+        return newHit
+    });
+    return retResults
+}
+export function blogHits(pages: pageHitType[], files: fileType[]): pageHitType[] {
+    const retResults = files.map((file, index) => {
+        const getpageHits = pages.filter(page => (page.page.includes(`/blogs/${file.id}`)));
+        const retCount = getpageHits.reduce((a, b) => (a + b.count), 0);
+        const newHit = { ...getpageHits[0], name: file.name, count: retCount }
+        return newHit
+    });
+    return retResults
+}
+

@@ -79,6 +79,11 @@ export type postType = {
     likes: postLikeType[],
     rates: postRateType[]
 }
+export type blogLinkType = {
+    fileId: string,
+    name: string,
+    title: string
+}
 export type contactType = {
     id?: number,
     email: string,
@@ -148,7 +153,7 @@ export const likeArr: { name: string, icon: React.ReactNode }[] = [
 export type pageHitType = {
     id?: number,
     page: string
-    count?: number,
+    count: number,
     date?: Date
     name: string
 }

@@ -86,7 +86,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                 <div className={styles.gridTwo}>
                     <div>
                         <div>
-                            <form className={form} onSubmit={(e) => handleUser(e)}>
+                            <form className={`${styles.userForm} bg-slate-500`} onSubmit={(e) => handleUser(e)}>
                                 <TextField
                                     fullWidth={false}
                                     helperText={"name"}
@@ -101,6 +101,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     variant="filled"
                                     value={user.name ? user?.name : ""}
                                     onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
+                                    style={{ width: "auto" }}
                                 />
                                 <TextField
                                     fullWidth={false}
@@ -116,8 +117,9 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     variant="filled"
                                     value={user.email ? user.email : ""}
                                     onChange={(e) => setUser({ ...user, email: e.target.value })}
+                                    style={{ width: "auto" }}
                                 />
-                                <div className="flexrowsm">
+                                <div className="flexrowsm" style={{ width: "auto" }}>
                                     <TextField
                                         fullWidth={false}
                                         helperText={"password"}
@@ -192,7 +194,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center bg-slate-700 text-white">
                         {user &&
                             <React.Fragment>
                                 <div className="text-center text-xl mb-2">{user.name}</div>

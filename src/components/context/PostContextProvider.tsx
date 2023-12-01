@@ -1,7 +1,7 @@
 "use client"
 import axios from "axios";
 import React from 'react';
-import type { msgType, userType, contactType, postType, fileType, inputType, postLikeType, postRateType, } from "@lib/Types";
+import type { msgType, userType, contactType, postType, fileType, inputType, postLikeType, postRateType, blogLinkType, } from "@lib/Types";
 import { getErrorMessage } from "@lib/errorBoundaries";
 const base_url = process.env.NEXT_PUBLIC_baseurl;
 
@@ -23,8 +23,9 @@ type postContextType = {
     setPostRates: React.Dispatch<React.SetStateAction<postRateType[]>>,
     postRates: postRateType[],
     setLikes: React.Dispatch<React.SetStateAction<postLikeType[]>>,
-    likes: postLikeType[]
-
+    likes: postLikeType[],
+    setBlogLinks: React.Dispatch<React.SetStateAction<blogLinkType[]>>,
+    blogLinks: blogLinkType[]
 
 
 
@@ -42,11 +43,12 @@ const PostContextProvider = (props: any) => {
     const [postLikes, setPostLikes] = React.useState<postLikeType[]>([]);
     const [likes, setLikes] = React.useState<postLikeType[]>([]);
     const [postRates, setPostRates] = React.useState<postRateType[]>([]);
+    const [blogLinks, setBlogLinks] = React.useState<blogLinkType[]>([]);
 
 
 
     return (
-        <PostContext.Provider value={{ setPost, post, uploaded, setUploaded, postMsg, setPostMsg, setPosts, posts, userPosts, setUserPosts, postRates, setPostRates, postLikes, setPostLikes, likes, setLikes }}>
+        <PostContext.Provider value={{ setPost, post, uploaded, setUploaded, postMsg, setPostMsg, setPosts, posts, userPosts, setUserPosts, postRates, setPostRates, postLikes, setPostLikes, likes, setLikes, blogLinks, setBlogLinks }}>
             {props.children}
         </PostContext.Provider>
     )

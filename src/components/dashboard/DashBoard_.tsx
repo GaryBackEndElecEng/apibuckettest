@@ -14,6 +14,8 @@ import { useGeneralContext } from '../context/GeneralContextProvider';
 import UserBlogs from "@dashboard/UserBlogs";
 import UserFilesRates from "./UserFilesRates";
 import UserPostsRates from "./UserPostsRates";
+import BlogHits from "./BlogHits";
+import PostHits from "./PostHits";
 
 type resType = { user: userType | null, message: string }
 
@@ -28,6 +30,7 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
     const { setUser, user } = useGeneralContext();
     const { setBlogMsg, blogMsg, setUserBlogs, userBlogs } = useBlogContext()
     const [open, setOpen] = React.useState<boolean>(false);
+    const [openRates, setOpenRates] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         if (!getuser) return
@@ -49,8 +52,34 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
             <div className={styles.gridThree}>
                 <div className={styles.gridElement}>
                     <div className={styles.rateStyles}>
-                        <UserFilesRates files={files} />
-                        <UserPostsRates posts={posts} />
+                        <div>
+                            <h3 className="font-bold text-center underline underline-offset-8 my-2">Blog rates</h3>
+                            <details>
+                                <summary>Blogs</summary>
+                                <UserFilesRates files={files} />
+                            </details>
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-center underline underline-offset-8 my-2">Post rates</h3>
+                            <details>
+                                <summary>posts</summary>
+                                <UserPostsRates posts={posts} />
+                            </details>
+                        </div>
+                        <div className="col-span-2">
+                            <h3 className="font-bold text-center underline underline-offset-8 my-2">Blog hits</h3>
+                            <details>
+                                <summary>hits</summary>
+                                <BlogHits files={files} />
+                            </details>
+                        </div>
+                        <div className="col-span-2">
+                            <h3 className="font-bold text-center underline underline-offset-8 my-2">Post hits</h3>
+                            <details>
+                                <summary>hits</summary>
+                                <PostHits posts={posts} />
+                            </details>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.gridElement} style={{ position: "relative" }}>
