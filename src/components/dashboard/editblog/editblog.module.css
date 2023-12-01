@@ -1,10 +1,11 @@
 .editBlogLayout {
   margin: auto;
-  width: 100%;
+  width: 80vh;
   display: grid;
   place-items: center;
   place-content: center;
   padding-block: 1rem;
+  border-radius: 20px 20px 20px 20px;
 }
 
 .mainEditBlog {
@@ -15,7 +16,7 @@
   margin-block: 1rem;
   align-items: center;
   background: white;
-  border-radius: 7px 7px 7px 7px;
+  border-radius: 17px 17px 17px 17px;
   filter: drop-shadow(1px 1px 5px black);
 }
 
@@ -92,7 +93,7 @@
 
 @media screen and (max-width: 940px) {
   .editBlogLayout {
-    width: 100%;
+    width: 85vw;
     padding-inline: 1rem;
     padding-block: 2rem;
   }
@@ -112,6 +113,7 @@
 }
 @media screen and (max-width: 450px) {
   .editBlogLayout {
+    width: 100%;
     padding-inline: 0.25rem;
   }
   .loginfix {
