@@ -1,7 +1,7 @@
 "use client"
 import axios from "axios";
 import React from 'react';
-import type { msgType, userType, pageHitType, contactType, postType, generalInfoType, fileType, } from "@lib/Types";
+import type { msgType, userType, pageHitType, contactType, postType, generalInfoType, fileType, genContactType, } from "@lib/Types";
 import { useSession } from "next-auth/react";
 import { getErrorMessage } from "@lib/errorBoundaries";
 const base_url = process.env.NEXT_PUBLIC_baseurl;
@@ -26,7 +26,9 @@ type generalContextType = {
     setGenInfo: React.Dispatch<React.SetStateAction<generalInfoType[]>>,
     genInfo: generalInfoType[],
     setPageChange: React.Dispatch<React.SetStateAction<boolean>>,
-    pageChange: boolean
+    pageChange: boolean,
+    setGenContact: React.Dispatch<React.SetStateAction<genContactType>>,
+    genContact: genContactType
 
 
 }
@@ -50,6 +52,7 @@ const GeneralContextProvider = (props: any) => {
 
     const [genInfo, setGenInfo] = React.useState<generalInfoType[]>([]);
     const [contact, setContact] = React.useState<contactType>({} as contactType);
+    const [genContact, setGenContact] = React.useState<genContactType>({} as contactType);
     const [getError, setGetError] = React.useState<string>("");
     const [pageChange, setPageChange] = React.useState<boolean>(false);
 
@@ -82,7 +85,7 @@ const GeneralContextProvider = (props: any) => {
 
 
     return (
-        <GeneralContext.Provider value={{ msg, setMsg, clients, setClients, setPageHits, pageHits, client, setClient, contact, setContact, genInfo, setGenInfo, getError, setGetError, user, setUser, pageChange, setPageChange }}>
+        <GeneralContext.Provider value={{ msg, setMsg, clients, setClients, setPageHits, pageHits, client, setClient, contact, setContact, genContact, setGenContact, genInfo, setGenInfo, getError, setGetError, user, setUser, pageChange, setPageChange }}>
             {props.children}
         </GeneralContext.Provider>
     )

@@ -124,6 +124,13 @@ model Contact {
   userId  String
 }
 
+model GenContact {
+  id      Int    @id @default(autoincrement())
+  email   String @unique
+  subject String
+  content String
+}
+
 // # This is for client's links in their blogs
 model Link {
   id      Int     @id @default(autoincrement())

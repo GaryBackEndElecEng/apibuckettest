@@ -14,7 +14,7 @@ export default function Post({ post, user }: { post: postType, user: userType | 
 
     return (
         <div className={`mx-auto ${styles.card}`}>
-            <h3 className="text-center mb-3">{post.name}</h3>
+            <h2 className="text-center mb-3 text-2xl">{post.name}</h2>
             <Link href={`/posts/${post.id}`} className={styles.postLink}>
 
                 {post.imageUrl ?

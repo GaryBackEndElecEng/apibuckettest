@@ -10,6 +10,7 @@ const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
 const secretAccessKey = process.env.SDK_ACCESS_SECRET as string
+const expiresIn = process.env.EXPIRESIN as string
 const s3 = new S3Client({
 
     credentials: {
@@ -43,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                     Key: input.s3Key as string
                                 }
                                 const command = new GetObjectCommand(params);
-                                input.url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                                input.url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                             }
                             return input
                         }));

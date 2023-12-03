@@ -12,6 +12,7 @@ const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
 const secretAccessKey = process.env.SDK_ACCESS_SECRET as string
+const expiresIn = process.env.EXPIRESIN as string
 const s3 = new S3Client({
 
     credentials: {

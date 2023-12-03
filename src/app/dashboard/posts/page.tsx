@@ -15,6 +15,7 @@ const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
 const secretAccessKey = process.env.SDK_ACCESS_SECRET as string
+const expiresIn = process.env.EXPIRESIN as string
 const s3 = new S3Client({
 
     credentials: {
@@ -67,7 +68,7 @@ export async function getPosts() {
                         if (post.s3Key) {
                             const params = { Key: post.s3Key, Bucket }
                             const command = new GetObjectCommand(params);
-                            post.imageUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                            post.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                         }
                         return post
                     })
@@ -98,7 +99,7 @@ export async function getUser() {
                 if (TUser.imgKey) {
                     const params = { Key: TUser.imgKey, Bucket }
                     const command = new GetObjectCommand(params);
-                    TUser.image = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                    TUser.image = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                 }
                 return TUser
             }

@@ -14,6 +14,7 @@ const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
 const secretAccessKey = process.env.SDK_ACCESS_SECRET as string
+const expiresIn = process.env.EXPIRESIN as string
 const s3 = new S3Client({
 
     credentials: {
@@ -69,7 +70,7 @@ export async function getUser(name: string) {
                         Bucket
                     }
                     const command = new GetObjectCommand(params);
-                    tempUser.image = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                    tempUser.image = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                 }
                 const files = await Promise.all(
                     tempUser.files.map(async (file) => {
@@ -79,7 +80,7 @@ export async function getUser(name: string) {
                                 Bucket
                             }
                             const command = new GetObjectCommand(params);
-                            file.imageUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                            file.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                         }
                         return file
                     }));

@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (GenInfo) {
                 res.status(200).json(GenInfo)
             } else {
-                const genInfo: generalInfoType = {} as generalInfoType
+                const genInfo: generalInfoType[] = []
                 res.status(400).json(genInfo)
             }
 

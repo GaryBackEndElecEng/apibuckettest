@@ -35,7 +35,7 @@ export default function SubNav() {
     React.useEffect(() => {
 
         if (pathname) {
-            const params: pageHitType = { name: "none", page: pathname }
+            const params: pageHitType = { name: "none", page: pathname, count: 1 }
             const sendPgHit = async () => {
                 const controller = new AbortController();
                 const res = await fetch("/api/pagehit", {
@@ -61,7 +61,7 @@ export default function SubNav() {
 
     const handleShow = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
         e.preventDefault();
-        if (!show) {
+        if (!show && size !== "lg") {
             return setShow(true)
         } else {
             return setShow(false);
@@ -86,8 +86,8 @@ export default function SubNav() {
                 <div className={show ? styles.navlistShow : styles.navlist}>
                     <React.Fragment>
                         {navList2 && navList2.map((navlink, index) => (
-                            <Link href={navlink.link} key={index}>
-                                <IconButton>
+                            <Link href={navlink.link} key={index} style={{ background: "black", color: "white" }}>
+                                <IconButton >
                                     {navlink.icon}
                                     <span className={styles.link_name}>
                                         {navlink.name}

@@ -91,6 +91,12 @@ export type contactType = {
     content: string,
     userId: string
 }
+export type genContactType = {
+    id?: number,
+    email: string,
+    subject: string,
+    content: string,
+}
 export type msgType = {
     loaded: boolean,
     msg: string | undefined
@@ -156,6 +162,10 @@ export type pageHitType = {
     count: number,
     date?: Date
     name: string
+}
+export type retType = {
+    page: string,
+    count: number
 }
 export type navLinkType = {
     id: number,

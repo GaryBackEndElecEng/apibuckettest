@@ -1,0 +1,67 @@
+.mainFooterContainer {
+  position: relative;
+  margin-inline: 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 10vh;
+  background-size: 200% 200%;
+  background-position: 50% 50%;
+  color: white;
+}
+.footerGrid {
+  margin-inline: 1rem;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  place-items: center;
+}
+.genContactContainer {
+  position: absolute;
+  top: -500%;
+  right: 1rem;
+  width: 350px;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 1px 1px 5px 1px black;
+  background-color: white;
+  padding: 1rem;
+}
+.one,
+.two,
+.three {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+@media screen and (max-width: 980px) {
+  .footerGrid {
+    margin-inline: 0.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .two {
+    grid-column: 1 / span 2;
+    order: 3;
+  }
+  .genContactContainer {
+    top: -300%;
+    right: 2.5rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .footerGrid {
+    margin-inline: 10px;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .two {
+    grid-column: 1;
+    order: 3;
+  }
+  .genContactContainer {
+    top: -280%;
+    right: 2rem;
+  }
+}

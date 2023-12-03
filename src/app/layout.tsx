@@ -7,6 +7,8 @@ import Providers from "./providers";
 import GeneralContextProvider from '@/components/context/GeneralContextProvider';
 import BlogContextProvider from "@context/BlogContextProvider";
 import PostContextProvider from "@context/PostContextProvider";
+import MainHeader from "./MainHeader";
+import Footer from "@component/footer/Footer";
 
 
 
@@ -29,8 +31,10 @@ export default function RootLayout({
           <GeneralContextProvider>
             <BlogContextProvider>
               <PostContextProvider>
-                <Nav />
+
+                <MainHeader />
                 {children}
+                <Footer />
               </PostContextProvider>
             </BlogContextProvider>
           </GeneralContextProvider>

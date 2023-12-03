@@ -5,19 +5,16 @@ import styles from "@component/userpage/userpage.module.css";
 import { useBlogContext } from '../context/BlogContextProvider';
 import { usePostContext } from '../context/PostContextProvider';
 import { Suspense } from "react";
-import MainBlogcard from "./MainBlogcard";
-import MainPostcard from "./MainPostcard";
-import BlogCard from "./BlogCard";
+
 import PostCard from "./PostCard";
 import Link from "next/link";
 import { useGeneralContext } from '../context/GeneralContextProvider';
 
 type userPageType = {
     user: userType,
-    files: fileType[] | undefined,
     posts: postType[] | undefined
 }
-export default function UserPage({ user, files, posts }: userPageType) {
+export default function MainPostcard({ user, posts }: userPageType) {
     //feed post & file detail to pages[id]
 
     const { setUserBlogs, userBlogs } = useBlogContext();
@@ -25,19 +22,32 @@ export default function UserPage({ user, files, posts }: userPageType) {
     const { setUser } = useGeneralContext();
 
     React.useEffect(() => {
-        if (user) {
-            setUser(user);
+
+        if (posts) {
+            setUserPosts(posts)
         }
-    }, [user, setUser]);
+
+    }, [posts, setUserPosts]);
 
     return (
         <div
-            className={styles.userpage}
+            className={styles.mainUsercard}
         >
-            <div className={styles.userGrid}>
-                <MainBlogcard user={user} files={files} />
-                <MainPostcard user={user} posts={posts} />
+            <div className="line-break-sm" />
+            <h2 className="text-center text-2xl font-bold">{("Posts").toUpperCase()}</h2>
+            <div className="line-break-sm" />
+
+            <div className={styles.blogCardContainer}>
+                <Suspense fallback="Loading....">
+                    {userPosts && userPosts.map((post, index) => (
+                        <React.Fragment key={index}>
+                            <PostCard post={post} />
+                        </React.Fragment>
+                    ))}
+                </Suspense>
             </div>
+
+
         </div>
     )
 }

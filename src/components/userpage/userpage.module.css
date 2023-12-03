@@ -112,6 +112,14 @@
   grid-auto-flow: dense;
   gap: 2rem;
 }
+.mainUserCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  background: transparent;
+}
 .blogCardContainer,
 .postCardContainer {
   display: flex;

@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType, nameRateType, postType } from "./Types";
 import React from "react";
+import { useGeneralContext } from "@/components/context/GeneralContextProvider";
 
 
 
@@ -143,30 +144,30 @@ export function useWindowReSize() {
     return size
 }
 export function useWindowSize() {
-    const [width, setWidth] = React.useState<number>(1920);
-    const [size, setSize] = React.useState<"xs" | "sm" | "lg" | "md">();
-    React.useEffect(() => {
-        setWidth(window.innerWidth);
 
-    }, []);
+    const [size, setSize] = React.useState<"xs" | "sm" | "lg" | "md">("lg");
+
     React.useEffect(() => {
-        switch (true) {
-            case (width > 980):
-                setSize("lg");
-                break;
-            case (width < 980 && width > 480):
-                setSize("md");
-                break;
-            case (width < 480 && width > 420):
-                setSize("sm");
-                break;
-            case (width < 420):
-                setSize("xs");
-                break;
-            default:
-                return
+        if (window) {
+            const width = window.innerWidth ? window.innerWidth : 1920;
+            switch (true) {
+                case (width > 980):
+                    setSize("lg");
+                    break;
+                case (width < 980 && width > 480):
+                    setSize("md");
+                    break;
+                case (width < 480 && width > 420):
+                    setSize("sm");
+                    break;
+                case (width < 420):
+                    setSize("xs");
+                    break;
+                default:
+                    return
+            }
         }
-    }, [width]);
+    }, []);
     return size
 
 }
@@ -251,5 +252,24 @@ export function blogHits(pages: pageHitType[], files: fileType[]): pageHitType[]
         return newHit
     });
     return retResults
+}
+
+export function useHits() {
+    type retType = {
+        page: string,
+        count: number
+    }
+    const { pageHits } = useGeneralContext();
+    const [total, setTotal] = React.useState<number>(0);
+    const [retArr, setRetArr] = React.useState<retType[]>([])
+    React.useEffect(() => {
+        if (pageHits) {
+            const getTotal = pageHits.reduce((a, b) => (a + b.count), 0);
+            setTotal(getTotal);
+            const getArr = pageHits.map(page => ({ page: page.page, count: page.count }));
+            setRetArr(getArr);
+        }
+    }, [pageHits]);
+    return { total, pageArr: retArr }
 }
 

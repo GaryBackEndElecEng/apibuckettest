@@ -1,11 +1,14 @@
 import React from 'react';
-import Nav from "@component/nav/Nav";
 import styles from "@component/post/post.module.css";
 
+
 export default function PostHeader() {
+    const url = "/images/happyFamily.png"
     return (
-        <React.Fragment>
-            <Nav />
-        </React.Fragment>
+        <div className="mx-0 h-[20vh] w-full"
+            style={{ backgroundImage: `url(${url})` }}
+        >
+
+        </div>
     )
 }

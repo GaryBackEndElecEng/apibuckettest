@@ -10,6 +10,7 @@ const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
 const secretAccessKey = process.env.SDK_ACCESS_SECRET as string
+const expiresIn = process.env.EXPIRESIN as string
 const s3 = new S3Client({
 
     credentials: {
@@ -50,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         Key: tempFile.imageKey
                     }
                     const command = new GetObjectCommand(params);
-                    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                    const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                     if (url) tempFile.imageUrl = url;
                 }
                 return res.status(200).json({ file: tempFile, message: "created" })
@@ -89,7 +90,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     Key: tempFile.imageKey
                 }
                 const command = new GetObjectCommand(params);
-                const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                 if (url) tempFile.imageUrl = url;
             }
             return res.status(200).json({ file: tempFile, message: "updated" })
@@ -118,7 +119,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                             Key: temFile.imageKey as string
                         }
                         const command = new GetObjectCommand(params);
-                        temFile.imageUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                        temFile.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
                     }
                     return res.status(200).json({ file: temFile, message: "retrieved" })
                 }

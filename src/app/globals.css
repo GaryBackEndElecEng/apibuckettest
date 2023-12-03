@@ -9,6 +9,9 @@
 }
 :root {
   --colorWorld: url("/images/colorWorld.png");
+  --logoUrl: url("/images/gb_logoHeader.png");
+  --logosmUrl: url("/images/gb_logosm.png");
+  --happyFamilyUrl: url("/images/happyFamily.png");
 }
 .rootBody {
   width: 100%;
@@ -17,6 +20,51 @@
   display: grid;
   place-items: center;
   place-content: stretch;
+}
+.mainHeaderTrue {
+  position: sticky;
+
+  margin-inline: 0;
+  height: 20vh;
+  width: 100%;
+  background-image: var(--logoUrl);
+  margin-bottom: 2rem;
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+  filter: grayscale(80);
+  /* padding-top: 10px; */
+}
+.mainHeaderFalse {
+  position: sticky;
+  margin-inline: 0;
+  height: auto;
+  width: 100%;
+  margin-bottom: 1rem;
+  background-image: var(--logosmUrl);
+  background-position: 40% 0%;
+  background-size: 150% 150%;
+  filter: grayscale(80);
+  padding-top: 10px;
+}
+@media screen and (max-width: 980px) {
+  .mainHeaderTrue {
+    background-position: 50% 0%;
+    background-size: 150% 120%;
+  }
+  .mainHeaderFalse {
+    background-position: 50% 0%;
+    background-size: 150% 160%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .mainHeaderTrue {
+    background-position: 50% 50%;
+    background-size: 150% 100%;
+  }
+  .mainHeaderFalse {
+    background-position: 30% 50%;
+    background-size: 150% 100%;
+  }
 }
 .flexrow {
   display: flex;

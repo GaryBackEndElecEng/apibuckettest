@@ -102,6 +102,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     value={user.name ? user?.name : ""}
                                     onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
                                     style={{ width: "auto" }}
+                                    className="bg-slate-100 text-black"
                                 />
                                 <TextField
                                     fullWidth={false}
@@ -118,6 +119,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     value={user.email ? user.email : ""}
                                     onChange={(e) => setUser({ ...user, email: e.target.value })}
                                     style={{ width: "auto" }}
+                                    className="bg-slate-100 text-black"
                                 />
                                 <div className="flexrowsm" style={{ width: "auto" }}>
                                     <TextField
@@ -136,6 +138,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
 
                                             setPassword(e.target.value)
                                         }}
+                                        className="bg-slate-100 text-black"
                                     />
                                     <input
                                         type="checkbox"
@@ -162,6 +165,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
 
                                         setUser({ ...user, bio: e.target.value })
                                     }}
+                                    className="bg-slate-100 text-black w-full"
                                 />
 
 
@@ -179,7 +183,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                 }}
                             />}
                             {message && message.msg &&
-                                <div className="relative h-[10vh] flex flex-col items-center justify-center">
+                                <div className="relative h-[10vh] flex flex-col items-center justify-center text-black">
                                     {message.loaded ?
                                         <div className=" absolute inset-0 flex flex-col text-blue-900 text-xl">
                                             {message.msg}
@@ -199,7 +203,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                             <React.Fragment>
                                 <div className="text-center text-xl mb-2">{user.name}</div>
                                 <h3 className="text-xl px-1 py-1 underline underlin-offest-8">Who am I</h3>
-                                <p className="text-md px-2 my-2">
+                                <p className="text-md px-2 my-2 text-black">
                                     {user.image ?
                                         <Image src={user.image}
                                             width={125}
