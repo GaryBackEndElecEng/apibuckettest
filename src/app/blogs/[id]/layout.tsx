@@ -3,6 +3,7 @@ import React from "react";
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import styles from "@component/blog/blog.module.css";
+import GeneralContextProvider from "@/components/context/GeneralContextProvider";
 
 
 
@@ -19,11 +20,13 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={styles.blogSIngleIDLayoutContainer}>
+        <GeneralContextProvider>
+            <main className={styles.blogSIngleIDLayoutContainer}>
 
-            {children}
+                {children}
 
 
-        </main>
+            </main>
+        </GeneralContextProvider>
     )
 }

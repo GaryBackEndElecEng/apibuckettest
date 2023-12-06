@@ -1,5 +1,5 @@
 "use client";
-import { inputType, targetType } from '@/lib/Types';
+import { contactType, inputType, targetType } from '@/lib/Types';
 import React from 'react';
 import "@pages/globalsTwo.css"
 import Image from 'next/image';
@@ -9,13 +9,16 @@ import { useBlogContext } from '@/components/context/BlogContextProvider';
 import styles from "@dashboard/createblog/createablog.module.css";
 import { FaTrash } from "react-icons/fa6";
 import { MdEditSquare } from "react-icons/md";
-import { IconButton } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import GenericMsg from '@/components/comp/GenericMsg';
+import Link from 'next/link';
+import { useGeneralContext } from '@/components/context/GeneralContextProvider';
 
 type inputFetchType = {
     input: inputType,
     message: string
 }
+
 type genInputType = {
     setInput: React.Dispatch<React.SetStateAction<inputType | undefined>>,
     input: inputType,
@@ -23,13 +26,13 @@ type genInputType = {
     setIsDeleted: React.Dispatch<React.SetStateAction<targetType>>,
 }
 export default function GenInput({ input, setInput, setIsSelected, setIsDeleted }: genInputType) {
+    const { user } = useGeneralContext();
+    const checkInput = (input && input.type) ? input : null;
     const [image, setImage] = React.useState<string | null>(null);
     const { setBlogMsg, blogMsg, input_s, setInput_s } = useBlogContext();
-    const type: string = input.type;
+    const type: string | null = checkInput && checkInput.type;
     const s3Key: string | null = input.s3Key ? input.s3Key : null;
-    const check: boolean = (type === "image" && s3Key && !input.url) ? true : false;
-
-
+    const check: boolean = (type && type === "image" && s3Key && !input.url) ? true : false;
 
     React.useEffect(() => {
         if (check) {
@@ -98,6 +101,17 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                     </h4>
                 </div>
             )
+        case "link":
+            return (
+                <div className="link" style={{ position: "relative", width: "100%" }}>
+                    {input.name && <h3>
+                        {input.name}
+                    </h3>}
+                    <Link href={input.content}>
+                        {input.content}
+                    </Link>
+                </div>
+            )
         case "section":
             return (
                 <div className="inputSection" style={{ position: "relative", width: "100%" }}>
@@ -129,6 +143,24 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                         <SeparatePara para={input.content} class_={"pSection"} />
                     </section>
                 </div>
+            )
+        case "reply":
+
+            return (
+                <React.Fragment>
+                    {checkInput && checkInput.type === "reply" &&
+
+                        <section className="replyForm" style={{ position: "relative", width: "100%" }}>
+                            {input.name && <h4>
+                                {input.name}
+                            </h4>}
+                            <p>{input.content}</p>
+
+                        </section>
+
+                    }
+                </React.Fragment>
+
             )
         case "conclusion":
             return (

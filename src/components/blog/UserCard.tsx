@@ -4,7 +4,7 @@ import Image from 'next/image';
 import "@pages/globalsTwo.css";
 import styles from "@component/blog/blog.module.css";
 
-export default function UserCard({ user }: { user: userType }) {
+export default function UserCard({ user }: { user: userType | null }) {
     return (
         <>
             {user &&

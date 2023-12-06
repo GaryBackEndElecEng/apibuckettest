@@ -15,11 +15,12 @@
 }
 .rootBody {
   width: 100%;
+  padding: 0;
   position: relative;
   margin: 0;
   display: grid;
   place-items: center;
-  place-content: stretch;
+  z-index: -1;
 }
 .mainHeaderTrue {
   position: sticky;
@@ -33,6 +34,8 @@
   background-size: 100% 100%;
   filter: grayscale(80);
   /* padding-top: 10px; */
+}
+.link {
 }
 .mainHeaderFalse {
   position: sticky;
@@ -107,6 +110,30 @@
 .conclusion {
   font-size: 110%;
   /* margin-bottom: 2rem; */
+}
+section.replyForm {
+  margin: auto;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+form.formReplySubmit {
+  margin: auto;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+form.formReplySubmit input {
+  border-radius: 20px 20px 20px 20px;
+}
+section.replyForm p {
+  margin-block: 0.5rem;
+  margin-inline: 0.5rem;
+  padding-inline: 0.5rem;
 }
 p.paraCreator::first-letter {
   color: rgba(28, 11, 1, 0.9);

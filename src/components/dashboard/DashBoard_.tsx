@@ -16,6 +16,9 @@ import UserFilesRates from "./UserFilesRates";
 import UserPostsRates from "./UserPostsRates";
 import BlogHits from "./BlogHits";
 import PostHits from "./PostHits";
+import MemberContact from "./MemberContact";
+import Message from './Message';
+import MasterLikes from './MasterLikes';
 
 type resType = { user: userType | null, message: string }
 
@@ -27,10 +30,11 @@ type DashboardType = {
 
 export default function DashBoard_({ getuser, files, posts }: DashboardType) {
 
-    const { setUser, user } = useGeneralContext();
+    const { setUser, user, setMsg, msg } = useGeneralContext();
     const { setBlogMsg, blogMsg, setUserBlogs, userBlogs } = useBlogContext()
     const [open, setOpen] = React.useState<boolean>(false);
-    const [openRates, setOpenRates] = React.useState<boolean>(false);
+    const [contactBtn, setContactBtn] = React.useState<boolean>(false);
+
 
     React.useEffect(() => {
         if (!getuser) return
@@ -49,8 +53,8 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
 
     return (
         <main className={`${styles.dashContainer} bg-slate-400`}>
-            <div className={styles.gridThree}>
-                <div className={styles.gridElement}>
+            <div className={styles.masterGrid}>
+                <div className={styles.grid_One}>
                     <div className={styles.rateStyles}>
                         <div>
                             <h3 className="font-bold text-center underline underline-offset-8 my-2">Blog rates</h3>
@@ -80,9 +84,16 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
                                 <PostHits posts={posts} />
                             </details>
                         </div>
+                        <div className="col-span-2">
+                            <h3 className="font-bold text-center underline underline-offset-8 my-2">likes</h3>
+                            <details>
+                                <summary>likes</summary>
+                                <MasterLikes files={files} posts={posts} />
+                            </details>
+                        </div>
                     </div>
                 </div>
-                <div className={styles.gridElement} style={{ position: "relative" }}>
+                <div className={styles.grid_Two} style={{ position: "relative" }}>
                     <BlogMsg />
                     <div className="flexrow">
                         <Link href={"/dashboard/createBlog"}>
@@ -93,7 +104,19 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
                         </Link>
                     </div>
                 </div>
-                <div className={styles.gridElement}>grid</div>
+                <div className={styles.grid_Three}>
+                    {!contactBtn &&
+                        <button className="buttonsm bg-black text-white" onClick={() => setContactBtn(true)}>message us</button>
+                    }
+                    {msg && msg.msg && <Message setMsg={setMsg} msg={msg} />}
+                    <div className={contactBtn ? styles.openMember : styles.closeMember}>
+                        {user && <MemberContact user={user} setMsg={setMsg}
+                            contactBtn={contactBtn}
+                            setContactBtn={setContactBtn} />}
+                    </div>
+                    <h1>space for messaging</h1>
+                </div>
+
             </div>
             <div className="text-xl text-center my-1 mt-2 text-slate-200">Update profile</div>
             {open ?

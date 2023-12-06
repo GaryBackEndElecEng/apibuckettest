@@ -8,6 +8,7 @@
   justify-content: stretch;
   align-items: stretch;
   padding-inline: 2rem;
+  z-index: -1;
   padding-block: 2rem;
   border-radius: 15px 15px 15px 15px;
 }
@@ -127,6 +128,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 3rem;
+  padding: 1.5rem;
   /* background: rgba(36, 35, 35, 0.1); */
 }
 .userCard {
@@ -245,7 +247,7 @@
   height: 80vh;
   display: grid;
   place-items: center;
-  padding: 10rem;
+  padding: 5rem;
   border-radius: 20px 20px 20px 20px;
 }
 .notFoundContainer > div {
@@ -267,6 +269,22 @@
   flex-direction: column;
   gap: 2rem;
   border-radius: inherit;
+}
+.notFoundContainer > div h2 {
+  padding-inline: 1rem;
+}
+/* reply selected*********/
+.showReply {
+  min-height: 20vh;
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.75s ease-in-out;
+}
+.hideReply {
+  height: 10px;
+  opacity: 0;
+  transform: scale(0.2);
+  transition: all 0.75s ease-in-out;
 }
 
 /* blogsLayoutContainer */

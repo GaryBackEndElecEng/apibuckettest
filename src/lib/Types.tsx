@@ -189,6 +189,7 @@ export const inputNames: inputType[] = [
     { type: "link", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "article", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "conclusion", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "reply", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
 ]
 export type targetType = {
     loaded: boolean,

@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import styles from "@component/post/post.module.css";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -13,6 +14,7 @@ import { postLikeType, postType, postRateType, likeType, likeIcon, likeArr, msgT
 import { usePostContext } from '../context/PostContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import GenericMsg from '../comp/GenericMsg';
+import { useLikes } from "@lib/ultils";
 
 
 
@@ -35,15 +37,17 @@ type likeFetchType = {
 }
 export default function PostLike({ file }: mainPostLikeType) {
     const [blogMsg, setBlogMsg] = React.useState<msgType | undefined>();
-    const [likes, setLikes] = React.useState<fileLikeType[]>([])
     const [Named, setNamed] = React.useState<{ name: string, id: number } | null>(null);
     const [styl, setStyl] = React.useState<string>("noname");
+    const [getLikes, setGetLikes] = React.useState<(likeIcon | undefined)[] | null>(null)
+    const likes = useLikes(file.likes)
 
     React.useEffect(() => {
-        if (file && file.likes) {
-            setLikes(file.likes)
+        if (likes) {
+            setGetLikes(likes)
         }
-    }, [file])
+    }, [likes])
+
 
 
     const handlePic = async (e: React.MouseEvent<HTMLSpanElement, MouseEvent>, obj: mainIconType) => {
@@ -59,7 +63,7 @@ export default function PostLike({ file }: mainPostLikeType) {
             })
             if (res.ok) {
                 const body: likeFetchType = await res.json();
-                setLikes([...likes, body.like]);
+                setGetLikes([...likes, body.like as unknown as likeIcon]);
                 setBlogMsg({ loaded: true, msg: body.message as string })
             }
         } catch (error) {
@@ -100,15 +104,21 @@ export default function PostLike({ file }: mainPostLikeType) {
 
             <div className="flexrow">
                 {file && file.likes &&
-                    calcLikes(likes).map((obj, index) => (
-                        <React.Fragment key={index}>
-                            <div className="flex flex-col items-center justify-center">
-                                <h4> {obj.name}</h4>
-                                {obj.icon}
-                                <div>#: {obj.count}</div>
-                            </div>
-                        </React.Fragment>
-                    ))
+                    getLikes && getLikes.map((obj, index) => {
+
+                        if (obj && obj.name && obj.count) {
+
+                            return (
+                                <React.Fragment key={index}>
+                                    <div className="flex flex-col items-center justify-center">
+                                        <h4> {obj?.name}</h4>
+                                        {obj?.icon}
+                                        <div>#: {obj?.count}</div>
+                                    </div>
+                                </React.Fragment>
+                            )
+                        }
+                    })
                 }
             </div>
 
@@ -116,17 +126,7 @@ export default function PostLike({ file }: mainPostLikeType) {
     )
 }
 
-export function calcLikes(likes: likeType[]): likeIcon[] {
-    let arr: likeIcon[] = []
-    //css issues for li && p in globals (can see-says invalid)
-    likeArr.forEach(nam => {
-        const item = likes.filter(like => like.name.includes(nam.name))
-        if (item) {
-            arr.push({ name: nam.name, icon: nam.icon, count: item.length })
-        }
-    });
-    return arr
-}
+
 
 export const iconArr: mainIconType[] = [
     { id: 1, name: "avg", icon: <ThumbUpIcon />, class: styles.average },

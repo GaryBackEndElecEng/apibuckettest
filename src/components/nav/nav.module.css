@@ -206,6 +206,7 @@
     direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 10;
   }
   .navMain > img {
     width: 45px;
@@ -234,6 +235,7 @@
     top: 4rem;
     flex: 1;
     gap: 0.75rem;
+    z-index: 20000;
     /* padding: 0.5rem; */
     width: max-content;
     transform: translateX(-225%) scale(1);

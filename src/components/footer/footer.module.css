@@ -37,6 +37,9 @@
   gap: 2rem;
   width: 100%;
 }
+.two {
+  font-weight: 500;
+}
 @media screen and (max-width: 980px) {
   .footerGrid {
     margin-inline: 0.5rem;
@@ -62,6 +65,6 @@
   }
   .genContactContainer {
     top: -280%;
-    right: 2rem;
+    right: 0.5rem;
   }
 }

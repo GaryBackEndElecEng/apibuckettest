@@ -6,6 +6,7 @@
   place-items: center;
   place-content: center;
   position: relative;
+  z-index: -1;
 }
 .buttonsm {
   padding-inline: 1rem;
@@ -27,15 +28,16 @@
   margin-block: 2rem;
   min-height: 100vh;
 }
-.gridThree {
+.masterGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-auto-flow: dense;
   place-items: center;
   gap: 1rem;
   width: 100%;
 }
-.gridElement {
+.grid_One {
+  grid-column: 1 / span 2;
   background: whitesmoke;
   border: 1px solid white;
   box-shadow: 1px 1px 5px 2px grey;
@@ -46,6 +48,35 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
+  position: relative;
+}
+.grid_Two {
+  grid-column: 1;
+  background: whitesmoke;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px 2px grey;
+  border-radius: 10px 10px 10px 10px;
+  min-height: 20vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
+}
+.grid_Three {
+  grid-column: 1 / span 2;
+  background: whitesmoke;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px 2px grey;
+  border-radius: 10px 10px 10px 10px;
+  min-height: 20vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
 }
 .rateStyles {
   width: 100%;
@@ -58,6 +89,86 @@
 .rateStyles > div {
   padding-inline: 10px;
 }
+/* CONTACT FORM-----*/
+.contactContainer {
+  opacity: 1;
+  background: whitesmoke;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px 2px grey;
+  border-radius: 10px 10px 10px 10px;
+  min-height: 20vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 30vh;
+  transition: all 0.75s ease-in-out;
+}
+.closeContactContainer {
+  height: 20px;
+  opacity: 0;
+  background: whitesmoke;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px 2px grey;
+  border-radius: 10px 10px 10px 10px;
+  height: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  transition: all 0.75s ease-in-out;
+}
+.contactSendBtn {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-inline: 1.5rem;
+  padding-block: 0.5rem;
+  text-align: center;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px 1px black;
+  border-radius: 20px 20px 20px 20px;
+}
+.openMember {
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 350px;
+  transform: scale(1);
+  transition: all 0.75s ease-in-out;
+}
+.closeMember {
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 350px;
+  transform: scale(0);
+  transition: all 0.75s ease-in-out;
+}
+/* CONTACT FORM-----*/
+/* ----AVGLIKES-----*/
+.mainLikes {
+  display: flex;
+  margin-inline: auto;
+  margin-block: auto;
+  flex-direction: row;
+  gap: 1rem;
+}
+.likeFlex {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.likeFlex > span.icon {
+  color: red;
+}
+/* ----AVGLIKES-----*/
 
 .gridElement button {
   background: black;
@@ -107,6 +218,19 @@
   line-height: 8px;
   font-weight: bold;
   color: white;
+}
+.btnPublish {
+  padding-inline: 2rem;
+  font-size: 20px;
+  padding-block: 0.5rem;
+  border: 1px solid black;
+  box-shadow: 1px 1px 7px 2px white;
+  border-radius: 30px 30px 30px 30px;
+  transition: box-shadow 0.75s ease-in-out;
+}
+.btnPublish:hover {
+  box-shadow: 1px 1px 7px 2px black;
+  transition: box-shadow 0.75s ease-in-out;
 }
 .sendBtn {
   border-radius: 50%;
@@ -296,6 +420,13 @@
   border-radius: 10px 10px 10px 10px;
   filter: drop-shadow(1px 1px 3px lightgrey);
 }
+.gridTwoFormContainer {
+  align-self: stretch;
+}
+.gridTwoFormContainer input,
+.gridTwoFormContainer textarea {
+  border-radius: 10px 10px 10px 10px;
+}
 .userForm {
   width: 100%;
   display: flex;
@@ -360,7 +491,7 @@
   .dashContainer {
     width: 100%;
   }
-  .gridThree {
+  .masterGrid {
     margin-inline: 1rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -375,7 +506,7 @@
   }
 }
 @media screen and (max-width: 450px) {
-  .gridThree {
+  .masterGrid {
     margin-inline: 0.5rem;
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));

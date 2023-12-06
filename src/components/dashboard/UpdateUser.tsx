@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useGeneralContext } from "@context/GeneralContextProvider";
 import styles from '@component/dashboard/dashboard.module.css';
 import { getErrorMessage } from '@/lib/errorBoundaries';
+import Message from "./Message";
 
 type fetchUserType = {
     user: userType,
@@ -84,8 +85,8 @@ export default function UpdateUser({ user }: { user: userType | null }) {
         <div className={styles.userUpDatemain}>
             {user &&
                 <div className={styles.gridTwo}>
-                    <div>
-                        <div>
+                    <div className={styles.gridTwoFormContainer}>
+                        <div style={{ width: "100%" }}>
                             <form className={`${styles.userForm} bg-slate-500`} onSubmit={(e) => handleUser(e)}>
                                 <TextField
                                     fullWidth={false}
@@ -101,7 +102,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     variant="filled"
                                     value={user.name ? user?.name : ""}
                                     onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
-                                    style={{ width: "auto" }}
+                                    style={{ width: "75%" }}
                                     className="bg-slate-100 text-black"
                                 />
                                 <TextField
@@ -118,12 +119,12 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     variant="filled"
                                     value={user.email ? user.email : ""}
                                     onChange={(e) => setUser({ ...user, email: e.target.value })}
-                                    style={{ width: "auto" }}
+                                    style={{ width: "75%" }}
                                     className="bg-slate-100 text-black"
                                 />
                                 <div className="flexrowsm" style={{ width: "auto" }}>
                                     <TextField
-                                        fullWidth={false}
+                                        fullWidth={true}
                                         helperText={"password"}
                                         id={"password"}
                                         label={"password"}
@@ -183,17 +184,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                 }}
                             />}
                             {message && message.msg &&
-                                <div className="relative h-[10vh] flex flex-col items-center justify-center text-black">
-                                    {message.loaded ?
-                                        <div className=" absolute inset-0 flex flex-col text-blue-900 text-xl">
-                                            {message.msg}
-                                        </div>
-                                        :
-                                        <div className=" absolute inset-0 flex flex-col text-orange-900 text-xl">
-                                            {message.msg}
-                                        </div>
-                                    }
-                                </div>
+                                <Message msg={message} setMsg={setMessage} />
                             }
                         </div>
                     </div>

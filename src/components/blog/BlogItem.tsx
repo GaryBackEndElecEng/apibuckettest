@@ -14,11 +14,16 @@ import { useGeneralContext } from '@context/GeneralContextProvider';
 
 type MainItemType = {
     file: fileType,
-    user: userType
+    getuser: userType | undefined
 }
-export default function BlogItem({ file, user }: MainItemType) {
-    const { pageHits } = useGeneralContext();
+export default function BlogItem({ file, getuser }: MainItemType) {
+    const { pageHits, setUser, user } = useGeneralContext();
     const arrLikeIcon: likeIcon[] | null = file.likes ? calcLikes(file.likes) : null;
+    React.useEffect(() => {
+        if (getuser) {
+            setUser(getuser)
+        }
+    }, [getuser, setUser]);
 
     return (
         <div className={styles.card}>

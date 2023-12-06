@@ -18,7 +18,7 @@ type userPageType = {
     posts: postType[] | undefined
 }
 export default function UserPage({ user, files, posts }: userPageType) {
-    //feed post & file detail to pages[id]
+    const [select, setSelect] = React.useState<"blogs" | "posts" | "both">("both")
 
     const { setUserBlogs, userBlogs } = useBlogContext();
     const { userPosts, setUserPosts } = usePostContext();
@@ -30,13 +30,15 @@ export default function UserPage({ user, files, posts }: userPageType) {
         }
     }, [user, setUser]);
 
+
     return (
         <div
             className={styles.userpage}
         >
-            <div className={styles.userGrid}>
-                <MainBlogcard user={user} files={files} />
-                <MainPostcard user={user} posts={posts} />
+            {select !== "both" && <button className="buttonsm bg-slate-800 text-white mt-3 mb-1" onClick={() => setSelect("both")}>view all</button>}
+            <div className={(select === "both" && files && posts) ? styles.userGrid : styles.userFlex}>
+                {files && <MainBlogcard user={user} files={files} setSelect={setSelect} select={select} />}
+                {posts && <MainPostcard user={user} posts={posts} setSelect={setSelect} select={select} />}
             </div>
         </div>
     )

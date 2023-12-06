@@ -4,6 +4,8 @@ import styles from "./userpage.module.css"
 import { userType } from '@/lib/Types';
 import Image from 'next/image';
 import { useWindowSize } from "@lib/ultils";
+import { Ephesis } from 'next/font/google';
+const ephesis = Ephesis({ subsets: ['latin'], weight: "400" });
 import { useGeneralContext } from '../context/GeneralContextProvider';
 
 
@@ -29,7 +31,7 @@ export default function UserHeader() {
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 place-items-center my-2 mx-0">
                     <div className="col-span-1 flex flex-col ">
 
-                        <h3>{Name?.split(" ")[0]} {Name?.split(" ")[1]}</h3>
+                        <h3 className={`${ephesis.className} text-3xl`}>{Name?.split(" ")[0]} {Name?.split(" ")[1]}</h3>
 
 
                         {user.image ?

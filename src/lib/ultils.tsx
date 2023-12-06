@@ -272,4 +272,18 @@ export function useHits() {
     }, [pageHits]);
     return { total, pageArr: retArr }
 }
+export function useLikes(likes: likeType[]) {
+    const [iconLikes, setIconLikes] = React.useState<(likeIcon | undefined)[]>([]);
+    React.useEffect(() => {
+        const getLikes = likeArr.map(nIcon => {
+            const likearr = likes.filter(n => (n.name === nIcon.name));
+            if (likearr && likearr.length > 0) {
+                const sum = likearr.reduce((a, b) => (a + b.count), 0)
+                return { name: nIcon.name, icon: nIcon.icon, count: sum }
+            }
+        });
+        setIconLikes(getLikes)
+    }, [likes]);
+    return iconLikes
+}
 

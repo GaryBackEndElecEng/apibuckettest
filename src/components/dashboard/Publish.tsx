@@ -61,7 +61,7 @@ export default function Publish({ file }: { file: fileType }) {
                 style={{ color: "red" }}
             />
             <IconButton onClick={(e) => sendPub(e)} style={{ display: "flex", gap: "5px" }}>
-                <BsFillSendFill style={{ color: "white", border: "1px", fontSize: "16px" }} className="bg-blue-500" />
+                <BsFillSendFill className={`bg-blue-500 ${styles.btnPublish} `} />
             </IconButton>
         </div>
     )

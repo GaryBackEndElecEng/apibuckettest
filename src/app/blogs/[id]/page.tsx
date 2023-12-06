@@ -86,18 +86,18 @@ export default async function BlogPage({ params }: { params: { id: string } }) {
     const file: fileType | undefined = await getFile(id);
     if (file) {
         const fileInsert = await insertFileImg(file)
-        const user: userType | undefined = await getUser(file.userId as string)
-        const userInsert = await insertUserImg(user as userType)
+        const getuser: userType | undefined = await getUser(file.userId as string)
+        const userInsert = await insertUserImg(getuser as userType)
 
 
         return (
 
             <div className={styles.MasterBlogIndex}>
                 <div className={styles.blogIndexContainer}>
-                    {file && user &&
+                    {file && getuser &&
 
 
-                        <BlogItem file={fileInsert} user={userInsert} />
+                        <BlogItem file={fileInsert} getuser={userInsert} />
 
                     }
                 </div>

@@ -8,7 +8,7 @@ export default function Page() {
         <div className={`${styles.notFoundContainer} bg-slate-400`}>
             <div style={{ backgroundImage: `url(${url})` }}>
                 <div>
-                    <h2 className="text-2xl font-bold text-slate-100" style={{ color: "white" }}> sorry the page was not found</h2>
+                    <h2 className="text-2xl font-bold text-slate-100 " style={{ color: "white" }}> sorry the page was not found</h2>
                     <Link href={"/"}>
                         <button className="buttonsm my-2 bg-black text-white">home</button>
                     </Link>

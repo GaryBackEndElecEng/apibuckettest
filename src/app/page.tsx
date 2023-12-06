@@ -35,10 +35,8 @@ export default async function Home() {
       <div className={styles.homeUserGrid}>
         {
           users && users.map((user, index) => (
-            <div key={index}>
-              <Link href={`/${user.name}`}>
-                <UserCard user={user as userType} />
-              </Link>
+            <div key={index} className={styles.homeGridElement}>
+              <UserCard user={user as userType} />
             </div>
           ))
         }

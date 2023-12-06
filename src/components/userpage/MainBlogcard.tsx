@@ -14,9 +14,11 @@ import { useGeneralContext } from '../context/GeneralContextProvider';
 type userPageType = {
     user: userType,
     files: fileType[] | undefined,
+    setSelect: React.Dispatch<React.SetStateAction<"blogs" | "posts" | "both">>,
+    select: "blogs" | "posts" | "both"
 
 }
-export default function MainBlogcard({ user, files }: userPageType) {
+export default function MainBlogcard({ user, files, select, setSelect }: userPageType) {
     //feed post & file detail to pages[id]
 
     const { setUserBlogs, userBlogs } = useBlogContext();
@@ -30,16 +32,19 @@ export default function MainBlogcard({ user, files }: userPageType) {
 
     }, [files, setUserBlogs]);
 
+    const showGrid = (select === "blogs" || select === "both") ? styles.mainUsercard : styles.mainhideusercard;
+    const dataView = "view blogs";
+
     return (
         <div
-            className={styles.mainUsercard}
+            className={showGrid}
         >
-
-            <div className="line-break-sm" />
-            <h2 className="text-center text-2xl font-bold">{("Blogs").toUpperCase()}</h2>
-            <div className="line-break-sm" />
-
-            <div className={styles.blogCardContainer}>
+            <div onClick={() => setSelect("blogs")} style={{ cursor: "pointer" }} className={styles.clickBlogs} data-view={dataView}>
+                <div className="line-break-sm" />
+                <h2 className="text-center text-2xl font-bold">{("Blogs").toUpperCase()}</h2>
+                <div className="line-break-sm" />
+            </div>
+            <div className={select === "blogs" ? styles.blogGrid : styles.blogCardContainer}>
                 <Suspense fallback="Loading....">
                     {userBlogs && userBlogs.map((file, index) => {
                         if (file.published === true) {

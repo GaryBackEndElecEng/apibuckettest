@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter } from 'next/font/google';
 import './globals.css';
 import "@pages/globalsTwo.css";
 import Nav from "@component/nav/Nav";
@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-300 rootBody" >
+      <body className="bg-slate-200 rootBody" >
         <Providers>
           <GeneralContextProvider>
             <BlogContextProvider>

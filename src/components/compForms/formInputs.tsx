@@ -1,4 +1,4 @@
-import { inputType, inputNames, userType, msgType } from '@/lib/Types'
+import { inputType, inputNames, userType, msgType, contactType } from '@/lib/Types'
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { TextField } from '@mui/material'
 import React from 'react'
@@ -76,6 +76,7 @@ export function HeaderPlusForm({ input, setInput }: GenFormType) {
         { name: "heading" },
         { name: "subHeading" },
         { name: "list" },
+
     ]
     if (input && input.type) {
         const check: inputType | null = checkArr.find(obj => (obj.name === input.type)) ? input : null;
@@ -220,4 +221,92 @@ export function ImgAddForm({ input, setInput }: GenFormType) {
     } else {
         return (<></>)
     }
+}
+
+export function LinkForm({ input, setInput }: GenFormType) {
+
+    if (input && input.type) {
+        const check: inputType | null = input.type === "link" ? input : null;
+        if (!check) return (<></>);
+        return (
+            <div>
+                <TextField
+                    fullWidth={true}
+                    helperText={`${check.type}-link name`}
+                    id={`${check.type}-${check.id ? check.id : "link name"}`}
+                    label={`${check.type}-link name`}
+                    multiline={false}
+                    name={`${check.type}-link name`}
+                    placeholder={`add link name`}
+                    required
+                    size={"medium"}
+                    type="text"
+                    value={check.name ? check.name : ""}
+                    onChange={(e) => setInput({ ...check, name: e.target.value as string })}
+                    style={{ fontFamily: "bold" }}
+                />
+                <TextField
+                    fullWidth={true}
+                    helperText={`${check.type}-link`}
+                    id={`${check.type}-${check.id ? check.id : "link"}`}
+                    label={`${check.type}-link`}
+                    multiline={false}
+                    name={`${check.type}-link`}
+                    placeholder={`body link`}
+                    required
+                    size={"medium"}
+                    type="text"
+                    variant="filled"
+                    value={check && check.content ? check.content : ""}
+                    onChange={(e) => setInput({ ...check, content: e.target.value as string })}
+                    style={{ fontFamily: "bold", width: "max-content" }}
+                />
+            </div>
+        )
+    } else {
+        return (<></>)
+    }
+}
+export function ReplyForm({ input, setInput }: GenFormType) {
+    const check = input && input.type === "reply" ? input : null;
+
+    return (
+        <React.Fragment>
+            {check &&
+                <div className="flex flex-col items-stretch justify-center gap-2">
+                    <TextField
+                        fullWidth={false}
+                        helperText={`${check.type}-reply name`}
+                        id={`${check.type}-${check.id ? check.id : "reply name"}`}
+                        label={`${check.type}-reply name`}
+                        multiline={false}
+                        name={`${check.type}-reply name`}
+                        placeholder={`add reply name`}
+                        required
+                        size={"medium"}
+                        type="text"
+                        value={check.name ? check.name : ""}
+                        onChange={(e) => setInput({ ...check, name: e.target.value as string })}
+                        style={{ fontFamily: "bold" }}
+                    />
+                    <TextField
+                        fullWidth={true}
+                        helperText={`${check.type}-reply`}
+                        id={`${check.type}-${check.id ? check.id : "reply"}`}
+                        label={`${check.type}-reply`}
+                        multiline={false}
+                        name={`${check.type}-reply`}
+                        placeholder={`body reply`}
+                        required
+                        size={"medium"}
+                        type="text"
+                        variant="outlined"
+                        value={check && check.content ? check.content : ""}
+                        onChange={(e) => setInput({ ...check, content: e.target.value as string })}
+                        style={{ fontFamily: "bold", width: "max-content" }}
+                    />
+                </div>
+            }
+        </React.Fragment>
+    )
 }

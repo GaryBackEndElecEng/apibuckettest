@@ -12,9 +12,11 @@ import { useGeneralContext } from '../context/GeneralContextProvider';
 
 type userPageType = {
     user: userType,
-    posts: postType[] | undefined
+    posts: postType[] | undefined,
+    setSelect: React.Dispatch<React.SetStateAction<"blogs" | "posts" | "both">>,
+    select: "blogs" | "posts" | "both"
 }
-export default function MainPostcard({ user, posts }: userPageType) {
+export default function MainPostcard({ user, posts, select, setSelect }: userPageType) {
     //feed post & file detail to pages[id]
 
     const { setUserBlogs, userBlogs } = useBlogContext();
@@ -29,15 +31,20 @@ export default function MainPostcard({ user, posts }: userPageType) {
 
     }, [posts, setUserPosts]);
 
+    const showGrid = (select === "posts" || select === "both") ? styles.mainUsercard : styles.mainhideusercard;
+    const dataView = "view posts";
+
     return (
         <div
-            className={styles.mainUsercard}
+            className={showGrid}
         >
-            <div className="line-break-sm" />
-            <h2 className="text-center text-2xl font-bold">{("Posts").toUpperCase()}</h2>
-            <div className="line-break-sm" />
+            <div onClick={() => setSelect("posts")} style={{ cursor: "pointer" }} className={styles.clickPosts} data-view={dataView}>
+                <div className="line-break-sm" />
+                <h2 className="text-center text-2xl font-bold">{("Posts").toUpperCase()}</h2>
+                <div className="line-break-sm" />
+            </div>
 
-            <div className={styles.blogCardContainer}>
+            <div className={select === "posts" ? styles.postGrid : styles.blogCardContainer}>
                 <Suspense fallback="Loading....">
                     {userPosts && userPosts.map((post, index) => (
                         <React.Fragment key={index}>
