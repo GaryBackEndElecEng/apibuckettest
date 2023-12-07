@@ -7,9 +7,10 @@
   margin-block: 3rem;
   justify-content: stretch;
   align-items: stretch;
-  padding-inline: 2rem;
+  padding: 2rem;
   z-index: -1;
-  padding-block: 2rem;
+  position: relative;
+
   border-radius: 15px 15px 15px 15px;
 }
 .blogSIngleIDLayoutContainer {
@@ -30,7 +31,42 @@
   align-items: center;
   margin-block: 3rem;
   border-radius: inherit;
+  position: relative;
 }
+/*---blogHeader----- */
+.blogHeader {
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+  height: 30vh;
+  width: 100%;
+  padding-inline: 2rem;
+  margin-inline: 0;
+  border-radius: inherit;
+  animation: growIn 5s ease-in-out;
+  z-index: 0;
+}
+@keyframes growIn {
+  from {
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    opacity: 0.2;
+    transform: scale(0.6);
+  }
+  to {
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media screen and (max-width: 980px) {
+  .blogHeader {
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+  }
+}
+/*---blogHeader----- */
+
 .MasterBlogIndex {
   margin: auto;
   display: flex;
@@ -287,12 +323,12 @@
   transition: all 0.75s ease-in-out;
 }
 
-/* blogsLayoutContainer */
 @media screen and (max-width: 980px) {
   .blogsLayoutContainer {
-    margin: auto;
+    /* margin: auto; */
     width: 100%;
     padding-inline: 1rem;
+    position: relative;
   }
   .blogIndexContainer {
     width: 100%;
@@ -321,6 +357,7 @@
     margin: auto;
     width: 100%;
     padding-inline: 0.5rem;
+    position: relative;
   }
   .blogCard {
     align-self: stretch;
@@ -345,6 +382,7 @@
     margin: auto;
     width: 100%;
     padding-inline: 5px;
+    position: relative;
   }
 
   .detailContainer {
@@ -377,5 +415,6 @@
     margin: auto;
     width: 100%;
     padding-inline: 1px;
+    position: relative;
   }
 }

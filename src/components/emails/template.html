@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you for registering</title>
+    <style>
+        body{
+            border-radius:10px;
+            box-shadow:1px 1px 5px 20px grey,-1px -1px -5px 20px grey;
+            margin-inline:2rem;
+            padding-inline:1.5rem;
+            display:flex;
+            flex-direction: column;
+            justify-content:center;
+            align-items:center;
+            gap:1rem;
+        }
+        h4{
+            color:blue;
+        }
+        h1{ font:"bold";text-decoration:underline;text-underline-offset: 3;}
+        .masterultils{
+            
+            margin-block:20px;
+            padding-block:20px;
+            border-radius:10%;
+        }
+        .flexrow{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:1rem;
+        }
+        p{margin-block:10px}
+        .list{
+            margin-block:20px;
+            background:white;
+            border-radius:10px;
+            padding:7px;
+            box-shadow:1px 1px 5px 20px grey,-1px -1px -5px 20px grey;
+        }
+        div.lineBreak{
+            height:5px;
+            background:linear-gradient(to left,orange,blue);
+            width:75%;
+            margin-block:1.5rem;
+            margin-bottom:2rem;
+        }
+        a{
+            margin-block:1rem;
+        }
+        img{
+            max-width:400px;
+            aspect-ratio:16 / 9;
+            padding:1rem;
+            border-radius: 30px 30px 30px 30px;
+            box-shadow:1px 1px 10px 2px black;
+        }
+    </style>
+</head>
+<html>
+    <div class="lineBreak"></div>
+    <div class="flexrow">
+    <h2>Community member</h2>
+    <h4> author: ${name}</h4>
+</div>
+    <div class="lineBreak"></div>
+    <p>${name} is working hard on updating / creating new blogs</p>
+    <p>We will let keep you in the loop.</p>
+    
+    <h4> additional interesting things you might like</h4>
+    <ul class="list">
+        <li><a href="https://www.masterultils.com/articles">articles</a></li>
+        <li><a href="https://www.ablogroom.com/register">register</a></li>
+        <li><a href="https://www.masterconnect.ca/design">Dynamic Designs</a></li>
+    </ul>
+    
+    <div class="masterultils text-align-center flex-col items-center gap-2">
+    <a href="www.masterconnect.ca">Designs@masterconnect.ca</a>
+    <p>email sponsor:<a href="emailto:masterultils@gmail.com"> email</a></p>
+        <img src="https://www.ablogroom.com/images/gb_logo.png" alt="www.masterconnect.ca"
+        />
+    </div>
+    <br/>
+    <div class="lineBreak"></div>
+    <p>To unsubscribe :<a href="https://www.ablogroom.com/unsubscribe?email=${email}" >unsubscribe</a></p>
+    
+    <div class="lineBreak"></div>
+</body>
+</html>

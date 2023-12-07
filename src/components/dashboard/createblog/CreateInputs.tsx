@@ -2,7 +2,7 @@ import { useBlogContext } from '@/components/context/BlogContextProvider'
 import { inputType, inputNames, userType, targetType } from '@/lib/Types';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import React from 'react';
-import BlogMsg from "@component/dashboard/createblog/BlogMsg";
+import GenBlogMsg from "@/components/dashboard/createblog/GenBlogMsg";
 import Popup from "@component/dashboard/createblog/Popup";
 import styles from "@component/dashboard/createblog/createablog.module.css";
 import InputForm from "@component/dashboard/createblog/InputForm";
@@ -169,7 +169,7 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                 })}
             </div>
             <div className={styles.mainSelectInput}>
-                <BlogMsg />
+                <GenBlogMsg />
                 {blogMsg && <Popup trigger={imgLoaded} message={blogMsg.msg} />}
 
                 <form className={!isSelected ? styles.showSelector : styles.hideSelector} onSubmit={handleSelectInput}

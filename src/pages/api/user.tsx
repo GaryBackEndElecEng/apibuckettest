@@ -120,4 +120,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
     }
+    if (req.method === "DELETE") {
+        const email = req.query as unknown as string;
+        try {
+            const deleteUser = await prisma.user.delete({
+                where: {
+                    email: email
+                },
+            });
+
+
+            return res.status(200).json({ user: deleteUser, message: "deleted" })
+        } catch (error) {
+            console.error(new Error(`${getErrorMessage(error)}@api/user@delete`))
+
+        } finally {
+            await prisma.$disconnect()
+        }
+
+    }
 }

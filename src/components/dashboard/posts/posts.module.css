@@ -24,13 +24,14 @@
 .postsDashGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(350px, 01fr));
+  grid-auto-flow: dense;
   place-items: center;
   gap: 1rem;
 }
 .postsDashGrid > div {
   margin: auto;
   width: 100%;
-  height: 20vh;
+  min-height: 20vh;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
@@ -107,6 +108,12 @@
   padding: 20rem;
   background: black;
 }
+@media screen and (max-width: 1117px) {
+  .mainPosts {
+    grid-template-columns: repeat(2, minmax(350px, 1fr));
+    gap: 0.75rem;
+  }
+}
 
 @media screen and (max-width: 980px) {
   .loginfix {
@@ -114,12 +121,6 @@
   }
   .mainPagePosts {
     width: 90%;
-  }
-  .mainPosts {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(350px, 1fr));
-    place-items: center;
-    gap: 1rem;
   }
   .postItemMain {
     padding-inline: 0.75rem;
@@ -134,10 +135,8 @@
     width: 100%;
   }
   .mainPosts {
-    display: grid;
     grid-template-columns: repeat(1, minmax(350px, 1fr));
-    place-items: center;
-    gap: 2rem;
+    gap: 1.25rem;
   }
   .postItemMain {
     padding-inline: 5px;

@@ -51,7 +51,7 @@ export default async function PageDetail({ params }: { params: { id: string } })
         return (
             <div className={styles.detailPageContainer}>
                 <BlogDetail file={file} getuser={user as userType} />
-                <Link href={"/dashboard"} className={`my-3 text-center ${styles.backLink}`}>
+                <Link href={"/dashboard"} className={`my-4 text-center ${styles.backLink}`}>
                     <button className="buttonsm bg-slate-600 text-white">back<span className="text-xl text-red-900 ml-1">?</span></button>
                 </Link>
             </div>

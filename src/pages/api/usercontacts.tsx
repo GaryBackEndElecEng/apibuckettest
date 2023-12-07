@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         userId: userId as string,
                     }
                 });
-                return res.status(200).json({ contact: contacts, message: "retrieved" })
+                return res.status(200).json({ contacts: contacts, message: "retrieved" })
             } catch (error) {
                 const message = getErrorMessage(error)
                 res.status(500).json({ contacts: null, message: `${message}@usercontacts` })

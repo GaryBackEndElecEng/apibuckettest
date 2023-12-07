@@ -40,7 +40,7 @@ export default function MainPosts({ getuser, getposts }: mainPostsType) {
 
     return (
         <React.Fragment>
-            <PostsDashboard />
+            <PostsDashboard user={user} posts={posts} />
 
             <div
                 className={styles.mainPosts}

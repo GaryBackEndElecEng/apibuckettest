@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="bg-slate-200 rootBody" >
+    <html lang="en" >
+      <body className="bg-slate-200 rootBody"  >
         <Providers>
           <GeneralContextProvider>
             <BlogContextProvider>

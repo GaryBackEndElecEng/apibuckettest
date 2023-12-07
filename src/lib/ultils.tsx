@@ -286,4 +286,21 @@ export function useLikes(likes: likeType[]) {
     }, [likes]);
     return iconLikes
 }
+export function usePostLikes(posts: postType[]): likeIcon[] {
+    const [iconLikes, setIconLikes] = React.useState<likeIcon[]>([]);
+    React.useEffect(() => {
+        let concatArr: likeIcon[] = [];
+        if (posts) {
+            posts.map(post => {
+                likeArr.map(iconName => {
+                    const likeNames = post.likes.filter(like => (like.name === iconName.name));
+                    concatArr.push({ name: iconName.name, count: likeNames.length, icon: iconName.icon })
+                });
+            })
+        }
+        setIconLikes(concatArr)
+
+    }, [posts]);
+    return iconLikes
+}
 

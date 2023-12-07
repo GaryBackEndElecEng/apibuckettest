@@ -18,7 +18,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   flex-direction: column;
   margin-inline: 0;
   padding-inline: 5px;

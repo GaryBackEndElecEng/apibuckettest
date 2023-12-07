@@ -5,6 +5,57 @@
   margin: auto;
   min-height: 100vh;
   width: 80%;
+  z-index: -1;
+}
+.homeHeader {
+  z-index: -1;
+  margin-block: 0;
+  padding: 1rem;
+  padding-inline: 2rem;
+  background-size: 100% 100%;
+  background-position: 50% 50%;
+  min-height: 30vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.homeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  gap: 2rem;
+  position: absolute;
+  inset: 0;
+}
+.remove {
+  display: none;
+}
+.gridElementOn {
+  opacity: 1;
+  grid-column: 3 / span 1;
+  padding-inline: 2rem;
+  color: white;
+  font-size: 120%;
+  border: 1px solid white;
+  border-radius: 20px 20px 20px 20px;
+  transform: scale(1);
+  animation: easeInOut 5s ease-in-out;
+  background: black;
+}
+.showMsg {
+  animation: easeInOut 5s ease-in-out forwards 2s;
+}
+@keyframes easeInOut {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .homeUserGrid {
   margin: auto;
@@ -22,8 +73,9 @@
   justify-content: center;
 }
 @media screen and (max-width: 980px) {
-  .homeMainPage {
-    /* margin-inline: 0; */
+  .homeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
   }
   .homeUserGrid {
     margin-inline: 0;
@@ -37,6 +89,11 @@
 }
 @media screen and (max-width: 920px) {
   .homeMainPage {
+    width: auto;
+  }
+  .homeGrid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
   }
   .homeUserGrid {
     grid-template-columns: repeat(1, minmax(550px, 1fr));

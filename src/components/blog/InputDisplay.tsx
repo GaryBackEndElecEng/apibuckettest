@@ -125,7 +125,7 @@ function GenInput({ input }: { input: inputType }) {
             const handleReplySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
                 if (checkInput && checkInput.type === "reply" && reply && reply.userId && reply.email && reply.content) {
-                    const res = await fetch("/api/contact", {
+                    const res = await fetch("/api/email", {
                         method: "POST",
                         body: JSON.stringify(reply)
                     });

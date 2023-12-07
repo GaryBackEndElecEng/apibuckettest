@@ -1,36 +1,97 @@
 .navContainer {
-  position: sticky;
-  top: 1rem;
-  left: 0;
+  position: absolute;
+  inset: 0;
+  padding-block: 0.25rem;
   margin-inline: 0rem;
-  padding-inline: 0rem;
+  padding-inline: 10px;
   z-index: 2000;
   width: 100%;
+  position: relative;
+  box-shadow: 1px 1px 8px 2px black;
+}
+.navSubContainer {
 }
 .navMain {
-  position: sticky;
-  height: 5vh;
-  padding-inline: 1rem;
+  height: auto;
+  padding-inline: 0;
+  margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* border: 1px solid green; */
-  padding-inline: 1rem;
 }
 .navMain > img {
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  margin-inline: 0;
   border: 1px solid rgba(0, 0, 0, 1);
   box-shadow: 1px 1px 4px 1px black;
   background: black;
 }
 .subNav {
+  margin: auto;
   position: relative;
   display: flex;
   direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
   gap: 1.5rem;
+  z-index: 10000;
+  /* border: 2px solid green; */
+}
+/*--MediaLinks---- */
+.navlist {
+  padding-inline: 2rem;
+  background: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+
+  gap: 1.5rem;
+}
+.navlist > a {
+  border-radius: 14px 14px 14px 14px;
+  box-shadow: 1px 1px 3px 1px black;
+  background: hsl(0, 0%, 10%);
+  padding-inline: 2px;
+  padding-block: 0.25rem;
+  color: white;
+  background: rgba(33, 33, 33, 0.671);
+  text-align: center;
+  text-justify: center;
+  position: relative;
+  transition: all 0.75s ease-in-out;
+}
+.navlist > a:hover {
+  background: hsl(0, 0%, 0%);
+  box-shadow: 1px 1px 7px 3px black;
+  transition: 0.75s ease-in-out;
+}
+.navlist > a:hover::before {
+  display: block;
+  position: absolute;
+  content: attr(data-desc);
+  inset: 115% 0% 115% 0%;
+  width: 110%;
+  background-color: black;
+  min-height: 20vh;
+  border: 1px solid white;
+  z-index: 2;
+  padding: 0.5rem;
+  border-radius: 20px 20px 20px 20px;
+  animation: growIn 0.75s ease-in-out;
+}
+@keyframes growIn {
+  from {
+    transform: scale(0.2) translateY(-70%);
+    opacity: 0.3;
+  }
+  to {
+    transform: scale(1) translateY(0%);
+    opacity: 1;
+  }
 }
 /*--MediaLinks---- */
 .flexrowxs {
@@ -41,6 +102,7 @@
   padding-inline: 0.25rem;
   margin-block: 0.5rem;
   gap: 1rem;
+  margin-inline: 2rem;
   width: 200px;
 }
 .link_name {
@@ -51,7 +113,6 @@
 .linkText {
   position: relative;
   margin-inline: auto;
-  border: 1px solid white;
   transition: all 0.75s ease-in-out;
 }
 .linkText:hover {
@@ -105,28 +166,6 @@
   filter: drop-shadow(1px 1px 4px blue);
 }
 
-/*--MediaLinks---- */
-.navlist {
-  margin-inline: 1rem;
-  background: transparent;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  gap: 1.5rem;
-}
-.navlist > a {
-  border-radius: 14px 14px 14px 14px;
-  border: 1px solid white;
-  box-shadow: 1px 1px 3px 1px whitesmoke;
-  background: black;
-  padding-inline: 2px;
-  padding-block: 0.25rem;
-  color: white;
-  background: rgba(33, 33, 33, 0.671);
-  text-align: center;
-  text-justify: center;
-}
 /* @context/navList=>DropDownTrigger() */
 .loading {
   position: relative;
@@ -182,31 +221,29 @@
 
 @media screen and (max-width: 980px) {
   .navContainer {
-    position: sticky;
-    top: 0;
-    left: 0;
     width: 100%;
     margin-inline: 0rem;
-    padding-inline: 0rem;
+    padding-inline: 10px;
     z-index: 2000;
+    position: relative;
   }
   .navMain {
     display: flex;
-    direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
     padding-inline: 0rem;
-    gap: 3rem;
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-    position: relative;
+    margin: 0;
+    /* padding-block: 0.25rem; */
+    /* position: relative; */
     /* min-height: 20vh; */
   }
   .subNav {
-    direction: column;
-    justify-content: center;
-    align-items: center;
+    display: absolute;
+    inset: 0;
+    left: -60%;
+    top: 3rem;
     z-index: 10;
+    width: 100%;
+    position: relative;
+    margin: 0;
   }
   .navMain > img {
     width: 45px;
@@ -214,55 +251,95 @@
   }
   .navlist {
     position: absolute;
+    inset: 0% -70px 0% -10px;
     background: transparent;
-    display: block;
-    margin: auto;
-    flex: 1;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
-    /* padding: 0.5rem; */
-    margin-inline: auto;
-    top: 4rem;
-    width: max-content;
-    transform: translateX(-500%) scale(0.6);
+    margin-inline: 0;
+    min-width: 360px;
+    transform: translateX(-110%) scale(0.2);
     transition: all 0.75s ease-in-out;
     /* min-height: 10vh; */
   }
   .navlistShow {
     position: absolute;
-    display: block;
+    inset: 0% -70px 0% -90px;
     background: transparent;
-    margin-inline: auto;
-    top: 4rem;
-    flex: 1;
-    gap: 0.75rem;
-    z-index: 20000;
-    /* padding: 0.5rem; */
-    width: max-content;
-    transform: translateX(-225%) scale(1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-inline: 0;
+    min-width: 360px;
+    transform: translateX(30%) scale(1);
     transition: all 0.75s ease-in-out;
     /* min-height: 10vh; */
   }
   .navlistShow > a {
-    display: block;
+    display: flex;
     border-radius: 14px 14px 14px 14px;
     border: 1px solid white;
     box-shadow: 1px 1px 3px 1px whitesmoke;
     padding-inline: 2px;
-    padding-block: 0.25rem;
+    /* margin-block: 0.75rem;
+    padding-block: 0.25rem; */
     background: black;
+    width: 100%;
     color: white;
-    transition: all 0.5s ease-in-out;
+    text-align: center;
+    animation: slideIn 0.75s ease-in-out forwards 0.5s;
+  }
+  .navlistShow > a > button span > span {
+    font-size: 14px;
+    animation: slideIn2 1.75s ease-in-out forwards 0.5s;
+  }
+  .navlist > a > button span > span {
+    font-size: 14px;
+    animation: none;
+  }
+  @keyframes slideIn2 {
+    from {
+      color: black;
+      transform: translateX(200%);
+    }
+    to {
+      color: white;
+      transform: translateX(0%);
+    }
+  }
+  @keyframes slideIn {
+    from {
+      transform: translate(-20%, -40%);
+    }
+    to {
+      transform: translate(0%, 0%);
+    }
   }
   .navlist > a {
-    display: block;
+    /* display: block; */
+    text-align: center;
     border-radius: 4px 4px 4px 4px;
     border: 1px solid white;
     box-shadow: 1px 1px 3px 1px grey;
-    padding-inline: 2px;
+    padding-inline: 0.5rem;
     background: transparent;
     color: transparent;
     transition: all 0.5s ease-in-out;
   }
+  .linkText:hover::before {
+    display: none;
+    opacity: 1;
+    content: attr(data-word);
+    position: absolute;
+    top: 100%;
+    left: 10%;
+    background: black;
+    color: white;
+    padding: 8px;
+    transform: scale(0.7);
+    transition: all 0.75s ease-in-out;
+  }
+
   .loading,
   .notLoading {
     top: 1rem;
@@ -290,13 +367,81 @@
     color: white;
     filter: drop-shadow(1px 1px 4px orange);
   }
+  .flexrowxs {
+    margin-inline: 4rem;
+    margin-left: 10rem;
+  }
+}
+@media screen and (max-width: 800px) {
+  .navlistShow {
+    position: absolute;
+    inset: 0% -70px 0% -80px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-inline: 0;
+    min-width: 360px;
+    transform: translateX(36%) scale(1);
+    transition: all 0.75s ease-in-out;
+    /* min-height: 10vh; */
+  }
 }
 @media screen and (max-width: 480px) {
+  .navContainer {
+    padding-inline: 1px;
+  }
   .navMain {
-    /* padding-left: 2rem; */
-    padding-top: 0.5rem;
+    z-index: -1;
+  }
+  .navlist {
+    position: absolute;
+    inset: 0% -70px 0% -10px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-inline: 0;
+    min-width: 360px;
+    transform: translateX(-110%) scale(0.2);
+    transition: all 0.75s ease-in-out;
+    /* min-height: 10vh; */
   }
   .navlistShow {
-    transform: translateX(-235%) scale(1);
+    position: absolute;
+    inset: 0% -70px 0% 80px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-inline: 0;
+    min-width: 360px;
+    transform: translateX(50%) scale(1);
+    transition: all 0.75s ease-in-out;
+    /* min-height: 10vh; */
+  }
+
+  .navlistShow {
+    transform: translateX(-25%) scale(1);
+  }
+  .flexrowxs {
+    margin-inline: 2rem;
+    gap: 1rem;
+    /* margin-left: 1rem; */
+  }
+}
+@media screen and (max-width: 400px) {
+  .navlistShow {
+    position: absolute;
+    inset: 0% -70px 0% 80px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-inline: 0;
+    min-width: 360px;
+    transform: translateX(-40%) scale(1);
+    transition: all 0.75s ease-in-out;
+    /* min-height: 10vh; */
   }
 }

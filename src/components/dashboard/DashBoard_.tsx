@@ -8,7 +8,7 @@ import { IoArrowDownSharp } from "react-icons/io5";
 import { IoArrowUp } from "react-icons/io5";
 import type { Session } from "next-auth";
 import { useBlogContext } from "@/components/context/BlogContextProvider";
-import BlogMsg from "@component/dashboard/createblog/BlogMsg";
+import BlogMsg from "@/components/dashboard/createblog/GenBlogMsg";
 import UpdateUser from '@/components/dashboard/UpdateUser';
 import { useGeneralContext } from '../context/GeneralContextProvider';
 import UserBlogs from "@dashboard/UserBlogs";
@@ -19,6 +19,7 @@ import PostHits from "./PostHits";
 import MemberContact from "./MemberContact";
 import Message from './Message';
 import MasterLikes from './MasterLikes';
+import ContactResponses from "./ContactResponses";
 
 type resType = { user: userType | null, message: string }
 
@@ -114,7 +115,7 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
                             contactBtn={contactBtn}
                             setContactBtn={setContactBtn} />}
                     </div>
-                    <h1>space for messaging</h1>
+                    <ContactResponses user={user} />
                 </div>
 
             </div>

@@ -24,6 +24,7 @@ export default function SubNav() {
     const logo = "/images/gb_logo.png";
     const { setMsg, msg, setPageChange, pageChange } = useGeneralContext();
     const size = useWindowSize();
+    const isSmall: boolean = (size && size !== "lg") ? true : false;
 
     React.useEffect(() => {
         if (pathHasChanged) {
@@ -83,15 +84,17 @@ export default function SubNav() {
             <Image src={logo} width={50} height={50} alt="www.ablogroom.com" onClick={(e) => handleShow(e)} priority />
             <MediaLinks />
             <div className={styles.subNav}>
+
                 <div className={show ? styles.navlistShow : styles.navlist}>
                     <React.Fragment>
                         {navList2 && navList2.map((navlink, index) => (
-                            <Link href={navlink.link} key={index} style={{ background: "black", color: "white" }}>
+                            <Link href={navlink.link} key={index} style={{ background: "black", color: "white", width: "100%", margin: "0" }} data-desc={navlink.desc}>
                                 <IconButton >
                                     {navlink.icon}
                                     <span className={styles.link_name}>
                                         {navlink.name}
                                     </span>
+                                    {isSmall && <span className={" text-white  text-sm"}> :<span>{navlink.desc}</span></span>}
                                 </IconButton>
                             </Link>
                         ))}

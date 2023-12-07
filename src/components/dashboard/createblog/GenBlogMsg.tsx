@@ -4,7 +4,7 @@ import type { msgType } from "@lib/Types";
 import styles from "@component/comp/comp.module.css";
 import { useBlogContext } from '@context/BlogContextProvider';
 
-export default function PostMsg() {
+export default function GenBlogMsg() {
     const { blogMsg, setBlogMsg } = useBlogContext();
     setTimeout(() => {
         setBlogMsg(undefined)

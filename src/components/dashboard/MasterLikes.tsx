@@ -8,7 +8,7 @@ type mainMastType = {
 }
 export default function MasterLikes({ files, posts }: mainMastType) {
     return (
-        <div>
+        <div className="flex flex-col items-start px-1 justify-center h-[15vh] overflow-y-scroll ">
             <h2>Blogs</h2>
             {files && files.map((file, index) => {
                 if (file.likes) {

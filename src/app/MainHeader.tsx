@@ -10,7 +10,6 @@ import { useHits } from "@lib/ultils";
 export default function MainHeader() {
 
     const pathname = usePathname();
-    const url = "/images/happyFamily.png";
     const check = pathname && pathname === "/" ? true : false;
     const checkTrue = "mainHeaderTrue";
     const checkFalse = "mainHeaderFalse";

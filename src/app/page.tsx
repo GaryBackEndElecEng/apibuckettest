@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import React from 'react';
 import styles from "@component/home/home.module.css";
 import { getErrorMessage } from "@/lib/errorBoundaries";
 import { PrismaClient } from '@prisma/client';
@@ -10,6 +11,7 @@ import Redirect from "@component/comp/Redirect";
 import { userType } from "@/lib/Types";
 import UserCard from "@component/home/UserCard";
 import { notFound } from "next/navigation";
+import HomeHeader from "@component/home/HomeHeader";
 
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
@@ -30,20 +32,23 @@ const prisma = new PrismaClient();
 export default async function Home() {
   const users = await getUsers();
   return (
-    <main className={styles.homeMainPage}>
+    <React.Fragment>
+      <HomeHeader />
+      <main className={styles.homeMainPage}>
 
-      <div className={styles.homeUserGrid}>
-        {
-          users && users.map((user, index) => (
-            <div key={index} className={styles.homeGridElement}>
-              <UserCard user={user as userType} />
-            </div>
-          ))
-        }
-      </div>
+        <div className={styles.homeUserGrid}>
+          {
+            users && users.map((user, index) => (
+              <div key={index} className={styles.homeGridElement}>
+                <UserCard user={user as userType} />
+              </div>
+            ))
+          }
+        </div>
 
 
-    </main>
+      </main>
+    </React.Fragment>
   )
 }
 
@@ -51,7 +56,7 @@ export async function getUsers() {
   try {
     const users = await prisma.user.findMany();
     if (users) {
-      let tempUsers = users;
+      let tempUsers = users as unknown as userType[];
       const retUsers = await Promise.all(
         tempUsers.map(async (user) => {
           if (user.imgKey) {

@@ -83,12 +83,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     }
     if (req.method === "DELETE") {
-        const contactId = req.query.contactId as string;
-        if (contactId) {
+        const contactEmail = req.query.email as string;
+        if (contactEmail) {
             try {
                 const genCont = await prisma.genContact.delete({
                     where: {
-                        id: parseInt(contactId)
+                        email: contactEmail
                     }
                 });
                 if (genCont) {
@@ -107,19 +107,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 }
 
-export async function sendEmail(contact: contactType) {
-    try {
-        const user = await prisma.user.findUnique({
-            where: {
-                id: contact.userId
-            }
-        });
-        const sendNodeEmail: sendEmailType = { user: user as unknown as userType, contact: contact }
-        return sendNodeEmail
-    } catch (error) {
-        const msg = getErrorMessage(error);
-        console.error(`${msg}@contact@sendEmail`)
-    } finally {
-        await prisma.$disconnect()
-    }
-}
