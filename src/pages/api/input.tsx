@@ -6,6 +6,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -40,13 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
             let tempInput = newInput;
             if (tempInput.s3Key) {
-                const params = {
-                    Bucket,
-                    Key: tempInput.s3Key
-                }
-                const command = new GetObjectCommand(params);
-                const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                if (url) tempInput.url = url;
+                tempInput.url = `${url}/${tempInput.s3Key}`
             }
             return res.status(200).json({ input: tempInput, message: "created" })
         } catch (error) {
@@ -79,13 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             let tempInput = updateInput;
             if (tempInput.s3Key) {
-                const params = {
-                    Bucket,
-                    Key: tempInput.s3Key
-                }
-                const command = new GetObjectCommand(params);
-                const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-                if (url) tempInput.url = url;
+                tempInput.url = `${url}/${tempInput.s3Key}`
             };
 
             return res.status(200).json({ input: tempInput, message: "updated" });
@@ -109,12 +98,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 if (input) {
                     let temInput = input;
                     if (temInput.s3Key) {
-                        const params = {
-                            Bucket,
-                            Key: temInput.s3Key as string
-                        }
-                        const command = new GetObjectCommand(params);
-                        temInput.s3Key = await getSignedUrl(s3, command, { expiresIn: 3600 });
+                        temInput.url = `${url}/${temInput.s3Key}`
                     }
                     return res.status(200).json({ input: temInput, message: "retrieved" })
                 }

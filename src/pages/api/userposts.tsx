@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -36,19 +37,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 if (userPosts) {
                     let tempPosts = userPosts;
-                    const userImgPosts = await Promise.all(
-                        tempPosts.map(async (post) => {
+                    const userImgPosts =
+                        tempPosts.map((post) => {
                             if (post.s3Key) {
-                                const params = {
-                                    Key: post.s3Key,
-                                    Bucket
-                                }
-                                const command = new GetObjectCommand(params);
-                                post.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) })
+                                post.imageUrl = `${url}/${post.s3Key}`
                             }
                             return post
                         })
-                    );
+
                     return res.status(200).json({ posts: userImgPosts, message: "recieved" })
                 } else {
                     return res.status(300).json({ posts: undefined, message: "no posts" })

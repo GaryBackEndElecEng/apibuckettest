@@ -10,7 +10,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import CreateInputs from "@component/dashboard/createblog/CreateInputs";
 import Link from 'next/link';
 import styles from "@component/dashboard/createblog/createablog.module.css"
-
+const url = process.env.BUCKET_URL as string;
 
 type fetchType = {
     file: fileType,
@@ -60,9 +60,9 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
             formData.set("file", file_);
             const Key = `${user.name?.trim()}/${file.id}/${uuidv4()}-${file_.name}`;
             formData.set("Key", Key);
-            const { data } = await axios.post("/api/media", formData)
-            if (data.status === 200) {
-                setFile_({ ...file, imageKey: Key });
+            const res = await fetch("/api/media", { method: "POST", body: formData })
+            if (res.ok) {
+                setFile_({ ...file, imageKey: Key, imageUrl: `${url}/${Key}` });
                 setMessage({ loaded: true, msg: "saved" })
             } else {
                 setMessage({ loaded: false, msg: "not saved" })

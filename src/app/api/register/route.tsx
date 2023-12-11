@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { genHash } from "@lib/ultils";
 import type { userType } from "@lib/Types";
 import { getErrorMessage } from '@/lib/errorBoundaries';
-import { NameSep } from "@lib/ultils"
+import { NameSep, unifyName } from "@lib/ultils"
 
 const prisma = new PrismaClient();
 
@@ -37,7 +37,7 @@ export async function POST(
                         email: email
                     },
                     data: {
-                        name: name ? name.trim() : (check.name as string).trim(),
+                        name: name ? unifyName(name.trim()) : (check.name as string).trim(),
                         password: hashPswd ? hashPswd : check.password,
                         imgKey: imgKey ? imgKey : check.imgKey
                     }
@@ -46,7 +46,7 @@ export async function POST(
             } else {
                 const user = await prisma.user.create({
                     data: {
-                        name: name ? name.trim() : null,
+                        name: name ? unifyName(name.trim()) : null,
                         email: email,
                         password: hashPswd,
                         imgKey: imgKey ? imgKey : null

@@ -3,6 +3,7 @@
   display: grid;
   place-items: center;
   margin: auto;
+  margin-block: 1rem;
   min-height: 100vh;
   width: 80%;
   z-index: -1;
@@ -17,6 +18,7 @@
   min-height: 30vh;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -27,25 +29,64 @@
   width: 100%;
   gap: 2rem;
   position: absolute;
-  inset: 0;
+  place-items: center;
 }
 .remove {
   display: none;
+}
+.finalMsg {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  gap: 2rem;
+}
+.finalMsg > div > p,
+.finalMsg > div > h3 {
+  margin: auto;
+  animation: slideIn 1.5s ease-in-out;
+  font-size: 130%;
+  color: white;
+}
+.p_grid {
+  margin: auto;
+  grid-column: 3 / span 1;
+  padding-inline: 2rem;
+  text-align: center;
+}
+.finalMsg > div > h3 {
+  font-size: 150%;
 }
 .gridElementOn {
   opacity: 1;
   grid-column: 3 / span 1;
   padding-inline: 2rem;
-  color: white;
+  color: black;
   font-size: 120%;
-  border: 1px solid white;
+  padding: 1rem;
   border-radius: 20px 20px 20px 20px;
   transform: scale(1);
   animation: easeInOut 5s ease-in-out;
-  background: black;
+  background: white;
+}
+.showMsgPhr {
+  color: blue;
+  font-size: 130%;
+  animation: easeInOut 5s ease-in-out forwards 2s;
 }
 .showMsg {
   animation: easeInOut 5s ease-in-out forwards 2s;
+}
+@keyframes slideIn {
+  from {
+    opacity: 0.5;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
 }
 @keyframes easeInOut {
   from {
@@ -63,19 +104,60 @@
   grid-template-columns: repeat(3, minmax(350px, 1fr));
   grid-auto-flow: dense;
   gap: 3rem;
-  place-items: center;
+  justify-content: center;
+  align-items: flex-start;
 }
 .homeGridElement {
-  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+.userCard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  filter: drop-shadow(1px 1px 4px black);
+  padding-block: 10px;
+  padding-inline: 0.5rem;
+  background: black;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+}
+.userCard img {
+  border-radius: 50%;
+  filter: drop-shadow(1px 1px 7px white);
+  border: 1px solid grey;
+}
+.userCard > h3 {
+  text-align: center;
+  font-size: 150%;
+  font-weight: bold;
+}
+.profileImage {
+  border-radius: 50%;
+  filter: drop-shadow(1px 1px 7px white);
+  border: 1px solid grey;
+  shape-outside: circle();
+  float: left;
+  margin-right: 10px;
+  margin-block: 0.75rem;
+  margin-top: 1rem;
+}
 @media screen and (max-width: 980px) {
-  .homeGrid {
+  .homeGrid,
+  .finalMsg {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2rem;
+  }
+  .p_grid {
+    display: flex;
+    margin-top: 5rem;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
   }
   .homeUserGrid {
     margin-inline: 0;
@@ -91,7 +173,8 @@
   .homeMainPage {
     width: auto;
   }
-  .homeGrid {
+  .homeGrid,
+  .finalMsg {
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 1rem;
   }
@@ -100,11 +183,32 @@
     grid-auto-flow: dense;
     gap: 1rem;
   }
+  .p_grid {
+    display: flex;
+    margin-top: 5rem;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  .finalMsg {
+    gap: 0.25rem;
+  }
 }
 @media screen and (max-width: 480px) {
   .homeUserGrid {
     grid-template-columns: repeat(1, minmax(350px, 1fr));
     grid-auto-flow: dense;
     gap: 1rem;
+  }
+  .p_grid {
+    flex-direction: column;
+  }
+  .finalMsg {
+    gap: 0.25rem;
+    inset: 40% auto 0% auto;
+  }
+}
+@media screen and (max-width: 400px) {
+  .finalMsg {
+    gap: 0.25rem;
+    inset: 30% auto 0% auto;
   }
 }

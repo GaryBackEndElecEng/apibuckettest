@@ -33,7 +33,6 @@ export default function Register() {
         const body = await res.json() as resType
         if (body.status === 200) {
             // const getUser = JSON.parse(body.user as string)//no need
-            alert(body.message)
             router.push("/api/auth/signin")
             //GET USER USER FROM EMAIL AND LOAD SETUSER()
 

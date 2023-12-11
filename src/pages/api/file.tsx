@@ -6,11 +6,12 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
-const Bucket = process.env.BUCKET_NAME as string
-const region = process.env.BUCKET_REGION as string
-const accessKeyId = process.env.SDK_ACCESS_KEY as string
-const secretAccessKey = process.env.SDK_ACCESS_SECRET as string
-const expiresIn = process.env.EXPIRESIN as string
+const url = process.env.BUCKET_URL as string;
+const Bucket = process.env.BUCKET_NAME as string;
+const region = process.env.BUCKET_REGION as string;
+const accessKeyId = process.env.SDK_ACCESS_KEY as string;
+const secretAccessKey = process.env.SDK_ACCESS_SECRET as string;
+const expiresIn = process.env.EXPIRESIN as string;
 const s3 = new S3Client({
 
     credentials: {
@@ -46,13 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 })
                 let tempFile = newFile2;
                 if (tempFile.imageKey) {
-                    const params = {
-                        Bucket,
-                        Key: tempFile.imageKey
-                    }
-                    const command = new GetObjectCommand(params);
-                    const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                    if (url) tempFile.imageUrl = url;
+                    tempFile.imageUrl = `${url}/${tempFile.imageKey}`
                 }
                 return res.status(200).json({ file: tempFile, message: "created" })
             }
@@ -85,13 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             let tempFile = updateFile;
             if (tempFile.imageKey) {
-                const params = {
-                    Bucket,
-                    Key: tempFile.imageKey
-                }
-                const command = new GetObjectCommand(params);
-                const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                if (url) tempFile.imageUrl = url;
+                tempFile.imageUrl = `${url}/${tempFile.imageKey}`
             }
             return res.status(200).json({ file: tempFile, message: "updated" })
         } catch (error) {
@@ -114,12 +103,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 if (file) {
                     let temFile = file;
                     if (temFile.imageKey) {
-                        const params = {
-                            Bucket,
-                            Key: temFile.imageKey as string
-                        }
-                        const command = new GetObjectCommand(params);
-                        temFile.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+                        temFile.imageUrl = `${url}/${temFile.imageKey}`
                     }
                     return res.status(200).json({ file: temFile, message: "retrieved" })
                 }

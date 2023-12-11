@@ -9,7 +9,7 @@ export default function PostHeader() {
         <div className={styles.postHeader}
             style={{ backgroundImage: `url(${url})` }}
         >
-            <h2>put somethin here</h2>
+
         </div>
     )
 }

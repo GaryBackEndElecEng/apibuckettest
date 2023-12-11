@@ -62,7 +62,7 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
         case "image":
             return (
                 <>
-                    {input.url &&
+                    {input.url && input.s3Key &&
                         <div className={styles.genInputImg}
                             style={{ position: "relative", width: "100%" }}
                         >

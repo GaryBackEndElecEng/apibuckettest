@@ -7,7 +7,7 @@ import getFormattedDate from "@lib/getFormattedDate";
 import UserProfile from "@component/post/UserProfile";
 import "@pages/globalsTwo.css";
 import Link from "next/link";
-
+const bucketUrl = process.env.BUCKET_URL
 
 export default function Post({ post, user }: { post: postType, user: userType | undefined }) {
     const logo = "/images/gb_logo.png";
@@ -37,6 +37,7 @@ export default function Post({ post, user }: { post: postType, user: userType | 
                     {post && post.date && <small className="mx-auto p-1">{getFormattedDate(post.date)}</small>}
                 </div>
             </Link>
+
         </div>
     )
 }

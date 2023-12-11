@@ -12,7 +12,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import { notFound } from "next/navigation";
 
 
-
+const url = process.env.BUCKET_URL as string
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -36,40 +36,20 @@ type Repo = {
 
 async function insertFileImg(file: fileType): Promise<fileType> {
     if (file.imageKey) {
-        const params = {
-            Key: file.imageKey,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            file.imageUrl = url
-        }
+        file.imageUrl = `${url}/${file.imageKey}`
     }
-    const inputs = await Promise.all(
-        file.inputs.map(async (input) => {
-            if (input.s3Key) {
-                const params = { Key: input.s3Key, Bucket };
-                const command = new GetObjectCommand(params);
-                input.url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-            }
-            return input
-        })
-    );
+    const inputs = file.inputs.map(input => {
+        if (input.s3Key) {
+            input.url = `${url}/${input.s3Key}`
+        }
+        return input
+    })
 
     return { ...file, inputs: inputs }
 }
 async function insertUserImg(user: userType): Promise<userType> {
     if (user && user.imgKey) {
-        const params = {
-            Key: user.imgKey,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            user.image = url
-        }
+        user.image = `${url}/${user.imgKey}`
     }
     return user
 }

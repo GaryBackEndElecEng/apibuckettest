@@ -6,6 +6,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -37,13 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
             let tempPost = newPost;
             if (tempPost.s3Key) {
-                const params = {
-                    Bucket,
-                    Key: tempPost.s3Key
-                }
-                const command = new GetObjectCommand(params);
-                const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                if (url) tempPost.imageUrl = url;
+                tempPost.imageUrl = `${url}/${tempPost.s3Key}`
             }
             return res.status(200).json({ post: tempPost, message: "created" })
         } catch (error) {
@@ -65,12 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 if (post) {
                     let temPost = post;
                     if (temPost.s3Key) {
-                        const params = {
-                            Bucket,
-                            Key: temPost.s3Key as string
-                        }
-                        const command = new GetObjectCommand(params);
-                        temPost.s3Key = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+                        temPost.imageUrl = `${url}/${temPost.s3Key}`
                     }
                     res.status(200).json({ post: temPost, message: "retieved" })
                 }
@@ -102,13 +92,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 let tempPost = newPost;
                 if (tempPost.s3Key) {
-                    const params = {
-                        Bucket,
-                        Key: tempPost.s3Key
-                    }
-                    const command = new GetObjectCommand(params);
-                    const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                    if (url) tempPost.imageUrl = url;
+                    tempPost.imageUrl = `${url}/${tempPost.s3Key}`
                 }
                 return res.status(200).json({ post: tempPost, message: "updated" })
             } catch (error) {

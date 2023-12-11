@@ -6,6 +6,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string

@@ -6,6 +6,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuidv4 } from "uuid";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -45,17 +46,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 async function insertUsers(users: userType[]) {
-    const getUsers = await Promise.all(
-        users.map(async (user) => {
-            if (user.imgKey) {
-                const params = { Key: user.imgKey, Bucket };
-                const command = new GetObjectCommand(params);
-                const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                if (url) user.image = url;
-            }
-            user.password = "omit";
-            return user;
-        })
-    );
+    const getUsers = users.map((user) => {
+        if (user.imgKey) {
+            user.image = `${url}/${user.imgKey}`
+        }
+        user.password = "omit";
+        return user;
+    })
+
     return getUsers
 }

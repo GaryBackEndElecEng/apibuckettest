@@ -28,8 +28,8 @@ export default function UserHeader() {
     return (
         <div className={styles.mainUserHeader} style={{ backgroundImage: `url(${bgWave})` }}>
             {user &&
-                <div className="w-full grid grid-cols-1 md:grid-cols-3 place-items-center my-2 mx-0">
-                    <div className="col-span-1 flex flex-col ">
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 place-items-center my-2 mx-0 py-2">
+                    <div className="col-span-1 flex flex-col mt-2 ">
 
                         <h3 className={`${ephesis.className} text-3xl`}>{Name?.split(" ")[0]} {Name?.split(" ")[1]}</h3>
 

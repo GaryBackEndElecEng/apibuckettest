@@ -6,6 +6,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -36,18 +37,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 if (inputs) {
                     let temInputs = inputs;
-                    const imgInputs = await Promise.all(
-                        temInputs.map(async (input) => {
-                            if (input.s3Key && input.type === "image") {
-                                const params = {
-                                    Bucket,
-                                    Key: input.s3Key as string
-                                }
-                                const command = new GetObjectCommand(params);
-                                input.url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                            }
-                            return input
-                        }));
+                    const imgInputs = temInputs.map((input) => {
+                        if (input.s3Key && input.type === "image") {
+                            input.url = `${url}/${input.s3Key}`;
+                        }
+                        return input
+                    });
                     return res.status(200).json({ inputs: imgInputs, message: "retrieved" })
                 } else {
                     return res.status(300).json({ inputs: [], message: "no inputs" })

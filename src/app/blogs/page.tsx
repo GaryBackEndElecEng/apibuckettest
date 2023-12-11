@@ -12,7 +12,7 @@ import { notFound } from "next/navigation";
 
 
 
-
+const url = process.env.BUCKET_URL
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -62,16 +62,22 @@ export default async function Page() {
 
 export async function getFiles() {
     const files = await prisma.file.findMany({ include: { rates: true } });
-    const fileInserts = await Promise.all(
-        files.map(async (file) => await insertImg(file as fileType))
-    );
+    const fileInserts = files.map(file => {
+        if (file.imageKey) {
+            file.fileUrl = `${url}/${file.imageKey}`
+        }
+        return file
+    });
     return fileInserts as fileType[]
 }
 export async function getUsers() {
     const users = await prisma.user.findMany() as userType[];
-    const usersInserts = await Promise.all(
-        users.map(async (user) => await insertUserImg(user))
-    );
+    const usersInserts = users.map(user => {
+        if (user.imgKey) {
+            user.image = `${url}/${user.imgKey}`
+        }
+        return user
+    })
     return usersInserts
 }
 

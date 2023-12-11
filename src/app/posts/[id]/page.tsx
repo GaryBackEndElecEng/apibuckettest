@@ -15,7 +15,7 @@ import { notFound } from 'next/navigation';
 
 
 
-
+const url = process.env.BUCKET_URL as string
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -43,31 +43,13 @@ export async function generateServerParams() {
 
 async function insertPostImg(post: postType): Promise<postType> {
     if (post.s3Key) {
-        const params = {
-            Key: post.s3Key,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            post.imageUrl = url
-        }
+        post.imageUrl = `${url}/${post.s3Key}`
     }
-
-
     return post
 }
 async function insertUserImg(user: userType): Promise<userType> {
     if (user.imgKey) {
-        const params = {
-            Key: user.imgKey,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            user.image = url
-        }
+        user.image = `${url}/${user.imgKey}`
     }
     return user
 }

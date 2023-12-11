@@ -16,6 +16,7 @@ import styles from "@component/dashboard/blogdetail/blogdetailStyle.module.css";
 import Link from "next/link";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -82,21 +83,11 @@ export async function getFile(id: string): Promise<fileType | undefined> {
                 let tempFile = file;
 
                 if (tempFile.imageKey) {
-                    const params = {
-                        Key: tempFile.imageKey,
-                        Bucket
-                    }
-                    const command = new GetObjectCommand(params);
-                    tempFile.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+                    tempFile.imageUrl = `${url}/${tempFile.imageKey}`;
                 }
                 tempFile.inputs.map(async (input) => {
                     if (input.s3Key) {
-                        const params = {
-                            Key: input.s3Key,
-                            Bucket
-                        }
-                        const command = new GetObjectCommand(params);
-                        input.url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+                        input.url = `${url}/${input.s3Key}`
                     }
                     return input
                 })
@@ -134,12 +125,7 @@ export async function getUser(session: Session | null) {
             if (user) {
                 let temUser = user;
                 if (temUser.imgKey) {
-                    const params = {
-                        Key: temUser.imgKey,
-                        Bucket
-                    }
-                    const command = new GetObjectCommand(params);
-                    temUser.image = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+                    temUser.image = `${url}/${temUser.imgKey}`;
                 }
                 return temUser
             }

@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation';
 import Redirect from "@component/comp/Redirect";
 import { notFound } from "next/navigation";
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -28,7 +29,7 @@ const prisma = new PrismaClient();
 
 export async function generateStaticParams({ params }: { params: { name: string } }) {
     const users = await getUsers();
-    return users.map(user => ({ name: user.name }))
+    return users.map(user => ({ name: (user.name as string).trim() }))
 
 }
 
@@ -65,25 +66,14 @@ export async function getUser(name: string) {
             if (user) {
                 let tempUser = user;
                 if (tempUser.imgKey) {
-                    const params = {
-                        Key: tempUser.imgKey,
-                        Bucket
-                    }
-                    const command = new GetObjectCommand(params);
-                    tempUser.image = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+                    tempUser.image = `${url}/${tempUser.imgKey}`
                 }
-                const files = await Promise.all(
-                    tempUser.files.map(async (file) => {
-                        if (file.imageKey) {
-                            const params = {
-                                Key: file.imageKey,
-                                Bucket
-                            }
-                            const command = new GetObjectCommand(params);
-                            file.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                        }
-                        return file
-                    }));
+                const files = tempUser.files.map((file) => {
+                    if (file.imageKey) {
+                        file.imageUrl = `${url}/${file.imageKey}`;
+                    }
+                    return file
+                });
                 const newUser = { ...tempUser, files: files }
                 return newUser
             }

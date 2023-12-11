@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -38,12 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const userImgBlogs = await Promise.all(
                         tempfiles.map(async (file) => {
                             if (file.imageKey) {
-                                const params = {
-                                    Key: file.imageKey,
-                                    Bucket
-                                }
-                                const command = new GetObjectCommand(params);
-                                file.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) })
+                                file.imageUrl = `${url}/${file.imageKey}`
                             }
                             return file
                         })

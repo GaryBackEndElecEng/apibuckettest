@@ -178,9 +178,27 @@ export function NameSep(nam: string) {
     arr.forEach((let_, index) => {
         if (index > 0 && (let_.toUpperCase() === let_)) {
             newName = `${arr.slice(0, index).join("")} ${arr.slice(index, arr.length - 1).join("")} `
+        } else if (index > 0 && let_ === "-") {
+            newName = `${arr.slice(0, index).join("")} ${arr.slice(index, arr.length - 1).join("")} `
         }
     });
     return newName
+}
+export function unifyName(nam: string): string {
+    let name = nam.split(" ");
+    let wrd: string = "";
+    if (name.length > 0) {
+        name.forEach((word, index) => {
+            if (wrd === "") {
+                wrd = word;
+            } else {
+                wrd = wrd + "-" + word
+            }
+        });
+    } else {
+        wrd = nam
+    }
+    return wrd
 }
 
 export function useChange(path: string | null) {

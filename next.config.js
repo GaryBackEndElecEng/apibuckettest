@@ -83,6 +83,12 @@ const nextConfig = {
         port: "",
         // pathname: '/account123/**',
       },
+      {
+        protocol: "https",
+        hostname: "garyposttestupload.s3.amazonaws.com",
+        port: "",
+        // pathname: '/account123/**',
+      },
     ],
   },
 };

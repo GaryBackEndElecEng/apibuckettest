@@ -3,6 +3,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import { TextField } from '@mui/material'
 import React from 'react'
 import { v4 as uuidv4 } from "uuid";
+const url = "https://garyposttestupload.s3.amazonaws.com"
 
 type GenFormType = {
     setInput: React.Dispatch<React.SetStateAction<inputType | undefined>>,
@@ -147,7 +148,7 @@ export function ImgForm({ input, setInput, user, setImgLoaded, setBlogMsg }: Img
                         });
                         if (res.ok) {
                             setImgLoaded(true);
-                            setInput({ ...check, s3Key: Key })
+                            setInput({ ...check, s3Key: Key, url: `${url}/${Key}` })
                             setBlogMsg({ loaded: true, msg: "img saved" });
                         }
                     } catch (error) {

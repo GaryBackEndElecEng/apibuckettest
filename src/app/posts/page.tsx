@@ -13,7 +13,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 
-
+const url = process.env.BUCKET_URL as string
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -31,34 +31,34 @@ const prisma = new PrismaClient();
 
 
 
-async function insertImg(post: postType) {
-    if (post.s3Key) {
-        const params = {
-            Key: post.s3Key,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            post.imageUrl = url
-        }
-    }
-    return post
-}
-async function insertUserImg(user: userType) {
-    if (user.imgKey) {
-        const params = {
-            Key: user.imgKey,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            user.image = url
-        }
-    }
-    return user
-}
+// async function insertImg(post: postType) {
+//     if (post.s3Key) {
+//         const params = {
+//             Key: post.s3Key,
+//             Bucket
+//         }
+//         const command = new GetObjectCommand(params);
+//         const url1 = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+//         if (url) {
+//             post.imageUrl = url1
+//         }
+//     }
+//     return post
+// }
+// async function insertUserImg(user: userType) {
+//     if (user.imgKey) {
+//         const params = {
+//             Key: user.imgKey,
+//             Bucket
+//         }
+//         const command = new GetObjectCommand(params);
+//         const url1 = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+//         if (url1) {
+//             user.image = url1
+//         }
+//     }
+//     return user
+// }
 
 
 export default async function Page() {
@@ -92,16 +92,22 @@ export default async function Page() {
 
 export async function getPosts() {
     const posts = await prisma.post.findMany({ include: { rates: true } }) as postType[];
-    const postInserts = await Promise.all(
-        posts.map(async (post) => await insertImg(post))
-    );
-    return postInserts as postType[]
+    const retPosts = posts.map(post => {
+        if (post.s3Key) {
+            post.imageUrl = `${url}/${post.s3Key}`
+        }
+        return post
+    })
+    return retPosts as postType[]
 }
 
 export async function getUsers() {
     const users = await prisma.user.findMany() as userType[];
-    const usersInserts = await Promise.all(
-        users.map(async (user) => await insertUserImg(user))
-    );
+    const usersInserts = users.map(user => {
+        if (user.imgKey) {
+            user.image = `${url}/${user.imgKey}`
+        }
+        return user
+    })
     return usersInserts
 }

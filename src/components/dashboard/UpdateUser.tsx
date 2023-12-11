@@ -17,37 +17,34 @@ type fetchUserType = {
 }
 
 export default function UpdateUser({ user }: { user: userType | null }) {
+    const url = "https://garyposttestupload.s3.amazonaws.com";
     const { setUser } = useGeneralContext();
     const [message, setMessage] = React.useState<msgType>();
     const [loaded, setLoaded] = React.useState<boolean>(false);
-    const [password, setPassword] = React.useState<string>("");
+    const [password, setPassword] = React.useState<string | undefined>();
     const [showPswd, setShowPswd] = React.useState<boolean>(false);
     const mainStyle = " mx-auto px-2 py-2 bg-slate-200 mt-8";
     const form = "flex flex-col gap-3 mx-auto";
     const logo = "/images/gb_logo.png"
 
-    React.useMemo(async () => {
-        if (password && user) {
-            let hash = await genHash(password);
-            setUser({ ...user, password: hash })
-        }
-
-
-    }, [password, setUser]);
-
-
-    // console.log("USER", user)
     const handleUser = async (e: React.FormEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
-        if (user && user.imgKey) {
+        if (user) {
+            let tempUser = user;
+            if (password) {
+                let hash = await genHash(password);
+                setUser({ ...user, password: hash });
+                tempUser.password = hash
+            }
             try {
-                const res = await fetch("/api/user", { method: "PUT", body: JSON.stringify(user) });
+                const res = await fetch("/api/user", { method: "PUT", body: JSON.stringify(tempUser) });
                 const body: fetchUserType = await res.json();
                 if (res.ok) {
                     setUser(body.user);
                     setMessage({ loaded: true, msg: body.message })
                     setLoaded(true);
+                    console.log(body.user)
                 } else {
                     setMessage({ loaded: false, msg: body.message })
                 }
@@ -56,7 +53,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                 console.log(`${message}@user`)
             }
         } else {
-            setMessage({ loaded: false, msg: "please upload a profile pic before saving" })
+            setMessage({ loaded: false, msg: "please complete your bio. This improves hits." })
         }
 
     }
@@ -72,7 +69,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
             formData.set("Key", Key);
             const res = await fetch("/api/media", { method: "POST", body: formData })
             if (res.ok) {
-                setUser({ ...user, imgKey: Key });
+                setUser({ ...user, imgKey: Key, image: `${url}/${Key}` });
                 setMessage({ loaded: true, msg: "saved" })
             } else {
                 setMessage({ loaded: false, msg: "not saved" })
@@ -80,6 +77,13 @@ export default function UpdateUser({ user }: { user: userType | null }) {
 
         }
 
+    }
+    const userChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        e.preventDefault();
+        setUser({
+            ...user as userType,
+            [e.target.name]: e.target.value
+        })
     }
     return (
         <div className={styles.userUpDatemain}>
@@ -101,7 +105,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     type="text"
                                     variant="filled"
                                     value={user.name ? user?.name : ""}
-                                    onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
+                                    onChange={(e) => userChange(e)}
                                     style={{ width: "75%" }}
                                     className="bg-slate-100 text-black"
                                 />
@@ -118,7 +122,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     type="email"
                                     variant="filled"
                                     value={user.email ? user.email : ""}
-                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+                                    onChange={(e) => userChange(e)}
                                     style={{ width: "75%" }}
                                     className="bg-slate-100 text-black"
                                 />
@@ -162,10 +166,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                     type="bio"
                                     variant="filled"
                                     value={user.bio ? user.bio : ""}
-                                    onChange={(e) => {
-
-                                        setUser({ ...user, bio: e.target.value })
-                                    }}
+                                    onChange={(e) => userChange(e)}
                                     className="bg-slate-100 text-black w-full"
                                 />
 
@@ -189,12 +190,12 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center bg-slate-700 text-white">
+                    <div className="flex flex-col items-center justify-center bg-slate-700 text-white bg-slate-900" style={{ background: "black" }}>
                         {user &&
                             <React.Fragment>
                                 <div className="text-center text-xl mb-2">{user.name}</div>
-                                <h3 className="text-xl px-1 py-1 underline underlin-offest-8">Who am I</h3>
-                                <p className="text-md px-2 my-2 text-black">
+                                <h3 className="text-xl px-1 py-1 underline underline-offest-8 ">Who am I</h3>
+                                <p className="text-md px-2 my-2 text-white">
                                     {user.image ?
                                         <Image src={user.image}
                                             width={125}

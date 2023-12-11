@@ -11,6 +11,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import { fileType, userType } from '@/lib/Types';
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -60,12 +61,7 @@ export async function getUser() {
             if (user) {
                 let tempUser = user;
                 if (tempUser.imgKey) {
-                    const params = {
-                        Key: tempUser.imgKey,
-                        Bucket
-                    }
-                    const command = new GetObjectCommand(params);
-                    tempUser.image = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) })
+                    tempUser.image = `${url}/${tempUser.imgKey}`
                 }
                 return tempUser as userType
             }
@@ -90,26 +86,14 @@ export async function getFile(fileId: string) {
         if (file) {
             let tempFile = file as fileType;
             if (tempFile.imageKey) {
-                const params = {
-                    Key: tempFile.imageKey,
-                    Bucket
-                }
-                const command = new GetObjectCommand(params);
-                tempFile.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) })
+                tempFile.imageUrl = `${url}/${tempFile.imageKey}`;
             }
-            const neInputs = await Promise.all(
-                tempFile.inputs.map(async (input) => {
-                    if (input.s3Key) {
-                        const params = {
-                            Key: input.s3Key,
-                            Bucket
-                        }
-                        const command = new GetObjectCommand(params);
-                        input.url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                    }
-                    return input
-                })
-            );
+            const neInputs = tempFile.inputs.map(input => {
+                if (input.s3Key && input.type === "image") {
+                    input.url = `${url}/${input.s3Key}`;
+                }
+                return input;
+            })
             const newFile = ({ ...tempFile, inputs: neInputs }) as fileType
             return newFile
         }

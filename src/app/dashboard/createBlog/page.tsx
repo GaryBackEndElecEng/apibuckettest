@@ -10,6 +10,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -57,9 +58,7 @@ export async function getUser() {
             if (user) {
                 let tUser = user as userType;
                 if (tUser.imgKey) {
-                    const params = { Key: tUser.imgKey, Bucket }
-                    const command = new GetObjectCommand(params);
-                    tUser.image = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
+                    tUser.image = `${url}/${tUser.imgKey}`;
                 }
                 return tUser
             }
