@@ -51,7 +51,7 @@
 
   gap: 1.5rem;
 }
-.navlist > a {
+.navlist > div {
   border-radius: 14px 14px 14px 14px;
   box-shadow: 1px 1px 3px 1px black;
   background: hsl(0, 0%, 10%);

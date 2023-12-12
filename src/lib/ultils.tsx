@@ -94,70 +94,7 @@ export function ConvertToList({ para }: { para: string }) {
 
 
 }
-export function ConvertToFormula({ para }: { para: string }) {
-    // searchList
 
-    const numLis: RegExp = /[0-9]/gm; //This matches 0-9 etc
-    const minus: RegExp = /-/gm; //matches "-"
-    const opBrack: RegExp = /\[/gm; //matches "["
-    const cbBrack: RegExp = /\]/gm; //matches "]"
-    const opRdBrack: RegExp = /\(/gm; //matches "]"
-    const clRdBrack: RegExp = /\)/gm; //matches "]"
-    const sum: RegExp = /sum/gm; //matches "sum"
-    const func: RegExp = /function/gm; //matches "sum"
-    const sub1: RegExp = /sub>/gm; //matches "sub>"
-    const sub2: RegExp = /<sub/gm; //matches "<sub"
-    const pi: RegExp = /pi/gm; //matches "<sub"
-    const dot: RegExp = /dot/gm; //matches "<sub"
-    const empty: RegExp = /empty/gm; //matches "<sub"
-    const opCurl: RegExp = /{/gm; //matches "<sub"
-    const clCurl: RegExp = /}/gm; //matches "<sub"
-    const times: RegExp = /x/gm; //matches "<sub"
-    const dbarrow: RegExp = /2arrow/gm; //matches "<sub"
-    const divide: RegExp = /\b\w{1,10}\b + \/ +\b\w{1,10}\b/gm; //matches "<sub"
-    const lim: RegExp = /lim_ + [a-z]/gm; //matches "lim"
-    const sqrt: RegExp = /sqrt/gm; //matches "lim"
-    const integral: RegExp = /integral/gm; //matches "lim"
-    const nextLine: RegExp = /\n/gm; //matches "return"
-    const infinity: RegExp = /infinity/gm; //matches "return"
-    const searchList = [
-        { name: "num", match: numLis, repl: `<span style="fontSize:110%;fontWeight:bold;"> $& </span> ` },
-        { name: "minus", match: minus, repl: `<span style="fontWeight:bold;"> &minus; </span>` },
-        { name: "nextLine", match: nextLine, repl: `<br/> ` },
-        { name: "opBrack", match: opBrack, repl: `<span style="color:pink;"> [ </span>` },
-        { name: "cbBrack", match: cbBrack, repl: `<span style="color:pink;"> ] </span>` },
-        { name: "times", match: times, repl: `<span style="color:red;"> X </span>` },
-        { name: "opRdBrack", match: opRdBrack, repl: `<span style="color:red;fontSize:110%"> ( </span>` },
-        { name: "clRdBrack", match: clRdBrack, repl: `<span style="color:red;fontSize:110%"> ) </span>` },
-        { name: "sum", match: sum, repl: `<span style="fontSize:120%;fontWeight:bold;"> &sum;</span>` },
-        { name: "pi", match: pi, repl: `<span style="fontSize:120%;fontWeight:bold;"> &pi;</span>` },
-        { name: "dot", match: dot, repl: `<span style="fontSize:120%;fontWeight:bold;"> &sdot;</span>` },
-        { name: "infinity", match: infinity, repl: `<span style="fontSize:120%;fontWeight:bold;"> &infin;</span>` },
-        { name: "sqrt", match: sqrt, repl: `<span style="fontSize:120%;fontWeight:bold;"> &radic;</span>` },
-        { name: "integral", match: integral, repl: `<span style="fontSize:120%;fontWeight:bold;"> &int;</span>` },
-        { name: "empty", match: empty, repl: `<span style="fontSize:120%;fontWeight:bold;"> &empty;</span>` },
-        { name: "dbarrow", match: dbarrow, repl: `<span style="fontSize:120%;fontWeight:bold;"> &hArr;</span>` },
-        { name: "lim", match: lim, repl: `<span style="fontSize:80%;"><sub> lim &rArr;$& </sub> </span>` },
-        { name: "sub1", match: sub1, repl: `<sub style="fontSize:80%;fontWeight:bolder"> ` },
-        { name: "sub2", match: sub2, repl: `</sub> ` },
-        { name: "divide", match: divide, repl: `<sup style="fontSize:80%;fontWeight:bolder">$&</sup> &#47; <sub style="fontSize:80%;fontWeight:bolder">$&</sub> ` },
-        { name: "opCurl", match: opCurl, repl: `<span; style="fontSize:110%;fontWeight:bolder">&#123; <span> ` },
-        { name: "clCurl", match: clCurl, repl: `<span style="fontSize:110%;fontWeight:bolder;color:purple;"> &#125; <span> ` },
-        { name: "func", match: func, repl: `<span style="fontSize:100%;fontWeight:bolder;color:blue;">function</span>` },
-    ]
-    let para2: string = "";
-    const getResults = searchList.map((item, index) => {
-        if (index === 0) {
-            para2 = para
-        }
-        para2 = para2.replace(item.match, item.repl)
-        return `${para2}`
-    });
-    const results = getResults[getResults.length - 1]
-    return (<div dangerouslySetInnerHTML={{ __html: results }} />)
-
-
-}
 
 export function SeparatePara({ para, class_ }: { para: string, class_: string }) {
     const arr = para.split("\n");
@@ -384,5 +321,88 @@ export function usePostLikes(posts: postType[]): likeIcon[] {
 
     }, [posts]);
     return iconLikes
+}
+
+export function ConvertToFormula({ para }: { para: string }) {
+    // searchList
+
+    const space: RegExp = /(?:\r\n|\r|\n)+\s/gm; //This matches 0-9
+    const nextLine: RegExp = /(?:\r\n|\r|\n)/gm;
+    const minus: RegExp = /-/gm; //matches "-"
+    const opBrack: RegExp = /\[/gm; //matches "["
+    const cbBrack: RegExp = /\]/gm; //matches "]"
+    const sum: RegExp = /sum/gm; //matches "sum"
+    const func: RegExp = /function/gm; //matches "sum"
+    const funct: RegExp = /func/gm; //matches "sum"
+    const pi: RegExp = /PI/gm; //matches "<sub"
+    const dot: RegExp = /dot/gm; //matches "<sub"
+    const empty: RegExp = /empty/gm; //matches "<sub"
+    const opCurl: RegExp = /{/gm; //matches "<sub"
+    const clCurl: RegExp = /}/gm; //matches "<sub"
+    const times: RegExp = /x/gm; //matches "<sub"
+    const dbarrow: RegExp = /2arrow/gm; //matches "<sub"
+    const divide: RegExp = /divide/gm; //matches "<sub"
+    const lim: RegExp = /lim/gm; //matches "lim"
+    const arrow: RegExp = /arrow/gm; //matches "lim"
+    const promise: RegExp = /Promise/gm; //matches "lim"
+    const sqrt: RegExp = /sqrt/gm; //matches "lim"
+    const integral: RegExp = /integral/gm; //matches "lim"
+    const infinity: RegExp = /infinity/gm; //matches "return"
+    const ret: RegExp = /return/gm; //matches "return"
+    const equal: RegExp = /=/gm; //matches "return"
+    const plus: RegExp = /\+/gm; //matches "return"
+    const muchGreater: RegExp = />>/gm; //matches "return"
+    const cube: RegExp = /cube/gm; //matches "return"
+    const notEqual: RegExp = /notequal/gm; //matches "return"
+    const angle: RegExp = /angle/gm; //matches "return"
+
+    const searchList = [
+        { name: "angle", match: angle, repl: ` &ang; ` },
+        { name: "cube", match: cube, repl: ` &NotCupCap; ` },
+        { name: "notEqual", match: notEqual, repl: ` &NotCupCap; ` },
+        { name: "muchGreater", match: muchGreater, repl: ` &#8921; ` },
+        { name: "divide", match: divide, repl: ` &divide; ` },
+        { name: "plus", match: plus, repl: `  &plus;  ` },
+        { name: "equal", match: equal, repl: ` <span style="color:green"> = </span> ` },
+        { name: "minus", match: minus, repl: ` &minus; ` },
+        { name: "nextLine", match: nextLine, repl: `<br/>` },
+        { name: "space", match: space, repl: `<div style="margin-left:10px"/>` },
+        { name: "opBrack", match: opBrack, repl: `&lbrack; ` },
+        { name: "cbBrack", match: cbBrack, repl: `&rbrack;` },
+        { name: "times", match: times, repl: `X ` },
+        { name: "return", match: ret, repl: `<span style="color:green"> return </span> ` },
+        { name: "sum", match: sum, repl: ` &sum; ` },
+        { name: "pi", match: pi, repl: `&pi;` },
+        { name: "dot", match: dot, repl: `&sdot;` },
+        { name: "infinity", match: infinity, repl: `&infin;` },
+        { name: "sqrt", match: sqrt, repl: `&radic;` },
+        { name: "integral", match: integral, repl: ` <span style="font-size:110%">&int;</span>` },
+        { name: "empty", match: empty, repl: `&empty; ` },
+        { name: "dbarrow", match: dbarrow, repl: `<span style="color:red"> &hArr; </span> ` },
+        { name: "arrow", match: arrow, repl: `<span style="color:blue"> &rArr; </span> ` },
+        { name: "lim", match: lim, repl: ` lim &rArr;` },
+        { name: "promise", match: promise, repl: `<span style="color:red">$& </span>` },
+        { name: "divide", match: divide, repl: ` &#47; ` },
+        { name: "opCurl", match: opCurl, repl: `<span style="color:pink"> &#123; </span>` },
+        { name: "clCurl", match: clCurl, repl: `<span style="color:pink"> &#125; </span>` },
+        { name: "func", match: func, repl: ` <span style="color:red">function</span> ` },
+        { name: "space", match: space, repl: ` <span style="color:red">function</span> ` },
+    ]
+    let para2: string = "";
+    const getResults = searchList.map((item, index) => {
+        if (index === 0) {
+            para2 = para
+        }
+        para2 = para2.replace(item.match, item.repl)
+        return `${para2}`
+    });
+    const results = getResults[getResults.length - 1]
+    return (
+        <p
+            dangerouslySetInnerHTML={{ __html: results }}
+        />
+    )
+
+
 }
 

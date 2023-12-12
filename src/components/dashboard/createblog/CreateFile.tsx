@@ -10,7 +10,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import CreateInputs from "@component/dashboard/createblog/CreateInputs";
 import Link from 'next/link';
 import styles from "@component/dashboard/createblog/createablog.module.css"
-const url = process.env.BUCKET_URL as string;
+const url = "https://garyposttestupload.s3.amazonaws.com";
 
 type fetchType = {
     file: fileType,

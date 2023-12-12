@@ -74,7 +74,7 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             <div className={show1 ? styles.finalMsg : styles.remove}>
                 <p></p>
                 <div className={styles.p_grid}>
-                    <p> Helping you helps us,,,</p>
+                    <p> Helping you  us,,,</p>
                     <h3> ablogroom.com</h3>
                 </div>
             </div>

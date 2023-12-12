@@ -358,6 +358,7 @@ export function ListForm({ input, setInput }: GenFormType) {
         return (<></>)
     }
 }
+
 export function CodeForm({ input, setInput }: GenFormType) {
     //"heading" || "subHeading" || "list"
 
@@ -365,44 +366,45 @@ export function CodeForm({ input, setInput }: GenFormType) {
         const check: inputType | null = input.type == "code" ? input : null;
         if (!check) return (<></>);
         return (
-            <div className="mx-auto flex flex-col items-center justify-center">
-                <div>
-                    <TextField
-                        fullWidth={true}
-                        helperText={`${check.type}-name list`}
-                        id={`${check.type}-${check.id ? check.id : "name list"}`}
-                        label={`${check.type}-name list`}
-                        multiline={false}
-                        name={`${check.type}-list`}
-                        placeholder={`name list`}
-                        required
-                        size={"medium"}
-                        type="text"
-                        variant="outlined"
-                        value={check.name ? check.name : ""}
-                        onChange={(e) => setInput({ ...check, name: e.target.value as string })}
-                        style={{ fontFamily: "bold" }}
-                    />
-                    <TextField
-                        fullWidth={true}
-                        helperText={`${check.type}-list body`}
-                        id={`${check.type}-${check.id ? check.id : "list body"}`}
-                        label={`${check.type}-list body`}
-                        multiline={true}
-                        minRows={4}
-                        name={`${check.type}-list body`}
-                        placeholder={`body your list`}
-                        required
-                        size={"medium"}
-                        type="text"
-                        variant="outlined"
-                        value={check && check.content ? check.content : ""}
-                        onChange={(e) => setInput({ ...check, content: e.target.value as string })}
-                        style={{ fontFamily: "bold", width: "100%" }}
-                    />
-                </div>
+            <div className="mx-auto flex flex-col items-center justify-center w-full">
+
+                <TextField
+                    fullWidth={true}
+                    helperText={`${check.type}-name list`}
+                    id={`${check.type}-${check.id ? check.id : "name list"}`}
+                    label={`${check.type}-name list`}
+                    multiline={false}
+                    name={`${check.type}-list`}
+                    placeholder={`name list`}
+                    required
+                    size={"medium"}
+                    type="text"
+                    variant="outlined"
+                    value={check.name ? check.name : ""}
+                    onChange={(e) => setInput({ ...check, name: e.target.value as string })}
+                    style={{ fontFamily: "bold" }}
+                />
+                <TextField
+                    fullWidth={true}
+                    helperText={`${check.type}-list body`}
+                    id={`${check.type}-${check.id ? check.id : "list body"}`}
+                    label={`${check.type}-list body`}
+                    multiline={true}
+                    minRows={4}
+                    name={`${check.type}-list body`}
+                    placeholder={`body your list`}
+                    required
+                    size={"medium"}
+                    type="text"
+                    variant="outlined"
+                    value={check && check.content ? check.content : ""}
+                    onChange={(e) => setInput({ ...check, content: e.target.value as string })}
+                    style={{ fontFamily: "bold", width: "100%" }}
+                />
+
                 <section className="code" style={{ position: "relative", width: "100%" }}>
-                    <div>{input.name && input.name}
+                    <h3 className="text-center text-xl underline underline-offest-8 my-2">{input.name && input.name}</h3>
+                    <div>
                         <ConvertToFormula para={input.content} />
                     </div>
                 </section>

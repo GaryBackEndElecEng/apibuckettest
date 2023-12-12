@@ -23,6 +23,7 @@ type mainCreateFileType = {
     file: fileType | undefined
 }
 export default function EditFile({ user, file }: mainCreateFileType) {
+    const url = "https://garyposttestupload.s3.amazonaws.com";
     const { setFile_, setBlogMsg, blogMsg, input_s } = useBlogContext();
     const [message, setMessage] = React.useState<msgType>({} as msgType);
     const [loaded, setLoaded] = React.useState<boolean>(false);
@@ -51,7 +52,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
 
 
     }
-
+    console.log("file", file)
     const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>
     ) => {
         e.preventDefault();
@@ -63,7 +64,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
             formData.set("Key", Key);
             const { data } = await axios.post("/api/media", formData)
             if (data.status === 200) {
-                setFile_({ ...file, imageKey: Key });
+                setFile_({ ...file, imageKey: Key, imageUrl: `${url}/${Key}` });
                 setMessage({ loaded: true, msg: "saved" })
             } else {
                 setMessage({ loaded: false, msg: "not saved" })
@@ -72,6 +73,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
         }
 
     }
+
     // console.log(file, "LOADED", loaded, "USERID", userId)
     const mainStyle = " mx-auto px-2 py-2 flex flex-col gap-2";
     const form = "flex flex-col gap-3 mx-auto";
@@ -142,6 +144,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
                                 handleOnChange(e)
                             }}
                         />}
+
                         {blogMsg && blogMsg.msg &&
                             <div className="relative h-[10vh] flex flex-col items-center justify-center">
                                 {blogMsg.loaded ?

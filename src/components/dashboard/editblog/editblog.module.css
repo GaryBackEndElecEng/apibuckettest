@@ -1,6 +1,6 @@
 .editBlogLayout {
   margin: auto;
-  width: 80vh;
+  width: 80vw;
   display: grid;
   place-items: center;
   place-content: center;
@@ -29,18 +29,20 @@
   justify-content: space-evenly;
   margin-block: 2rem;
   align-items: center;
-  width: 100%;
+  min-width: 65vw;
+  width: 80%;
   background: whitesmoke;
 }
 .mainFile > form {
   margin: auto;
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   gap: 1rem;
 }
+
 .fileTitle {
   background-image: url("/images/colorWorld.png");
   color: transparent;
@@ -106,7 +108,7 @@
     width: 100%;
   }
   .mainFile > form {
-    width: 90%;
+    width: 100%;
   }
   .displayFile {
     padding-inline: 1rem;
@@ -130,6 +132,10 @@
   }
   .displayFile {
     padding-inline: 0.75rem;
+  }
+  .mainFile {
+    width: 100%;
+    min-width: 97vw;
   }
 }
 /*---------EDITFILE------------ */
