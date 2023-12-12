@@ -275,7 +275,7 @@
     transition: all 0.75s ease-in-out;
     /* min-height: 10vh; */
   }
-  .navlistShow > a {
+  .navlistShow > div {
     display: flex;
     border-radius: 14px 14px 14px 14px;
     border: 1px solid white;
@@ -289,12 +289,13 @@
     text-align: center;
     animation: slideIn 0.75s ease-in-out forwards 0.5s;
   }
-  .navlistShow > a > button span > span {
+  .navlistShow > div > button span > span {
     font-size: 14px;
     animation: slideIn2 1.75s ease-in-out forwards 0.5s;
   }
-  .navlist > a > button span > span {
+  .navlist > div > button span > span {
     font-size: 14px;
+    font-weight: bold;
     animation: none;
   }
   @keyframes slideIn2 {

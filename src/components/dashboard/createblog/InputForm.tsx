@@ -6,7 +6,7 @@ import { inputType, userType } from '@/lib/Types';
 import { useBlogContext } from '@/components/context/BlogContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { v4 as uuidv4 } from "uuid";
-import { SecPlusForm, HeaderPlusForm, ImgForm, LinkForm, ReplyForm } from "@component/compForms/formInputs";
+import { SecPlusForm, HeaderPlusForm, ImgForm, LinkForm, ReplyForm, ListForm, CodeForm } from "@component/compForms/formInputs";
 
 type fetchType = {
     input: inputType,
@@ -105,6 +105,8 @@ export function GenForm({ setInput, input, setImgLoaded, user }: GenFormType) {
                 />
                 <LinkForm input={input} setInput={setInput} />
                 <ReplyForm input={input} setInput={setInput} />
+                <ListForm input={input} setInput={setInput} />
+                <CodeForm input={input} setInput={setInput} />
             </>
         )
     }

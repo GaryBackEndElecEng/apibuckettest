@@ -78,6 +78,11 @@ export default function SubNav() {
         }
 
     }
+    const handleOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, link: string) => {
+        e.preventDefault();
+        router.push(link);
+        setShow(false);
+    }
 
     return (
         <main className={`${styles.navMain}`} onMouseLeave={(e) => handleMouse(e)}>
@@ -88,7 +93,7 @@ export default function SubNav() {
                 <div className={show ? styles.navlistShow : styles.navlist}>
                     <React.Fragment>
                         {navList2 && navList2.map((navlink, index) => (
-                            <Link href={navlink.link} key={index} style={{ background: "black", color: "white", width: "100%", margin: "0" }} data-desc={navlink.desc}>
+                            <div onClick={(e) => handleOnClick(e, navlink.link)} key={index} style={{ background: "black", color: "white", width: "100%", margin: "0" }} data-desc={navlink.desc}>
                                 <IconButton >
                                     {navlink.icon}
                                     <span className={styles.link_name}>
@@ -96,7 +101,7 @@ export default function SubNav() {
                                     </span>
                                     {isSmall && <span className={" text-white  text-sm"}> :<span>{navlink.desc}</span></span>}
                                 </IconButton>
-                            </Link>
+                            </div>
                         ))}
                         <DropDownTrigger />
                     </React.Fragment>

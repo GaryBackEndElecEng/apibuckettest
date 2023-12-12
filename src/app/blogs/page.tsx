@@ -12,7 +12,8 @@ import { notFound } from "next/navigation";
 
 
 
-const url = process.env.BUCKET_URL
+const url = process.env.BUCKET_URL as string
+// const url = "https://garyposttestupload.s3.amazonaws.com"
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -64,7 +65,8 @@ export async function getFiles() {
     const files = await prisma.file.findMany({ include: { rates: true } });
     const fileInserts = files.map(file => {
         if (file.imageKey) {
-            file.fileUrl = `${url}/${file.imageKey}`
+            file.imageUrl = `${url}/${file.imageKey}`
+
         }
         return file
     });

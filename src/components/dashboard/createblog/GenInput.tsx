@@ -3,7 +3,7 @@ import { contactType, inputType, targetType } from '@/lib/Types';
 import React from 'react';
 import "@pages/globalsTwo.css"
 import Image from 'next/image';
-import { ConvertToList, SeparatePara } from "@lib/ultils";
+import { ConvertToFormula, ConvertToList, SeparatePara } from "@lib/ultils";
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { useBlogContext } from '@/components/context/BlogContextProvider';
 import styles from "@dashboard/createblog/createablog.module.css";
@@ -130,6 +130,17 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                     <ul>{input.name && input.name}
                         <ConvertToList para={input.content} />
                     </ul>
+                </section>
+
+            )
+        case "code":
+            return (
+
+                <section className="code" style={{ position: "relative", width: "100%" }}>
+                    <h3 className="text-center text-xl underline underline-offest-8 my-2">{input.name && input.name}</h3>
+                    <div>
+                        <ConvertToFormula para={input.content} />
+                    </div>
                 </section>
 
             )

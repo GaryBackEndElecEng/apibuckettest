@@ -38,8 +38,8 @@ export default function MasterEditBlog({ user, file }: mastertype) {
 
 
     return (
-        <div>
-            <EditFile user={user} file={file_} />
-        </div>
+
+        <EditFile user={user} file={file_} />
+
     )
 }

@@ -3,7 +3,7 @@ import { contactType, inputType } from '@/lib/Types';
 import React from 'react';
 // import "@pages/globalsTwo.css"
 import Image from 'next/image';
-import { ConvertToList, SeparatePara } from "@lib/ultils";
+import { ConvertToFormula, ConvertToList, SeparatePara } from "@lib/ultils";
 import styles from "@component/blog/blog.module.css";
 import { useGeneralContext } from '../context/GeneralContextProvider';
 import { TextField } from '@mui/material';
@@ -120,6 +120,17 @@ function GenInput({ input }: { input: inputType }) {
                 </section>
 
             );
+        case "code":
+            return (
+
+                <section className="code" style={{ position: "relative", width: "100%" }}>
+                    <h3 className="text-center text-xl underline underline-offest-8 my-2">{input.name && input.name}</h3>
+                    <div>
+                        <ConvertToFormula para={input.content} />
+                    </div>
+                </section>
+
+            )
         case "reply":
 
             const handleReplySubmit = async (e: React.FormEvent<HTMLFormElement>) => {

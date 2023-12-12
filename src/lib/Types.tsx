@@ -190,6 +190,7 @@ export const inputNames: inputType[] = [
     { type: "article", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "conclusion", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "reply", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "code", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
 ]
 export type targetType = {
     loaded: boolean,

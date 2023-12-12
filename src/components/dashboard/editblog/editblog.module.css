@@ -6,6 +6,7 @@
   place-content: center;
   padding-block: 1rem;
   border-radius: 20px 20px 20px 20px;
+  position: relative;
 }
 
 .mainEditBlog {
@@ -109,6 +110,13 @@
   }
   .displayFile {
     padding-inline: 1rem;
+  }
+}
+@media screen and (max-width: 920px) {
+  .editBlogLayout {
+    width: 100vw;
+    padding-inline: 0.5rem;
+    padding-block: 2rem;
   }
 }
 @media screen and (max-width: 450px) {

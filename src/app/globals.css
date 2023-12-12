@@ -189,6 +189,19 @@ li::before {
   color: red;
   margin-right: 5px;
 }
+section.code {
+  margin-block: 1.5rem;
+  margin-inline: auto;
+  padding: 1rem;
+  border-radius: 15px 15px 15px 15px;
+  background: rgba(0, 0, 0, 0.4);
+}
+section.code > div {
+  width: 100%;
+  border-radius: inherit;
+  background: white;
+  padding: 1rem;
+}
 
 .link,
 .hlink {
