@@ -1,4 +1,4 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+import type { ResolvingMetadata, Metadata } from 'next';
 import React, { Suspense } from 'react';
 import { PrismaClient } from "@prisma/client";
 import { postType, userType } from '@/lib/Types';
@@ -110,4 +110,68 @@ export async function getUsers() {
         return user
     })
     return usersInserts
+}
+
+type rateType = { id: string, title: string, name: string, rate: number, img: string, author: { name: string, url: string } }
+
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+
+    const posts: postType[] = await getPosts() as unknown[] as postType[]
+    const authors_: userType[] = await getUsers() as unknown[] as userType[]
+    if (posts && posts.length > 0 && authors_ && authors_.length > 0) {
+        const image = "/images/logo_512.png";
+        let avgRates: rateType[] = [];
+
+        const rates: rateType[] = posts.map((post, index) => {
+            const postId = post.id ? String(post.id) : "#";
+            const postImg = post.imageUrl ? post.imageUrl : "#";
+            const reduce = post.rates.reduce((a, b) => (a + b.rate), 0);
+            const avrate = Math.round(reduce / (post.rates.length))
+            const author: userType | undefined = authors_.find((auth: userType) => (auth.id === post.userId));
+            const authorFound = (author && author.name) ? { name: author.name, url: `/${author.name}` } : { name: "author", url: "/" };
+
+            return {
+                id: postId,
+                title: post.name,
+                name: post.name,
+                rate: avrate,
+                img: postImg,
+                author: authorFound
+            }
+        });
+
+
+
+        // optionally access and extend (rather than replace) parent metadata
+        const previousImages = (await parent)?.openGraph?.images || []
+        const prevDesc = (await parent).openGraph?.description;
+        const keywords = (await parent).keywords || [];
+        const authors = (await parent).authors || [];
+        const titles: string = rates.map(rate => (rate.title)).join(",")
+        const kwds: string[] = rates.map(rate => (rate.title));
+        const images: string[] = rates.map(rate => (rate.img));
+        const getAuths = rates.map(auth => (auth.author))
+        const desc = titles ? `${titles} posts for you` : `all posts for you`;
+        const postUrl = `/posts`
+        const newImages = previousImages.concat(images);
+        const newKwds = keywords.concat(kwds);
+        const newAuths = authors.concat(getAuths)
+        return {
+            title: `all Blogs- Blog Room Page`,
+            description: `${desc}, ${prevDesc}`,
+            keywords: newKwds,
+            authors: newAuths,
+
+            openGraph: {
+                images: [image, ...newImages],
+                description: `${desc}, ${prevDesc}`,
+                url: postUrl,
+            },
+        }
+    } else {
+        return {
+            title: ` Blog Room post detail Page`,
+            description: "The Blog Room - post detail page",
+        }
+    }
 }

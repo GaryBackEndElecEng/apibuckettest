@@ -1,4 +1,4 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+import type { InferGetServerSidePropsType, GetServerSideProps, Metadata, ResolvingMetadata } from 'next';
 import React, { Suspense } from 'react';
 import { PrismaClient } from "@prisma/client";
 import { fileType, userType } from '@/lib/Types';
@@ -110,4 +110,67 @@ async function insertUserImg(user: userType) {
         }
     }
     return user
+}
+type rateType = { id: string, title: string, name: string, rate: number, img: string, author: string }
+
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+
+    const files: fileType[] = await getFiles() as unknown[] as fileType[]
+    const authors_: userType[] = await getUsers() as unknown[] as userType[]
+    if (files && files.length > 0 && authors_ && authors_.length > 0) {
+        const image = "/images/logo_512.png";
+        let avgRates: rateType[] = [];
+
+        const rates: rateType[] = files.map((file, index) => {
+            const fileId = file.id ? file.id : "#";
+            const fileImg = file.imageUrl ? file.imageUrl : "#";
+            const reduce = file.rates.reduce((a, b) => (a + b.rate), 0);
+            const avrate = Math.round(reduce / (file.rates.length))
+            const author: userType | undefined = authors_.find((auth: userType) => (auth.id === file.userId));
+            const authorFound = (author && author.name) ? author.name : "author";
+
+            return {
+                id: fileId,
+                title: file.title,
+                name: file.name,
+                rate: avrate,
+                img: fileImg,
+                author: authorFound
+            }
+        });
+
+
+
+        // optionally access and extend (rather than replace) parent metadata
+        const previousImages = (await parent)?.openGraph?.images || []
+        const prevDesc = (await parent).openGraph?.description;
+        const keywords = (await parent).keywords || [];
+        const authors = (await parent).authors || [];
+        const titles: string = rates.map(rate => (rate.title)).join(",")
+        const kwds: string[] = rates.map(rate => (rate.title));
+        const images: string[] = rates.map(rate => (rate.img));
+        const getAuths = rates.map(auth => ({ name: auth.author, url: `/blogs/${auth.id}` }))
+        const desc = titles ? `${titles} blogs for you` : `all blogs for you`;
+        const blogUrl = `/blogs`
+        const newImages = previousImages.concat(images);
+        const newKwds = keywords.concat(kwds);
+        const newAuths = authors.concat(getAuths)
+        return {
+            title: `all Blogs- Blog Room Page`,
+            description: `${desc}, ${prevDesc}`,
+            keywords: newKwds,
+            authors: newAuths,
+
+            openGraph: {
+                images: [image, ...newImages],
+                description: `${desc}, ${prevDesc}`,
+                url: blogUrl,
+            },
+        }
+    } else {
+        return {
+            title: ` Blog Room post detail Page`,
+            description: "The Blog Room - post detail page",
+        }
+    }
 }

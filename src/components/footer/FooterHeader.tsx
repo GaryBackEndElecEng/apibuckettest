@@ -11,7 +11,7 @@ export default function FooterHeader({ logo }: { logo: string }) {
     const roomRef = React.useRef(null);
     const [showMsg, setShowMsg] = React.useState<boolean>(false);
     const size = useWindowSize();
-    console.log(size)
+
     React.useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             let entry = entries[0];
@@ -33,12 +33,12 @@ export default function FooterHeader({ logo }: { logo: string }) {
 
                     <div>
                         <h3 data-link="Email Use">
-                            {size !== "sm" && "mail"}
+                            {(size !== ("sm" || "xs")) && "mail"}
                             <a href={"mailto:masterultils@gmail.com"} >
                                 <MdEmail style={{ color: "green" }} />
                             </a></h3>
                         <h3 data-link="Call Use">
-                            {size !== "sm" && "phone"}
+                            {(size !== ("sm" || "xs")) && "phone"}
                             <a href={"tel:4169175768"} >
                                 <FaPhoneAlt style={{ color: "blue" }} />
                             </a>

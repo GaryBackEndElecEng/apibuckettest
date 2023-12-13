@@ -1,4 +1,4 @@
-import type { InferGetServerSidePropsType, GetServerSideProps, GetStaticProps, InferGetStaticPropsType } from 'next';
+import type { InferGetServerSidePropsType, GetServerSideProps, GetStaticProps, InferGetStaticPropsType, Metadata, ResolvingMetadata } from 'next';
 import React from 'react';
 import { PrismaClient } from "@prisma/client";
 import { postType, userType, GetServerSidePropsResult } from '@/lib/Types';
@@ -119,4 +119,68 @@ export async function getUser(userId: string) {
 export async function getposts() {
     const posts = await prisma.post.findMany();
     return posts
+}
+
+type ratetype = {
+    rate: number,
+    count: number,
+    id: string,
+    img: string,
+    author: { author: string, url: string },
+}
+
+type Props = {
+    params: { id: string }
+    // searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    const { id } = params;
+
+    const post: postType | undefined = await getPost(id) as unknown as postType;
+
+    if (post) {
+        const user: userType = await getUser(post.userId) as unknown as userType;
+        const name: string = user.name ? user.name : "author";
+        const image = "/images/logo_512.png";
+        const blogLink = post.bloglink ? post.bloglink : "https://www.ablogroom.com/blogs";
+        const reduce = post.rates.reduce((a, b) => (a + b.rate), 0);
+        const avrate = Math.round(reduce / (post.rates.length))
+        const Rate: ratetype | undefined = {
+            count: post.rates.length,
+            rate: avrate,
+            id: String(post.id),
+            img: post.imageUrl ? post.imageUrl : image,
+            author: { author: name, url: blogLink, }
+        };
+
+
+        // optionally access and extend (rather than replace) parent metadata
+        const previousImages = (await parent)?.openGraph?.images || []
+        const prevDesc = (await parent).openGraph?.description;
+        const emails = (await parent).openGraph?.emails || [];
+        const authors = (await parent).authors || []
+        const creator = (await parent).creator ? `${name} of ${(await parent).creator}` : name;
+        const newAuthors = [...authors, Rate.author];
+        const desc = (post && post.content) ? post.content : `${post.name} description of an author's blog.`;
+        const blogUrl = `/blogs/${post.id}`
+
+        return {
+            title: `${post.name}:Rating: ${Rate.rate}- Blog Room Page`,
+            description: `${desc}, ${prevDesc}`,
+            authors: newAuthors,
+            creator: creator,
+
+            openGraph: {
+                images: [image, Rate.img, ...previousImages],
+                url: blogUrl,
+                emails: [user.email, ...emails]
+            },
+        }
+    } else {
+        return {
+            title: ` Blog Room post detail Page`,
+            description: "The Blog Room - post detail page",
+        }
+    }
 }

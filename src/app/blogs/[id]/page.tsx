@@ -1,9 +1,9 @@
-import type { GetServerSideProps, InferGetStaticPropsType } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
 import React from 'react';
 import { PrismaClient } from "@prisma/client";
-import { fileType, userType, GetServerSidePropsResult } from '@/lib/Types';
-import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { fileType, userType, GetServerSidePropsResult, fileRateType } from '@/lib/Types';
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+// import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // import { v4 as uuidv4 } from "uuid";
 import styles from "@component/blog/blog.module.css";
 import PostHeader from "@component/post/PostHeader";
@@ -129,7 +129,70 @@ export async function getUser(userId: string) {
 }
 
 export async function getFiles() {
-    const files = await prisma.file.findMany();
+    const files = await prisma.file.findMany({ include: { rates: true, likes: true } });
     await prisma.$disconnect();
     return files
+}
+
+type ratetype = {
+    rate: number,
+    count: number,
+    id: string,
+    img: string,
+    author: { author: string, url: string },
+}
+
+type Props = {
+    params: { id: string }
+    // searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    const { id } = params;
+
+    const file: fileType = await getFile(id) as unknown as fileType;
+    if (file) {
+        const user: userType = await getUser(file.userId) as unknown as userType;
+        const name: string = user.name ? user.name : "author";
+        const image = "/images/logo_512.png";
+        let avgRate: number = 0;
+        const reduce = file.rates.reduce((a, b) => (a + b.rate), 0);
+        const avrate = Math.round(reduce / (file.rates.length))
+        const Rate: ratetype | undefined = {
+            count: file.rates.length,
+            rate: avrate,
+            id: file.id as string,
+            img: file.imageUrl ? file.imageUrl : image,
+            author: { author: name, url: `/blogs/${file.id}`, }
+        };
+
+
+        // optionally access and extend (rather than replace) parent metadata
+        const previousImages = (await parent)?.openGraph?.images || []
+        const prevDesc = (await parent).openGraph?.description;
+        const emails = (await parent).openGraph?.emails || [];
+        const authors = (await parent).authors || []
+        const creator = (await parent).creator ? `${name} of www.ablogroom.com from ${(await parent).creator}` : name;
+        const newAuthors = [...authors, Rate.author];
+        const desc = (file && file.content) ? file.content : `${file.name} description of an author's blog.`;
+        const blogUrl = `/blogs/${file.id}`
+
+        return {
+            title: `${file.title}:Rating: ${Rate.rate}- Blog Room Page`,
+            description: `${desc}, ${prevDesc}`,
+            authors: newAuthors,
+            creator: creator,
+
+            openGraph: {
+                images: [image, Rate.img, ...previousImages],
+                url: blogUrl,
+                emails: [user.email, ...emails]
+            },
+        }
+    } else {
+        return {
+            title: ` Blog Room blog detail Page`,
+            description: "The Blog Room - Blog detail page",
+        }
+    }
 }
