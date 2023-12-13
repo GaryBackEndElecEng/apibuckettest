@@ -142,6 +142,7 @@ export async function generateMetadata(parent: ResolvingMetadata): Promise<Metad
 
 
         // optionally access and extend (rather than replace) parent metadata
+        const referrer = (await parent).referrer;
         const previousImages = (await parent)?.openGraph?.images || []
         const prevDesc = (await parent).openGraph?.description;
         const keywords = (await parent).keywords || [];
@@ -160,6 +161,7 @@ export async function generateMetadata(parent: ResolvingMetadata): Promise<Metad
             description: `${desc}, ${prevDesc}`,
             keywords: newKwds,
             authors: newAuths,
+            referrer,
 
             openGraph: {
                 images: [image, ...newImages],

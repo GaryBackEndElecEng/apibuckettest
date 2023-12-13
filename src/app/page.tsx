@@ -14,6 +14,7 @@ import { notFound } from "next/navigation";
 import HomeHeader from "@component/home/HomeHeader";
 import authOptions from "@lib/authOptions";
 import { getServerSession } from "next-auth";
+import { Metadata, ResolvingMetadata } from "next";
 
 const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string;
@@ -56,6 +57,10 @@ export default async function Home() {
     </React.Fragment>
   )
 }
+export async function generateStaticParams() {
+  const users = await getUsers();
+  return users?.map(user => ({ name: user.name }))
+}
 
 export async function getUsers() {
   try {
@@ -74,6 +79,43 @@ export async function getUsers() {
   } catch (error) {
     const message = getErrorMessage(error);
     console.error(`${message}@home`)
+  }
+}
+
+type rateType = { id: string, title: string, name: string, rate: number, img: string, author: { name: string, url: string } }
+
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata | undefined> {
+
+  const authors_: userType[] = await getUsers() as unknown[] as userType[]
+  if (authors_ && authors_.length > 0) {
+    const image = "/images/logo_512.png";
+
+    // optionally access and extend (rather than replace) parent metadata
+    const referrer = (await parent).referrer;
+    const previousImages = (await parent)?.openGraph?.images || []
+    const prevDesc = (await parent).openGraph?.description;
+    const keywords = (await parent).keywords || [];
+    const authors = (await parent).authors || [];
+    const names: string = authors_.map(user => (user.name)).join(",")
+    const kwds: string[] = authors_.map(user => (user.name as string));
+    const images: string[] = authors_.map(user => (user.image as string));
+    const getAuths = authors_.map(user => ({ name: user.name, url: `/${user.name}` }));
+    const desc = names ? `${names} bloggers for you` : `all posts for you`;
+    const newImages = previousImages.concat(images);
+    const newKwds = keywords.concat(kwds);
+    const newAuths = authors.concat(getAuths)
+    return {
+      description: `${desc}, ${prevDesc}`,
+      keywords: newKwds,
+      authors: newAuths,
+      referrer,
+
+      openGraph: {
+        images: [image, ...newImages],
+        description: `${desc}, ${prevDesc}`,
+        url: "/",
+      },
+    }
   }
 }
 

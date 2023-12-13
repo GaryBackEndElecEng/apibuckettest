@@ -106,7 +106,7 @@ export default function SubNav() {
                         <DropDownTrigger />
                     </React.Fragment>
                 </div>
-                {/* <button onClick={() => signOut()}>logout</button> */}
+
             </div>
         </main>
     )

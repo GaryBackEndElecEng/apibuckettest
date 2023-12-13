@@ -21,6 +21,7 @@
   display: grid;
   place-items: center;
   z-index: -1;
+  min-height: 100vh;
 }
 .mainHeaderTrue {
   margin-inline: 2px;

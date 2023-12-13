@@ -31,34 +31,7 @@ const prisma = new PrismaClient();
 
 
 
-// async function insertImg(post: postType) {
-//     if (post.s3Key) {
-//         const params = {
-//             Key: post.s3Key,
-//             Bucket
-//         }
-//         const command = new GetObjectCommand(params);
-//         const url1 = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-//         if (url) {
-//             post.imageUrl = url1
-//         }
-//     }
-//     return post
-// }
-// async function insertUserImg(user: userType) {
-//     if (user.imgKey) {
-//         const params = {
-//             Key: user.imgKey,
-//             Bucket
-//         }
-//         const command = new GetObjectCommand(params);
-//         const url1 = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-//         if (url1) {
-//             user.image = url1
-//         }
-//     }
-//     return user
-// }
+
 
 
 export default async function Page() {
@@ -91,7 +64,7 @@ export default async function Page() {
 }
 
 export async function getPosts() {
-    const posts = await prisma.post.findMany({ include: { rates: true } }) as postType[];
+    const posts = await prisma.post.findMany({ include: { rates: true, likes: true } }) as postType[];
     const retPosts = posts.map(post => {
         if (post.s3Key) {
             post.imageUrl = `${url}/${post.s3Key}`
@@ -112,15 +85,16 @@ export async function getUsers() {
     return usersInserts
 }
 
+
 type rateType = { id: string, title: string, name: string, rate: number, img: string, author: { name: string, url: string } }
 
-export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata | undefined> {
 
     const posts: postType[] = await getPosts() as unknown[] as postType[]
     const authors_: userType[] = await getUsers() as unknown[] as userType[]
     if (posts && posts.length > 0 && authors_ && authors_.length > 0) {
         const image = "/images/logo_512.png";
-        let avgRates: rateType[] = [];
+
 
         const rates: rateType[] = posts.map((post, index) => {
             const postId = post.id ? String(post.id) : "#";
@@ -147,6 +121,7 @@ export async function generateMetadata(parent: ResolvingMetadata): Promise<Metad
         const prevDesc = (await parent).openGraph?.description;
         const keywords = (await parent).keywords || [];
         const authors = (await parent).authors || [];
+        const referrer = (await parent).referrer;
         const titles: string = rates.map(rate => (rate.title)).join(",")
         const kwds: string[] = rates.map(rate => (rate.title));
         const images: string[] = rates.map(rate => (rate.img));
@@ -161,17 +136,13 @@ export async function generateMetadata(parent: ResolvingMetadata): Promise<Metad
             description: `${desc}, ${prevDesc}`,
             keywords: newKwds,
             authors: newAuths,
+            referrer,
 
             openGraph: {
                 images: [image, ...newImages],
                 description: `${desc}, ${prevDesc}`,
                 url: postUrl,
             },
-        }
-    } else {
-        return {
-            title: ` Blog Room post detail Page`,
-            description: "The Blog Room - post detail page",
         }
     }
 }

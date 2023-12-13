@@ -322,6 +322,32 @@ export function usePostLikes(posts: postType[]): likeIcon[] {
     }, [posts]);
     return iconLikes
 }
+export function useOnScroll() {
+    const [isScroll, setIsScroll] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        let lastKnownScrollPosition = 0;
+        let ticking = false;
+        if (window) {
+            window.addEventListener("scroll", () => {
+                lastKnownScrollPosition = window.scrollY;
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        if (lastKnownScrollPosition > 0) {
+                            setIsScroll(true);
+                            ticking = false;
+                        }
+                    });
+
+                    ticking = true;
+                }
+            });
+            return () => window.removeEventListener("scroll", () => { });
+        }
+
+    }, [isScroll]);
+    return isScroll
+}
 
 export function ConvertToFormula({ para }: { para: string }) {
     // searchList

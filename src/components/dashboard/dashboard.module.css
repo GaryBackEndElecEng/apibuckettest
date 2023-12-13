@@ -387,6 +387,7 @@
   place-items: center;
   padding: 20rem;
   background: black;
+  margin-block: 10rem;
   border-radius: 15px 15px 15px 15px;
   filter: drop-shadow(2px 2px 10px white);
 }

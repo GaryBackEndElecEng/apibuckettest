@@ -21,6 +21,20 @@ const nextConfig = {
     return [
       {
         // matching all API routes
+        source: "/:path*",
+        headers: [
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+        ],
+        source: "/dashboard/:path*",
+        headers: [
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin",
+          },
+        ],
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },

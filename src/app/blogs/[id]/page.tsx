@@ -168,6 +168,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 
         // optionally access and extend (rather than replace) parent metadata
+        const referrer = (await parent).referrer;
         const previousImages = (await parent)?.openGraph?.images || []
         const prevDesc = (await parent).openGraph?.description;
         const emails = (await parent).openGraph?.emails || [];
@@ -182,6 +183,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
             description: `${desc}, ${prevDesc}`,
             authors: newAuthors,
             creator: creator,
+            referrer,
 
             openGraph: {
                 images: [image, Rate.img, ...previousImages],

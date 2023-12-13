@@ -12,9 +12,11 @@ import Footer from "@component/footer/Footer";
 
 
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
+
 const baseUrl = new URL("https://www.ablogroom.com");
 const local = new URL("http://localhost:3000");
+
 export const metadata: Metadata = {
   metadataBase: process.env.NODE_ENV === "production" ? baseUrl : local,
   title: {
@@ -34,8 +36,8 @@ export const metadata: Metadata = {
 
   generator: "Next.js",
   applicationName: "apitest",
-  referrer: "origin-when-cross-origin",
-  keywords: ["The Blog Room, Free to use", "blogs for you", "web info", "free blog posts", " The World is Your Oyster", " Create Your Own Blog", "Gary's Blogs"],
+  referrer: "strict-origin-when-cross-origin",
+  keywords: ["The Blog Room, Free to use", "blogs for you", "web info", "free blogs & posts", " The World is Your Oyster", " Create Your Own Blog", "Gary's Blogs"],
   authors: [{ name: "Gary Wallace", url: "https://www.ablogroom.com" }, { name: "Gary Wallace", url: "https://www.masterconnect.ca" }],
   // colorScheme:"light",
   creator: "Gary Wallace",
@@ -63,16 +65,12 @@ export const metadata: Metadata = {
 
   },
   robots: {
-    index: false,
+    index: true,
     follow: true,
     nocache: false,
     googleBot: {
       index: true,
-      follow: false,
-      noimageindex: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      follow: true,
     },
   },
   icons: {

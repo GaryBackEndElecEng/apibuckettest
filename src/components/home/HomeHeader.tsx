@@ -3,6 +3,7 @@ import React from 'react'
 import { introArr } from "@component/home/homeExtra";
 import styles from "./home.module.css";
 import { usePathname } from "next/navigation";
+import { useOnScroll } from "@lib/ultils";
 
 type lineType = {
     id: number,
@@ -15,6 +16,7 @@ type lineType = {
 }
 
 export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
+    const isScroll = useOnScroll()
     const pathname = usePathname();
     const url = "/images/logo_1500.png";
     const [show, setShow] = React.useState<boolean>(false);
@@ -44,7 +46,7 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
         <div className={styles.homeHeader}
             style={{ backgroundImage: `url(${url})` }}
         >
-            {!isLoggedIn &&
+            {!isLoggedIn && !isScroll &&
                 <div className={show ? styles.homeGrid : styles.remove}>
                     <p></p>
                     <p className={styles.gridElementOn}>
@@ -74,7 +76,7 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             <div className={show1 ? styles.finalMsg : styles.remove}>
                 <p></p>
                 <div className={styles.p_grid}>
-                    <p> Helping you  us,,,</p>
+                    <p> Helping you helps us,,,</p>
                     <h3> ablogroom.com</h3>
                 </div>
             </div>
