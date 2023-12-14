@@ -124,6 +124,7 @@
   background: black;
   color: white;
   border-radius: 20px 20px 20px 20px;
+  cursor: pointer;
 }
 .userCard img {
   border-radius: 50%;

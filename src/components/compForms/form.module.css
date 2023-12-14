@@ -1,0 +1,50 @@
+.codeFormMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin-block: 1rem;
+  padding-inline: 0px;
+}
+.formGrid {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+  grid-auto-flow: dense;
+  place-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 1px 1px 12px 2px black;
+}
+.gridOne,
+.gridTwo {
+  margin: auto;
+  width: auto;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 0.75rem;
+}
+.gridTwo {
+  height: 50vh;
+  overflow-y: scroll;
+}
+.gridTwo > table {
+  background: rgba(0, 0, 0, 0.2);
+}
+.gridTwo > table th {
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+@media screen and (max-width: 480px) {
+  .formGrid {
+    grid-template-columns: repeat(1, minmax(275px, 1fr));
+    grid-auto-flow: dense;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}

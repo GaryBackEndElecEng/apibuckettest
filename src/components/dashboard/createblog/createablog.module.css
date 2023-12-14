@@ -268,6 +268,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  width: 80%;
 }
 /*---Gen inputs--- */
 
@@ -330,6 +331,12 @@
     grid-column: span 1;
     -ms-grid-column: span 1;
   }
+  .genInputContainer {
+    width: 95%;
+  }
 }
 @media screen and (max-width: 560px) {
+  .genInputContainer {
+    width: 100%;
+  }
 }

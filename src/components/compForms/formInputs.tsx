@@ -1,9 +1,11 @@
 import { inputType, inputNames, userType, msgType, contactType } from '@/lib/Types'
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { ConvertToFormula } from '@/lib/ultils';
-import { TextField } from '@mui/material'
-import React from 'react'
+import { TextField } from '@mui/material';
+import React from 'react';
+import styles from "./form.module.css";
 import { v4 as uuidv4 } from "uuid";
+import { searchList, ConvertRes } from '../context/arrayList';
 const url = "https://garyposttestupload.s3.amazonaws.com"
 
 type GenFormType = {
@@ -366,41 +368,61 @@ export function CodeForm({ input, setInput }: GenFormType) {
         const check: inputType | null = input.type == "code" ? input : null;
         if (!check) return (<></>);
         return (
-            <div className="mx-auto flex flex-col items-center justify-center w-full">
+            <div className={styles.codeFormMain}>
+                <div className={styles.formGrid}>
+                    <div className={styles.gridOne}>
+                        <TextField
+                            fullWidth={true}
+                            helperText={`${check.type}-name list`}
+                            id={`${check.type}-${check.id ? check.id : "name list"}`}
+                            label={`${check.type}-name list`}
+                            multiline={false}
+                            name={`${check.type}-list`}
+                            placeholder={`name list`}
+                            required
+                            size={"medium"}
+                            type="text"
+                            variant="outlined"
+                            value={check.name ? check.name : ""}
+                            onChange={(e) => setInput({ ...check, name: e.target.value as string })}
+                            style={{ fontFamily: "bold" }}
+                        />
+                        <TextField
+                            fullWidth={true}
+                            helperText={`${check.type}-list body`}
+                            id={`${check.type}-${check.id ? check.id : "list body"}`}
+                            label={`${check.type}-list body`}
+                            multiline={true}
+                            minRows={4}
+                            name={`${check.type}-list body`}
+                            placeholder={`body your list`}
+                            required
+                            size={"medium"}
+                            type="text"
+                            variant="outlined"
+                            value={check && check.content ? check.content : ""}
+                            onChange={(e) => setInput({ ...check, content: e.target.value as string })}
+                            style={{ fontFamily: "bold", width: "100%" }}
+                        />
+                    </div>
+                    <div className={styles.gridTwo}>
+                        <table>
+                            <tr>
+                                <th>name</th>
+                                <th>symbol</th>
+                            </tr>
+                            {searchList && searchList.map((obj, index) => (
+                                <tr key={index}>
+                                    <td>{obj.name}</td>
+                                    <td><ConvertRes sym={obj.sym} /></td>
+                                </tr>
 
-                <TextField
-                    fullWidth={true}
-                    helperText={`${check.type}-name list`}
-                    id={`${check.type}-${check.id ? check.id : "name list"}`}
-                    label={`${check.type}-name list`}
-                    multiline={false}
-                    name={`${check.type}-list`}
-                    placeholder={`name list`}
-                    required
-                    size={"medium"}
-                    type="text"
-                    variant="outlined"
-                    value={check.name ? check.name : ""}
-                    onChange={(e) => setInput({ ...check, name: e.target.value as string })}
-                    style={{ fontFamily: "bold" }}
-                />
-                <TextField
-                    fullWidth={true}
-                    helperText={`${check.type}-list body`}
-                    id={`${check.type}-${check.id ? check.id : "list body"}`}
-                    label={`${check.type}-list body`}
-                    multiline={true}
-                    minRows={4}
-                    name={`${check.type}-list body`}
-                    placeholder={`body your list`}
-                    required
-                    size={"medium"}
-                    type="text"
-                    variant="outlined"
-                    value={check && check.content ? check.content : ""}
-                    onChange={(e) => setInput({ ...check, content: e.target.value as string })}
-                    style={{ fontFamily: "bold", width: "100%" }}
-                />
+                            ))
+                            }
+
+                        </table>
+                    </div>
+                </div>
 
                 <section className="code" style={{ position: "relative", width: "100%" }}>
                     <h3 className="text-center text-xl underline underline-offest-8 my-2">{input.name && input.name}</h3>
