@@ -4,6 +4,8 @@ import { introArr } from "@component/home/homeExtra";
 import styles from "./home.module.css";
 import { usePathname } from "next/navigation";
 import { useOnScroll } from "@lib/ultils";
+import GridOneTwo from "./GridOneTwo";
+import RequestInfo from "./RequestInfo";
 
 type lineType = {
     id: number,
@@ -16,69 +18,58 @@ type lineType = {
 }
 
 export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
-    const isScroll = useOnScroll()
+    const isScroll = useOnScroll();
     const pathname = usePathname();
-    const url = "/images/logo_1500.png";
+    const url = "/images/bgWave.png";
+    const picGridOne = "/images/gridOneTwo1.png"
     const [show, setShow] = React.useState<boolean>(false);
     const [show1, setShow1] = React.useState<boolean>(false);
-    const [count, setCount] = React.useState<number>(0);
-    const [line, setLine] = React.useState<lineType>({ id: 0, phr: "", phr1: "", phr2: "", phr3: "", phr4: "", phr5: "" });
+    const [turnOn, setTurnOn] = React.useState<boolean>(false);
 
-    React.useEffect(() => {
-
-        if (!isLoggedIn) {
-            if (count > 4) {
-                setShow1(true);
-                setShow(false);
-            } else { setShow(true) }
-            if (count === 0 || count < 6) {
-                setTimeout(() => {
-                    setCount(prev => prev + 1)
-                }, 10000);
-                setLine(introArr[count] as lineType)
-            }
+    const handleTurnOn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        if (!turnOn) {
+            setTurnOn(true);
+            setShow1(false);
         } else {
+            setTurnOn(false);
             setShow1(true);
         }
-    }, [count, isLoggedIn]);
+    }
+
 
     return (
-        <div className={styles.homeHeader}
+        <div className={!isLoggedIn ? styles.homeHeader : styles.remove}
             style={{ backgroundImage: `url(${url})` }}
         >
-            {!isLoggedIn && !isScroll &&
-                <div className={show ? styles.homeGrid : styles.remove}>
-                    <p></p>
-                    <p className={styles.gridElementOn}>
-                        {
 
-                            line && Object.entries(line).map((phr, index) => {
-                                if (typeof (phr[1]) !== "number") {
-                                    if (phr[0] === "phr") {
-                                        return (
-                                            <React.Fragment key={index}>
-                                                <span className={styles.showMsgPhr}>{phr[1]}</span>
-                                            </React.Fragment>
-                                        )
-                                    } else {
-                                        return (
-                                            <React.Fragment key={index}>
-                                                <span className={styles.showMsg}>{phr[1]}</span>
-                                            </React.Fragment>
-                                        )
-                                    }
-                                }
-                            })
-                        }
-                    </p>
+
+            <div className={styles.homeGrid}>
+                <div className={styles.gridOneTwo}>
+                    <GridOneTwo />
                 </div>
-            }
-            <div className={show1 ? styles.finalMsg : styles.remove}>
-                <p></p>
-                <div className={styles.p_grid}>
-                    <p> Helping you helps us,,,</p>
-                    <h3> ablogroom.com</h3>
+
+                <div className={styles.gridThree}>
+
+                    <RequestInfo
+                        setShow={setShow}
+                        show={show}
+                        isScroll={isScroll}
+                        setShow1={setShow1}
+                        show1={show1}
+                        setTurnOn={setTurnOn}
+                        turnOn={turnOn}
+                    />
                 </div>
+            </div>
+
+
+            <div className="flex flex-col mx-auto py-2">
+                {!isScroll &&
+                    <button className="rounded-full px-3 py-1 bg-slate-700 text-white shadow shadow-slate-200" onClick={(e) => handleTurnOn(e)}>
+                        info
+                    </button>
+                }
             </div>
 
         </div>

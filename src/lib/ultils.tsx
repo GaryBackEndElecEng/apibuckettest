@@ -336,9 +336,10 @@ export function useOnScroll() {
                         if (lastKnownScrollPosition > 0) {
                             setIsScroll(true);
                             ticking = false;
+
                         }
                     });
-
+                    setIsScroll(false);
                     ticking = true;
                 }
             });

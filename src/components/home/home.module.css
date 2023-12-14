@@ -26,49 +26,174 @@
 .homeGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: row;
   width: 100%;
   gap: 2rem;
-  position: absolute;
+  position: relative;
   place-items: center;
+  padding: 0.5rem;
 }
 .remove {
   display: none;
 }
-.finalMsg {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: 100%;
-  gap: 2rem;
+.gridThree {
+  grid-column: 3 / span 1;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
-.finalMsg > div > p,
-.finalMsg > div > h3 {
+
+/* ------- RequestInfo.tsx---------*/
+.helpYou {
+  margin: auto;
+  padding-inline: 1rem;
+  text-align: center;
+  animation: slideIn 0.75s ease-in-out;
+}
+.helpYou > h3 {
+  font-size: 150%;
+}
+.helpYou > p,
+.helpYou > h3 {
   margin: auto;
   animation: slideIn 1.5s ease-in-out;
   font-size: 130%;
   color: white;
 }
-.p_grid {
+/* ------- RequestInfo.tsx---------*/
+
+/* ----GridOneTwo.tsx---------------*/
+.gridOneTwo {
+  grid-column: 1 / span 2;
+  border-right: 2px solid white;
+  width: 100%;
+  min-height: 30vh;
+  position: relative;
+}
+.insideGridOne {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.insideGridOne > div {
+  flex: 0 0 50%;
+  color: white;
+}
+.insideGridOneImg {
+  width: 100%;
+  animation: growIn 1.5s ease-in-out;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-inline: 3rem;
+}
+.insideGridOneImg > img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  padding: 0.5rem;
+  background: black;
+  filter: drop-shadow(1px 1px 5px white);
+}
+@keyframes growIn {
+  from {
+    opacity: 0.2;
+    transform: scale(0.4);
+    background-position: 0% 0%;
+    background-size: 200% 200%;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+  }
+}
+.gridOneLogin {
   margin: auto;
-  grid-column: 3 / span 1;
-  padding-inline: 2rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
-.finalMsg > div > h3 {
-  font-size: 150%;
+.gridOneLogin > img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 0.5rem;
+  background: inherit;
+  filter: drop-shadow(1px 1px 5px rgb(219, 226, 226));
 }
-.gridElementOn {
+.subGridOne1 {
+  color: white;
+  font-size: 130%;
+  margin-right: 0.5rem;
+  animation: clearIn 1.25s ease-in-out;
+}
+.subGridOne2 {
+  color: rgb(2, 252, 2);
+  font-size: 130%;
+  margin-right: 0.5rem;
+  animation: clearIn 1.25s ease-in-out;
+}
+.subGridOne3 {
+  color: gold;
+  font-size: 130%;
+  margin-right: 0.5rem;
+  animation: clearIn 1.25s ease-in-out;
+}
+.subGridOne4 {
+  color: gold;
+  font-size: 130%;
+  margin-right: 0.5rem;
+  animation: clearIn 1.25s ease-in-out;
+}
+.subGridOne5 {
+  color: rgb(248, 152, 152);
+  font-size: 130%;
+  margin-right: 0.5rem;
+  animation: clearIn 1.25s ease-in-out;
+}
+@keyframes clearIn {
+  from {
+    opacity: 0.3;
+    transform: scale(0.3);
+    color: white;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    color: inherit;
+  }
+}
+/* ----GridOneTwo.tsx---------------*/
+.requestInfoMain {
+  color: black;
+  width: 100%;
+  height: 100%;
+}
+.infoPara {
   opacity: 1;
-  grid-column: 3 / span 1;
+  width: 100%;
+  height: 100%;
   padding-inline: 2rem;
   color: black;
   font-size: 120%;
   padding: 1rem;
+  background: white;
   border-radius: 20px 20px 20px 20px;
   transform: scale(1);
   animation: easeInOut 5s ease-in-out;
-  background: white;
 }
 .showMsgPhr {
   color: blue;
@@ -149,20 +274,27 @@
 @media screen and (max-width: 980px) {
   .homeHeader {
     width: 100%;
+    height: auto;
   }
   .homeGrid,
   .finalMsg {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
     gap: 2rem;
   }
-  .p_grid {
-    display: flex;
-    margin-top: 5rem;
+  .insideGridOne {
     flex-direction: column;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
   }
+  .gridOneTwo {
+    grid-column: auto;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid white;
+  }
+  .gridThree {
+    grid-column: auto;
+    position: relative;
+  }
+
   .homeUserGrid {
     margin-inline: 0;
     grid-template-columns: repeat(2, minmax(350px, 1fr));
@@ -179,8 +311,15 @@
   }
   .homeGrid,
   .finalMsg {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
+  }
+  .gridOneTwo,
+  .gridThree {
+    border-bottom: 2px solid white;
+    width: 100%;
+    border-right: none;
+    position: relative;
   }
   .homeUserGrid {
     grid-template-columns: repeat(1, minmax(550px, 1fr));

@@ -44,8 +44,8 @@
   width: 100vw;
   margin-bottom: 1rem;
   background-image: var(--logosmUrl);
-  background-position: 40% 0%;
-  background-size: 150% 150%;
+  background-position: 40% 40%;
+  background-size: 150% 160%;
   filter: grayscale(80);
   /* padding-top: 10px; */
   position: relative;
@@ -57,7 +57,7 @@
     /* width: 100%; */
   }
   .mainHeaderFalse {
-    background-position: 50% 0%;
+    background-position: 50% 35%;
     background-size: 150% 160%;
   }
   section.code > div {
@@ -73,7 +73,7 @@
   }
   .mainHeaderFalse {
     background-position: 30% 50%;
-    background-size: 150% 100%;
+    background-size: 150% 160%;
   }
 }
 section.code > div {
