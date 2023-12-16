@@ -274,11 +274,13 @@
 @media screen and (max-width: 980px) {
   .homeHeader {
     width: 100%;
-    height: auto;
+    height: 60vh;
+    justify-content: flex-start;
   }
   .homeGrid,
   .finalMsg {
     grid-template-columns: repeat(2, minmax(300px, 1fr));
+    grid-template-rows: minmax(200px, 28vh);
     gap: 2rem;
   }
   .insideGridOne {
@@ -309,10 +311,15 @@
   .homeMainPage {
     width: auto;
   }
+  .homeHeader {
+    width: 100%;
+    height: 70vh;
+  }
   .homeGrid,
   .finalMsg {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
+    grid-template-rows: minmax(200px, 35vh);
+    gap: 0.5rem;
   }
   .gridOneTwo,
   .gridThree {
@@ -323,7 +330,7 @@
   }
   .homeUserGrid {
     grid-template-columns: repeat(1, minmax(550px, 1fr));
-    grid-auto-flow: dense;
+    grid-template-rows: minmax(200px, 35vh);
     gap: 1rem;
   }
   .p_grid {
@@ -348,10 +355,24 @@
     gap: 0.25rem;
     inset: 40% auto 0% auto;
   }
+  .homeHeader {
+    width: 100%;
+    height: 75vh;
+  }
+  .homeGrid {
+    grid-template-rows: minmax(200px, 37vh);
+  }
 }
 @media screen and (max-width: 400px) {
   .finalMsg {
     gap: 0.25rem;
     inset: 30% auto 0% auto;
+  }
+  .homeGrid {
+    grid-template-rows: minmax(px, 350px);
+  }
+  .homeHeader {
+    width: 100%;
+    height: 83vh;
   }
 }

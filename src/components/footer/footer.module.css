@@ -20,8 +20,8 @@
 }
 .genContactContainer {
   position: absolute;
-  top: -500%;
-  right: 1rem;
+  top: -400%;
+  right: 40rem;
   width: 350px;
   border-radius: 20px 20px 20px 20px;
   box-shadow: 1px 1px 5px 1px black;
@@ -145,8 +145,8 @@
     order: 3;
   }
   .genContactContainer {
-    top: -300%;
-    right: 2.5rem;
+    top: -200%;
+    right: 9.5rem;
   }
 }
 @media screen and (max-width: 480px) {
@@ -169,7 +169,7 @@
     order: 3;
   }
   .genContactContainer {
-    top: -280%;
-    right: 0.5rem;
+    top: -150%;
+    right: 1rem;
   }
 }

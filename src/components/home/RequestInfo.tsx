@@ -35,7 +35,7 @@ export default function RequestInfo({ isScroll, setShow, show, setShow1, show1, 
             setShow1(false);
             setCount(0);
         }
-    }, [setCount, turnOn, setShow1, isScroll])
+    }, [setCount, turnOn, setShow1, isScroll, setTurnOn])
 
 
     React.useEffect(() => {
