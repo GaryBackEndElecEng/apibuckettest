@@ -31,6 +31,7 @@ export async function generatStaticParams() {
     const userFiles = await getFiles();
     return userFiles.map(file => ({ fileId: file.id }))
 }
+export const dynamic = "force-dynamic";
 
 export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const fileId = searchParams.fileId as string;

@@ -93,6 +93,15 @@
   border: 1px solid black;
   border-radius: inherit;
 }
+.handleLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: inherit;
+  padding: 0;
+  margin-inline: auto;
+  cursor: pointer;
+}
 .card {
   margin: auto;
   position: relative;

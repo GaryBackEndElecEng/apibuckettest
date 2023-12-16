@@ -20,7 +20,7 @@ const s3 = new S3Client({
     },
     region,
 })
-
+export const dynamic = 'force-dynamic'
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -27,6 +27,7 @@ const s3 = new S3Client({
 
 const prisma = new PrismaClient();
 
+export const dynamic = 'force-dynamic'
 
 export default async function page() {
     const user = await getUser();

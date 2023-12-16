@@ -6,6 +6,7 @@ import React from 'react';
 import styles from "./form.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { searchList, ConvertRes } from '../context/arrayList';
+import toast from 'react-hot-toast';
 const url = "https://garyposttestupload.s3.amazonaws.com"
 
 type GenFormType = {
@@ -151,12 +152,14 @@ export function ImgForm({ input, setInput, user, setImgLoaded, setBlogMsg }: Img
                         if (res.ok) {
                             setImgLoaded(true);
                             setInput({ ...check, s3Key: Key, url: `${url}/${Key}` })
-                            setBlogMsg({ loaded: true, msg: "img saved" });
+                            // setBlogMsg({ loaded: true, msg: "img saved" });
+                            toast.success("saved pic")
                         }
                     } catch (error) {
                         const message = getErrorMessage(error);
                         console.error(message)
                         setBlogMsg({ loaded: false, msg: `${message}@media` })
+                        toast.error("something went wrong-did not save pick")
                     }
                 }
             }

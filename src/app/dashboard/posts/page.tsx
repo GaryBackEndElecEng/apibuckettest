@@ -11,6 +11,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import { fileType, postType, userType } from '@/lib/Types';
 // export const config = { runtime: 'experimental-edge' }
 
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -26,13 +27,46 @@ const s3 = new S3Client({
 })
 const prisma = new PrismaClient();
 
+// export const dynamic = "force-dynamic";
+
+export async function getposts(user: userType) {
+
+    if (user) {
+        try {
+            const userPosts = await prisma.post.findMany({
+                where: {
+                    userId: user.id
+                },
+                include: {
+                    rates: true,
+                    likes: true
+                }
+            })
+            let tempPosts = userPosts as unknown[] as postType[];
+            tempPosts.map(post => {
+                if (post.s3Key) {
+                    post.imageUrl = `${url}/${post.s3Key}`
+                }
+                return post
+            });
+
+            return tempPosts
+        } catch (error) {
+            const msg = getErrorMessage(error);
+            console.error(`${msg}@dashboard@posts@page`)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+}
 
 
 export default async function Posts() {
     const user = await getUser();
-    const userPosts = await getPosts();
 
     if (user) {
+        const userPosts = await getposts(user);
+        // console.log("Posts=>userPosts", userPosts)
         return (
             <div className={styles.mainPagePosts}>
                 <MainPosts getuser={user} getposts={userPosts} />
@@ -48,41 +82,6 @@ export default async function Posts() {
     }
 }
 
-export async function getPosts() {
-    const user = await getUser();
-    if (user) {
-        try {
-            const posts = await prisma.post.findMany({
-                where: {
-                    userId: user.id
-                },
-                include: {
-                    rates: true,
-                    likes: true
-                }
-            });
-            if (posts) {
-                let TPosts = posts as unknown as postType[]
-                const getPosts = await Promise.all(
-                    TPosts.map(async (post) => {
-                        if (post.s3Key) {
-                            const params = { Key: post.s3Key, Bucket }
-                            const command = new GetObjectCommand(params);
-                            post.imageUrl = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                        }
-                        return post
-                    })
-                );
-                return getPosts
-            }
-        } catch (error) {
-            const msg = getErrorMessage(error);
-            console.error(`${msg}@dashboard@posts@page`)
-        } finally {
-            await prisma.$disconnect()
-        }
-    }
-}
 
 export async function getUser() {
     const session = await getServerSession(authOptions);
@@ -92,17 +91,14 @@ export async function getUser() {
             const user = await prisma.user.findMany({
                 where: {
                     email: email
-                }
+                },
+
             });
-            if (user) {
-                let TUser = user as unknown as userType;
-                if (TUser.imgKey) {
-                    const params = { Key: TUser.imgKey, Bucket }
-                    const command = new GetObjectCommand(params);
-                    TUser.image = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-                }
-                return TUser
+            let TUser = user as unknown as userType;
+            if (TUser.imgKey) {
+                TUser.image = `${url}/${TUser.imgKey}`
             }
+            return TUser
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(`${msg}@dashboard@posts@page`)

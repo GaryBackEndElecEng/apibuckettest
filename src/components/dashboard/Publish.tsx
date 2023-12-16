@@ -6,6 +6,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import { BsFillSendFill } from "react-icons/bs";
 import { IoCheckmark } from "react-icons/io5";
 import { IconButton } from "@mui/material";
+import toast from 'react-hot-toast';
 
 type fetchPubType = {
     file: fileType,
@@ -35,11 +36,13 @@ export default function Publish({ file }: { file: fileType }) {
                 setFile_(body.file);
                 setPublish(body.file.published)
                 setBlogMsg({ loaded: true, msg: body.message });
+                toast.success(body.message)
 
             }
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@file@dashboard@publish`);
+            toast.error("something went wrong")
         } finally {
             return () => controller.abort()
         }

@@ -34,6 +34,7 @@ export async function generateStaticParams() {
     return users.map(user => ({ name: user.name as string }))
 
 }
+export const revalidate = 60;
 
 export default async function Userpage({ params }: { params: { name: string } }) {
     const { name } = params;

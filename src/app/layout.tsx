@@ -9,6 +9,7 @@ import BlogContextProvider from "@context/BlogContextProvider";
 import PostContextProvider from "@context/PostContextProvider";
 import MainHeader from "./MainHeader";
 import Footer from "@component/footer/Footer";
+import ToasterContext from "@context/ToasterContext";
 
 
 
@@ -116,7 +117,7 @@ export default function RootLayout({
           <GeneralContextProvider>
             <BlogContextProvider>
               <PostContextProvider>
-
+                <ToasterContext />
                 <MainHeader />
                 {children}
                 <Footer />

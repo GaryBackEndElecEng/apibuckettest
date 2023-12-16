@@ -4,6 +4,9 @@ import Link from "next/link";
 import styles from "./posts.module.css";
 import { likeIcon, nameRateType, postType, userType } from '@/lib/Types';
 import { ArrRatePostResult, usePostLikes } from "@lib/ultils";
+import GenericMsg from '@/components/comp/GenericMsg';
+import { usePostContext } from '@/components/context/PostContextProvider';
+import toast from 'react-hot-toast';
 
 type mainPostType = {
     user: userType | null,
@@ -11,9 +14,19 @@ type mainPostType = {
 }
 
 export default function PostsDashboard({ user, posts }: mainPostType) {
+    const { postMsg, setPostMsg } = usePostContext();
     const [nameRate, setNameRate] = React.useState<nameRateType[]>([]);
-    const likes = usePostLikes(posts)
+    const likes = usePostLikes(posts);
 
+    React.useEffect(() => {
+        if (postMsg && postMsg.msg) {
+            if (postMsg.loaded) {
+                toast.success(postMsg.msg)
+            } else {
+                toast.error(postMsg.msg)
+            }
+        }
+    }, [postMsg]);
 
     React.useEffect(() => {
         if (posts) {
@@ -26,6 +39,7 @@ export default function PostsDashboard({ user, posts }: mainPostType) {
         <div className={styles.postItemMain}>
             <div className={styles.postsDashGrid}>
                 <div>
+
                     <h3>post create</h3>
                     <Link href={"/dashboard/posts/createPost"}>
                         <button className={styles.btnPostItem}>Create a post</button>

@@ -6,7 +6,7 @@ import styles from "@component/dashboard/createPost/createpost.module.css";
 
 
 
-
+export const revalidate = 0;
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

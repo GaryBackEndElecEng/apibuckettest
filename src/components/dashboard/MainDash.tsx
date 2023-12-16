@@ -9,7 +9,7 @@ import { getErrorMessage } from "@/lib/errorBoundaries";
 // export const config = { runtime: 'experimental-edge' }
 
 const prisma = new PrismaClient();
-
+const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
 const region = process.env.BUCKET_REGION as string
 const accessKeyId = process.env.SDK_ACCESS_KEY as string
@@ -50,21 +50,16 @@ export async function getFiles(user: userType) {
             }
         });
         if (files) {
-            let tFiles = files;
-            const newFiles = await Promise.all(
-                tFiles.map(async (file) => {
-                    if (file.imageKey) {
-                        const params = { Key: file.imageKey, Bucket }
-                        const command = new GetObjectCommand(params);
-                        file.imageUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
-                    }
-                    return file;
-                })
-            );
+            let tFiles = files as unknown[] as fileType[];
+            const newFiles = tFiles.map((file) => {
+                if (file.imageKey) {
+                    file.imageUrl = `${url}/${file.imageKey}`
+                }
+                return file;
+            })
 
-            return newFiles as fileType[]
-        } else {
-            return files as fileType[]
+
+            return newFiles
         }
     } catch (error) {
         const message = getErrorMessage(error);

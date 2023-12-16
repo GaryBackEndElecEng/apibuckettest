@@ -11,13 +11,13 @@ export default function GenericMsg({ setPostMsg, postMsg }: genericType) {
     const [turnoff, setTurnoff] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        if (postMsg && postMsg && postMsg.loaded) {
+        if (postMsg && postMsg.msg && postMsg.loaded) {
             setTimeout(() => {
                 setPostMsg(undefined)
                 setTurnoff(true)
             }, 4000);
         }
-    }, []);
+    }, [postMsg, setPostMsg]);
 
 
     return (

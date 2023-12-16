@@ -4,6 +4,7 @@ import { TextField } from '@mui/material'
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import styles from "./dashboard.module.css"
 import { useGeneralContext } from '../context/GeneralContextProvider';
+import toast from 'react-hot-toast';
 
 type fetchContactType = {
     contact: contactType,
@@ -32,10 +33,12 @@ export default function MemberContact({ user, setContactBtn, contactBtn, setMsg 
                 setMsg({ loaded: true, msg: `${body.message}. We will answer you ASAP!` });
                 setContactBtn(false);
                 setContact({} as contactType)
+                toast.success("recieved message");
             } catch (error) {
                 const msg = getErrorMessage(error);
                 setMsg({ loaded: false, msg })
                 console.error(`${msg}@GenContact@gencontact@footer`)
+                toast.error("something went wrong")
             }
         }
     }

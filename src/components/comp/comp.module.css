@@ -25,7 +25,7 @@
 /*----MSGTYPE----- */
 .message {
   position: absolute;
-  min-height: 10vh;
+  min-height: 8vh;
   top: -40%;
   inset: 3rem;
   z-index: 2000;

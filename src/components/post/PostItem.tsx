@@ -21,23 +21,25 @@ export default function PostItem({ post, user }: { post: postType, user: userTyp
     }
 
     return (
-        <div className={`${styles.mainPostItemCard} cursor-pointer `} onClick={(e) => handleLink(e)}>
+        <div className={`${styles.mainPostItemCard}  `} >
             <h2>{post.name}</h2>
+            <div onClick={(e) => handleLink(e)} className={styles.handleLink}>
+                {post.imageUrl &&
 
-            {post.imageUrl &&
+                    <Image src={post.imageUrl} width={900} height={600}
+                        alt={post.name}
+                        className={styles.postImage}
+                        priority
+                        onClick={(e) => handleLink(e)}
+                    />
 
-                <Image src={post.imageUrl} width={900} height={600}
-                    alt={post.name}
-                    className={styles.postImage}
-                    priority
-                />
+                }
 
-            }
-
-            <p className="paraCreator">{post.content}</p>
-            <div className="line-break-sm" />
-            <UserProfileTwo user={user} />
-            <div className="line-break-sm" />
+                <p className="paraCreator">{post.content}</p>
+                <div className="line-break-sm" />
+                <UserProfileTwo user={user} />
+                <div className="line-break-sm" />
+            </div>
             {post && <PostRatesLikes post={post} />}
 
             <div className="line-break-sm" />

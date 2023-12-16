@@ -17,8 +17,8 @@ export default function PostCard({ post }: { post: postType }) {
     }
 
     return (
-        <div className={`${styles.mainPostcard} cursor-pointer`} onClick={handleRoute}>
-            <div >
+        <div className={`${styles.mainPostcard} cursor-pointer`} onClick={handleRoute} >
+            <div>
                 <h2 style={{ color: "white" }}>{post.name}</h2>
                 {post && post.imageUrl && <Image src={post.imageUrl} alt={post.name} width={375} height={375} />}
             </div>

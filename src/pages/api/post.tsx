@@ -76,6 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     if (req.method === "PUT") {
         const post = JSON.parse(req.body) as postType;
+        // console.log("@ api/post, @PUT", post)
         if (post) {
             try {
                 const newPost = await prisma.post.update({
@@ -88,6 +89,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         content: post.content,
                         s3Key: post.s3Key,
                         bloglink: post.bloglink
+                    },
+                    include: {
+                        rates: true,
+                        likes: true
                     }
                 });
                 let tempPost = newPost;

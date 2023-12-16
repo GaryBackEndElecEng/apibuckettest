@@ -9,6 +9,7 @@ import { useGeneralContext } from '../context/GeneralContextProvider';
 import { TextField } from '@mui/material';
 import { useBlogContext } from '../context/BlogContextProvider';
 import { IoMdHappy } from "react-icons/io";
+import toast from 'react-hot-toast';
 
 type contactFetchType = {
     contact: contactType,
@@ -142,14 +143,15 @@ function GenInput({ input }: { input: inputType }) {
                     });
                     const body: contactFetchType = await res.json();
                     if (res.ok) {
-                        setBlogMsg({ loaded: true, msg: `${body.message} we will reply ASAP to ${body.contact.subject}` });
+                        setBlogMsg({ loaded: true, msg: `${body.message} ` });
+                        toast.success(`we will reply ASAP to ${body.contact.subject}`)
                         setReply(body.contact);
                         setDidReply(true);
                     } else if (res.status >= 400 && res.status < 500) {
-                        setBlogMsg({ loaded: false, msg: body.message })
+                        toast.error(body.message)
                     }
                 } else {
-                    setBlogMsg({ loaded: false, msg: `Was not sent, missing reply: ${reply}` });
+                    toast.error(`Was not sent, missing reply`)
                     console.log("reply is not complete", reply)
                 }
 

@@ -13,6 +13,7 @@ import { postLikeType, postType, postRateType, likeType, likeIcon, likeArr, msgT
 import { usePostContext } from '../context/PostContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import GenericMsg from '../comp/GenericMsg';
+import toast from 'react-hot-toast';
 
 
 
@@ -60,12 +61,14 @@ export default function PostLike({ post }: mainPostLikeType) {
             if (res.ok) {
                 const body: likeFetchType = await res.json();
                 setLikes([...likes, body.like]);
-                setPostMsg({ loaded: true, msg: body.message as string })
+                // setPostMsg({ loaded: true, msg: body.message as string })
+                toast.success(`Thanks for ${body.like.name}`)
             }
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@like`)
-            setPostMsg({ loaded: false, msg: message })
+            // setPostMsg({ loaded: false, msg: message })
+            toast.error("was not recieved?")
         }
 
     }

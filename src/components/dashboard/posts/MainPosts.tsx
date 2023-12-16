@@ -9,6 +9,7 @@ import { postType, userType } from '@/lib/Types';
 import PostsDashboard from "@component/dashboard/posts/PostsDashboard";
 import { Session } from 'next-auth';
 
+
 type postsfetchType = {
     posts: postType[],
     message: string
@@ -24,30 +25,32 @@ type mainPostsType = {
 
 export default function MainPosts({ getuser, getposts }: mainPostsType) {
 
-    const { posts, setPosts, setPostMsg } = usePostContext();
+    const { userPosts, setUserPosts, setPostMsg, postMsg } = usePostContext();
     const { user, setUser } = useGeneralContext();
+
+    // console.log("MainPosts=>getposts", getposts)
 
     React.useEffect(() => {
         if (!getuser) return
         setUser(getuser);
         if (!getposts) return
-        setPosts(getposts);
+        setUserPosts(getposts);
         setPostMsg({ loaded: true, msg: "recieved" })
-    }, [getuser, getposts, setUser, setPosts, setPostMsg]);
+    }, [getuser, getposts, setUser, setUserPosts, setPostMsg]);
 
 
 
 
     return (
         <React.Fragment>
-            <PostsDashboard user={user} posts={posts} />
+            <PostsDashboard user={user} posts={userPosts} />
 
             <div
                 className={styles.mainPosts}
             >
 
-                {posts &&
-                    posts.map((post, index) => (
+                {userPosts &&
+                    userPosts.map((post, index) => (
                         <React.Fragment key={index}>
                             <PostItem post={post} />
                         </React.Fragment>

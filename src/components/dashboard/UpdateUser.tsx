@@ -10,6 +10,7 @@ import { useGeneralContext } from "@context/GeneralContextProvider";
 import styles from '@component/dashboard/dashboard.module.css';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import Message from "./Message";
+import toast from 'react-hot-toast';
 
 type fetchUserType = {
     user: userType,
@@ -44,13 +45,12 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                     setUser(body.user);
                     setMessage({ loaded: true, msg: body.message })
                     setLoaded(true);
-                    console.log(body.user)
-                } else {
-                    setMessage({ loaded: false, msg: body.message })
+                    toast.success(`Updated user:${body.message}`)
                 }
             } catch (error) {
                 const message = getErrorMessage(error);
                 console.log(`${message}@user`)
+                toast.error("something went wrong")
             }
         } else {
             setMessage({ loaded: false, msg: "please complete your bio. This improves hits." })

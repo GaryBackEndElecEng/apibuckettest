@@ -36,6 +36,8 @@ export async function generateStaticParams() {
     const getUserfiles = await getFiles();
     return getUserfiles.map(file => ({ id: file.id }))
 }
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 
 export default async function PageDetail({ params }: { params: { id: string } }) {

@@ -7,6 +7,7 @@ import { usePostContext } from '../context/PostContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { calcAvg } from "@lib/ultils";
 import GenericMsg from "@component/comp/GenericMsg";
+import toast from 'react-hot-toast';
 
 //make line of switches for likes and dislikes, then add it to posts=> DO THE SAME FOR POSTS
 type rateFetchType = {
@@ -35,11 +36,12 @@ export default function PostRate({ post }: mainPostLikeType) {
             if (res.ok) {
                 const body: rateFetchType = await res.json();
                 setPostRates([...post.rates, body.rate]);
-                setPostMsg({ loaded: true, msg: body.message })
+                toast.success(`Thanks for the ${body.rate.rate}`)
             }
         } catch (error) {
             const message = getErrorMessage(error);
-            console.error(`${message}@like`)
+            console.error(`${message}@like`);
+            toast.error("sorry was not recieved?")
         }
 
     }

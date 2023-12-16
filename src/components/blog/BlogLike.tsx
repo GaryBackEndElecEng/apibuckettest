@@ -15,6 +15,7 @@ import { usePostContext } from '../context/PostContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import GenericMsg from '../comp/GenericMsg';
 import { useLikes } from "@lib/ultils";
+import toast from 'react-hot-toast';
 
 
 
@@ -64,12 +65,12 @@ export default function PostLike({ file }: mainPostLikeType) {
             if (res.ok) {
                 const body: likeFetchType = await res.json();
                 setGetLikes([...likes, body.like as unknown as likeIcon]);
-                setBlogMsg({ loaded: true, msg: body.message as string })
+                toast.success(`Thanks for the ${body.like.name}`)
             }
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@like`)
-            setBlogMsg({ loaded: false, msg: message })
+            toast.error("Sorry something went wrong ?")
         }
 
     }

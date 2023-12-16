@@ -12,6 +12,7 @@ import GenericMsg from "@component/comp/GenericMsg";
 import { FaTrash } from "react-icons/fa6";
 import { MdEditSquare } from "react-icons/md";
 import { IconButton } from "@mui/material";
+import toast from 'react-hot-toast';
 
 type fetchInType = {
     input: inputType,
@@ -42,6 +43,7 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                 if (res.ok) {
                     setInput_s(body.inputs);
                     setBlogMsg({ loaded: true, msg: body.message })
+                    toast.success(`extensions: ${body.message}`)
                 } else if (res.status > 200 && res.status < 500) {
                     setBlogMsg({ loaded: false, msg: body.message })
                 }
@@ -49,6 +51,7 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                 const message = getErrorMessage(error);
                 console.error(`${message}@inputs`);
                 setBlogMsg({ loaded: false, msg: message })
+                toast.error("something went wrong")
             }
         }
         if (fileId) {
@@ -72,18 +75,16 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                         method: "POST",
                         body: JSON.stringify(input_type)
                     });
-                    if (res.ok) {
-                        const body: fetchInType = await res.json();
-                        setInput_s([...input_s, body.input]);
-                        setBlogMsg({ loaded: true, msg: body.message });
-                        setInput(body.input);
-                        setIsSelected(true)
-                        return
-                    }
+                    const body: fetchInType = await res.json();
+                    setInput_s([...input_s, body.input]);
+                    // setBlogMsg({ loaded: true, msg: body.message });
+                    toast.success(body.message)
+                    setInput(body.input);
+                    setIsSelected(true)
                 } catch (error) {
                     const message = getErrorMessage(error);
                     console.error(`${message}@input`)
-                    return
+                    toast.error("something went wrong")
                 }
             }
         }
@@ -97,10 +98,12 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
             setInput(inp);
             setIsSelected(true);
             setIsDeleted({ loaded: true, id: inp.id as number });
-            setBlogMsg({ loaded: true, msg: "ready to edit" })
+            // setBlogMsg({ loaded: true, msg: "ready to edit" });
+            toast.success("ready to edit")
 
         } else {
-            setBlogMsg({ loaded: false, msg: "No ID- not deleted" })
+            // setBlogMsg({ loaded: false, msg: "No ID- not deleted" });
+            toast.error("No ID- not deleted")
         }
     }
 
@@ -111,23 +114,23 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
             try {
                 const res = await fetch(`/api/input?inputId=${id}`, { method: "DELETE" });
                 const body: fetchInType = await res.json();
-                if (res.ok) {
-                    if (input_s) {
-                        const reduce = input_s.filter(inpt => (inpt.id !== id));
-                        setInput_s(reduce)
-                        setBlogMsg({ loaded: true, msg: `${body.input.name}-${body.message}` });
-                        setIsDeleted({ loaded: true, id: id });
-                    }
-                } else if (res.status > 200 && res.status < 500) {
-                    setBlogMsg({ loaded: false, msg: `${body.input.name}-${body.message}` })
+
+                if (input_s) {
+                    const reduce = input_s.filter(inpt => (inpt.id !== id));
+                    setInput_s(reduce)
+                    // setBlogMsg({ loaded: true, msg: `${body.input.name}-${body.message}` });
+                    setIsDeleted({ loaded: true, id: id });
+                    toast.success(`${body.input.name}-${body.message}`)
                 }
+
             } catch (error) {
                 const message = getErrorMessage(error);
                 console.error(`${message}@input@GenInput@delete`)
+                toast.error("something went wrong")
             }
         } else {
             setBlogMsg({ loaded: false, msg: "No ID- not deleted" })
-            console.log("ID not seen")
+            toast.error("sorry no ID, could not find")
         }
     }
     return (

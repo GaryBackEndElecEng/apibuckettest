@@ -61,6 +61,7 @@ export async function generateStaticParams() {
   const users = await getUsers();
   return users?.map(user => ({ name: user.name }))
 }
+export const revalidate = 30;
 
 export async function getUsers() {
   try {

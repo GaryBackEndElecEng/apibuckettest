@@ -12,6 +12,7 @@ import styles from "@dashboard/editblog/editblog.module.css";
 import "@pages/globalsTwo.css"
 import { SeparatePara } from "@lib/ultils";
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 
 type fetchType = {
@@ -52,7 +53,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
 
 
     }
-    console.log("file", file)
+
     const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>
     ) => {
         e.preventDefault();
@@ -65,9 +66,11 @@ export default function EditFile({ user, file }: mainCreateFileType) {
             const { data } = await axios.post("/api/media", formData)
             if (data.status === 200) {
                 setFile_({ ...file, imageKey: Key, imageUrl: `${url}/${Key}` });
-                setMessage({ loaded: true, msg: "saved" })
+                // setMessage({ loaded: true, msg: "saved" })
+                toast.success("pic saved")
             } else {
-                setMessage({ loaded: false, msg: "not saved" })
+                // setMessage({ loaded: false, msg: "not saved" })
+                toast.error(" pic not saved- something went wrong")
             }
 
         }

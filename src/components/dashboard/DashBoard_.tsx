@@ -20,6 +20,8 @@ import MemberContact from "./MemberContact";
 import Message from './Message';
 import MasterLikes from './MasterLikes';
 import ContactResponses from "./ContactResponses";
+import { usePostContext } from '../context/PostContextProvider';
+import { toast } from "react-hot-toast";
 
 type resType = { user: userType | null, message: string }
 
@@ -33,8 +35,19 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
 
     const { setUser, user, setMsg, msg } = useGeneralContext();
     const { setBlogMsg, blogMsg, setUserBlogs, userBlogs } = useBlogContext()
+    // const {setUserPosts}=usePostContext();
     const [open, setOpen] = React.useState<boolean>(false);
     const [contactBtn, setContactBtn] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        if (msg && msg.msg) {
+            if (msg.loaded) {
+                toast.success(msg.msg)
+            } else {
+                toast.error(msg.msg)
+            }
+        }
+    }, [msg]);
 
 
     React.useEffect(() => {
@@ -109,7 +122,8 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
                     {!contactBtn &&
                         <button className="buttonsm bg-black text-white" onClick={() => setContactBtn(true)}>message us</button>
                     }
-                    {msg && msg.msg && <Message setMsg={setMsg} msg={msg} />}
+                    {/* {msg && msg.msg && <Message setMsg={setMsg} msg={msg} />} */}
+
                     <div className={contactBtn ? styles.openMember : styles.closeMember}>
                         {user && <MemberContact user={user} setMsg={setMsg}
                             contactBtn={contactBtn}

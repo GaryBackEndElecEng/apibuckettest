@@ -30,8 +30,12 @@ const s3 = new S3Client({
 const prisma = new PrismaClient();
 
 
-
-
+export async function generateStaticParams() {
+    const posts = await getPosts();
+    return posts.map(post => ({ id: post.id }))
+}
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 
 export default async function Page() {

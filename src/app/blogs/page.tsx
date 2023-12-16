@@ -29,10 +29,13 @@ const s3 = new S3Client({
 })
 const prisma = new PrismaClient();
 
+export const dynamic = "force-dynamic";
+
 
 export default async function Page() {
     const files = await getFiles();
     const users = await getUsers();
+    // console.log("users", users, "files", files)
     return (
 
         <div className={styles.blogsIndexContainer}>
@@ -83,34 +86,7 @@ export async function getUsers() {
     return usersInserts
 }
 
-async function insertImg(file: fileType) {
-    if (file.imageKey && file.published === true) {
-        const params = {
-            Key: file.imageKey,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            file.imageUrl = url
-        }
-    }
-    return file
-}
-async function insertUserImg(user: userType) {
-    if (user.imgKey) {
-        const params = {
-            Key: user.imgKey,
-            Bucket
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, { expiresIn: parseInt(expiresIn) });
-        if (url) {
-            user.image = url
-        }
-    }
-    return user
-}
+
 type rateType = { id: string, title: string, name: string, rate: number, img: string, author: string }
 
 export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {

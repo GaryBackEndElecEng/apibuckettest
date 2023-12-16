@@ -36,10 +36,12 @@ type Repo = {
     userInsert: userType
 }
 
-export async function generateServerParams() {
-    const posts = await getposts();
-    return posts.map(post => ({ id: post.id }));
-}
+// export async function generateStaticParams() {
+//     const posts = await getposts();
+//     return posts.map(post => ({ id: post.id }))
+// }
+// export const dynamic = "force-dynamic";
+// export const revalidate = 0;
 
 async function insertPostImg(post: postType): Promise<postType> {
     if (post.s3Key) {
@@ -120,6 +122,7 @@ export async function getposts() {
     const posts = await prisma.post.findMany();
     return posts
 }
+
 
 type ratetype = {
     rate: number,

@@ -18,11 +18,14 @@ type postFetchType = {
     post: postType,
     message: string
 }
+type createMainCreatePost = {
+    user: userType | null,
+    post: postType | undefined
+}
 
-export default function CreatePost({ user }: { user: userType | null }) {
-    const { file_ } = useBlogContext();
-    const { setUser } = useGeneralContext()
-    const { post, setPost, setPosts, posts, setPostMsg, postMsg } = usePostContext()
+export default function CreatePost({ user, post }: createMainCreatePost) {
+    const { userBlogs } = useBlogContext();
+    const { setPost, setPosts, posts, setPostMsg, postMsg } = usePostContext()
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
     const [temPost, setTemPost] = React.useState<postType>({} as postType);
@@ -153,6 +156,25 @@ export default function CreatePost({ user }: { user: userType | null }) {
                             onChange={postOnChange}
                             style={{ width: "100%" }}
                         />
+                        {userBlogs &&
+                            <React.Fragment>
+                                <label htmlFor="bloglink">attach a blog?</label>
+                                <select
+                                    id="bloglink"
+                                    name="bloglink"
+                                    onChange={(e) => setTemPost({ ...temPost, [e.target.name]: e.target.value })}
+                                >
+                                    {userBlogs.map((file, index) => {
+                                        if (file.id) {
+                                            const postU = `/blogs/${file.id}`
+                                            return (
+                                                <option key={index} value={postU}>{file.title}</option>
+                                            )
+                                        }
+                                    })}
+                                </select>
+                            </React.Fragment>
+                        }
 
                         {complete &&
                             <button className={styles.btnCreateSubit} type="submit">submit post</button>

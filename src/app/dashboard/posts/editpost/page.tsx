@@ -30,6 +30,8 @@ export async function generateStaticParams() {
     const posts = await getposts();
     return posts.map(post => ({ postId: String(post.id) }))
 }
+export const revalidate = 0;
+export const dynamic = "force-dynamic"
 
 export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const postId = searchParams.postId as string;

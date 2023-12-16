@@ -10,6 +10,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import CreateInputs from "@component/dashboard/createblog/CreateInputs";
 import Link from 'next/link';
 import styles from "@component/dashboard/createblog/createablog.module.css"
+import toast from 'react-hot-toast';
 const url = "https://garyposttestupload.s3.amazonaws.com";
 
 type fetchType = {
@@ -21,12 +22,18 @@ type mainCreateFileType = {
     file: fileType
 }
 export default function CreateFile({ user, file }: mainCreateFileType) {
-    const { setFile_, setBlogMsg, blogMsg, input_s } = useBlogContext();
+    const { setFile_, file_, setBlogMsg, blogMsg, input_s } = useBlogContext();
     const [message, setMessage] = React.useState<msgType>({} as msgType);
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
 
-
+    const handleFileUpdate = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        e.preventDefault();
+        setFile_({
+            ...file_,
+            [e.target.name]: e.target.value
+        } as fileType)
+    }
 
     const handleFile = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
@@ -34,18 +41,20 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
         try {
             const res = await fetch("/api/file", {
                 method: "PUT",
-                body: JSON.stringify(file)
+                body: JSON.stringify(file_)
             });
             const body: fetchType = await res.json();
             if (res.ok) {
                 setFile_(body.file);
                 setBlogMsg({ loaded: true, msg: body.message });
                 setLoaded(true);
+                toast.success(`blog saved: ${body.message}`)
             }
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@file`)
-            setBlogMsg({ loaded: false, msg: message })
+            setBlogMsg({ loaded: false, msg: message });
+            toast.error("something went wrong - try again")
         }
 
 
@@ -55,17 +64,19 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
     ) => {
         e.preventDefault();
         if (e.target.files) {
-            const file_ = e.target.files[0]
+            const pic = e.target.files[0]
             const formData = new FormData();
-            formData.set("file", file_);
-            const Key = `${user.name?.trim()}/${file.id}/${uuidv4()}-${file_.name}`;
+            formData.set("file", pic);
+            const Key = `${user.name?.trim()}/${file.id}/${uuidv4()}-${pic.name}`;
             formData.set("Key", Key);
             const res = await fetch("/api/media", { method: "POST", body: formData })
             if (res.ok) {
-                setFile_({ ...file, imageKey: Key, imageUrl: `${url}/${Key}` });
-                setMessage({ loaded: true, msg: "saved" })
+                setFile_({ ...file_ as fileType, imageKey: Key });
+                setMessage({ loaded: true, msg: "saved" });
+                toast.success("picture saved")
             } else {
-                setMessage({ loaded: false, msg: "not saved" })
+                setMessage({ loaded: false, msg: "not saved" });
+                toast.error("picture not saved")
             }
 
         }
@@ -91,7 +102,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                             type="title"
                             variant="filled"
                             value={file ? file?.title : " "}
-                            onChange={(e) => setFile_({ ...file, title: e.target.value as string })}
+                            onChange={(e) => handleFileUpdate(e)}
                             style={{ width: "max-content" }}
                         />
                         <div className="flex flex-row my-2 mx-auto gap-2">
@@ -100,28 +111,25 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                                 id="published"
                                 type={"checkbox"}
                                 name="published"
-                                value={file ? String(file.published) : "false"}
-                                onChange={(e) => setFile_({ ...file, published: Boolean(e.target.value) })}
+                                checked={file ? file.published : false}
+                                onChange={(e) => setFile_({ ...file_ as fileType, published: e.target.checked })}
                             />
                         </div>
                         <TextField
                             fullWidth={true}
-                            helperText={"bio"}
-                            id={"bio"}
-                            label={"bio"}
+                            helperText={"summary"}
+                            id={"summary"}
+                            label={"summary"}
                             multiline={true}
                             minRows={4}
-                            name={"bio"}
-                            placeholder="bio"
+                            name={"content"}
+                            placeholder="summary"
                             required
                             size={"medium"}
-                            type="bio"
+                            type="text"
                             variant="filled"
                             value={file ? file?.content : " "}
-                            onChange={(e) => {
-
-                                setFile_({ ...file, content: e.target.value as string })
-                            }}
+                            onChange={(e) => { handleFileUpdate(e) }}
                             style={{ width: "100%" }}
                         />
 
@@ -138,19 +146,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                                 handleOnChange(e)
                             }}
                         />}
-                        {blogMsg && blogMsg.msg &&
-                            <div className="relative h-[10vh] flex flex-col items-center justify-center">
-                                {blogMsg.loaded ?
-                                    <div className=" absolute inset-0 flex flex-col text-blue-900 text-xl">
-                                        {blogMsg && blogMsg.msg}
-                                    </div>
-                                    :
-                                    <div className=" absolute inset-0 flex flex-col text-orange-900 text-xl">
-                                        {blogMsg && blogMsg.msg}
-                                    </div>
-                                }
-                            </div>
-                        }
+
                     </div>
                     <div className={`${styles.fileCreateInput} bg-slate-300`}>
 

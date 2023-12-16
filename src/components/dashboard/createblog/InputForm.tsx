@@ -7,6 +7,7 @@ import { useBlogContext } from '@/components/context/BlogContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { v4 as uuidv4 } from "uuid";
 import { SecPlusForm, HeaderPlusForm, ImgForm, LinkForm, ReplyForm, ListForm, CodeForm } from "@component/compForms/formInputs";
+import toast from 'react-hot-toast';
 
 type fetchType = {
     input: inputType,
@@ -41,21 +42,24 @@ export default function InputForm({ input, setInput, imgLoaded, setImgLoaded, us
                 body: JSON.stringify(input)
             });
             const body: fetchType = await res.json();
-            if (res.ok && input_s) {
+            if (input_s) {
                 const reduce = input_s.filter(inp => (inp.id !== input.id));
                 setInput_s([...reduce, body.input]);
                 setInput(undefined);
-                setBlogMsg({ loaded: true, msg: body.message });
+                // setBlogMsg({ loaded: true, msg: body.message });
+                toast.success(`saved: ${body.message}`);
                 setIsSelected(false);
                 return
             } else if (res.status > 200 && res.status < 500) {
-                setBlogMsg({ loaded: false, msg: body.message });
+                // setBlogMsg({ loaded: false, msg: body.message });
+                toast.error("updated - refresh the page")
                 return
             }
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@input`);
-            setBlogMsg({ loaded: false, msg: `${message}@input` });
+            // setBlogMsg({ loaded: false, msg: `${message}@input` });
+            toast.error(`something went wrong- did not save`)
             return
         }
     }

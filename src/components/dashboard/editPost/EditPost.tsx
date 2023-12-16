@@ -12,6 +12,7 @@ import PostMsg from "@component/dashboard/createPost/PostMsg";
 import styles from "@component/dashboard/editPost/editPostStyle.module.css";
 import { useRouter } from "next/navigation";
 import { useGeneralContext } from '@/components/context/GeneralContextProvider';
+import toast from 'react-hot-toast';
 
 type postFetchType = {
     post: postType,
@@ -52,6 +53,7 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
     ) => {
         e.preventDefault();
         if (post) {
+            // console.log("POST@Dashboard/EditPost", post)
             try {
                 const res = await fetch("/api/post", {
                     method: "PUT",
@@ -60,7 +62,8 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
                 if (res.ok) {
                     const body: postFetchType = await res.json();
                     setPost(body.post);
-                    setPostMsg({ loaded: true, msg: body.message });
+                    // setPostMsg({ loaded: true, msg: body.message });
+                    toast.success("post saved")
                     setTemImage(undefined);
                     setLoaded(true);
                     setPosts([...posts, body.post]);
@@ -70,6 +73,7 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
                 const message = getErrorMessage(error);
                 console.error(`${message}@post`);
                 setPostMsg({ loaded: false, msg: message })
+                toast.error("something went wrong")
             }
         }
     }
@@ -84,11 +88,9 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
     const handleBlogLinkOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault();
         if (e) {
-            const fileId = e.target.value
-            const blog_lnk = blogLinks.find(lk => lk.fileId === fileId);
 
-            if (blog_lnk && post) {
-                setPost({ ...post, bloglink: `/blogs/${fileId}` })
+            if (post) {
+                setPost({ ...post, [e.target.name]: e.target.value })
             }
         }
     }
@@ -139,14 +141,19 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
                     <form className={styles.editForm}>
                         <h3 className="text-center font-bold underline underline-offset-8 text-slate-100 text-xl"> attach a blog</h3>
                         <select
-                            name="blogLink"
+                            name="bloglink"
                             onChange={(e) => handleBlogLinkOnChange(e)}
                         >
-                            {blogLinks && blogLinks.map((blogLn, index) => (
-                                <React.Fragment key={index}>
-                                    <option value={blogLn.fileId}>{blogLn.name}</option>
-                                </React.Fragment>
-                            ))}
+                            {blogLinks && blogLinks.map((blogLn, index) => {
+                                if (blogLn.fileId) {
+                                    const blogU = `/blogs/${blogLn.fileId}`
+                                    return (
+                                        <React.Fragment key={index}>
+                                            <option value={blogU}>{blogLn.name}</option>
+                                        </React.Fragment>
+                                    )
+                                }
+                            })}
                         </select>
                     </form>
 

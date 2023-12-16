@@ -5,6 +5,7 @@ import { useGeneralContext } from '../context/GeneralContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { genContactType } from '@/lib/Types';
 import styles from "./footer.module.css"
+import toast from 'react-hot-toast';
 
 type fetchContactType = {
     contact: genContactType,
@@ -38,10 +39,12 @@ export default function GenContact({ setContactBtn }: mainType) {
                 const body: fetchContactType = await res.json();
                 setMsg({ loaded: true, msg: body.message });
                 setContactBtn(false);
+                toast.success(`sent:${body.message}`);
             } catch (error) {
                 const msg = getErrorMessage(error);
                 setMsg({ loaded: false, msg })
                 console.error(`${msg}@GenContact@gencontact@footer`)
+                toast.error("something went wrong")
             }
         }
     }

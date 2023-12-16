@@ -34,6 +34,7 @@ type Repo = {
 }
 
 
+
 async function insertFileImg(file: fileType): Promise<fileType> {
     if (file.imageKey) {
         file.imageUrl = `${url}/${file.imageKey}`
@@ -54,12 +55,12 @@ async function insertUserImg(user: userType): Promise<userType> {
     return user
 }
 
-export async function generateServerParams() {
+export async function generateStaticParams() {
     const files = await getFiles();
     return files.map(file => ({ id: file.id }))
-
-
 }
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function BlogPage({ params }: { params: { id: string } }) {
     const { id } = params;

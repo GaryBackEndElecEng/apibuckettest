@@ -7,6 +7,7 @@ import { usePostContext } from '../context/PostContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { calcAvg } from "@lib/ultils";
 import GenericMsg from "@component/comp/GenericMsg";
+import toast from 'react-hot-toast';
 
 //make line of switches for likes and dislikes, then add it to posts=> DO THE SAME FOR POSTS
 type rateFetchType = {
@@ -35,12 +36,13 @@ export default function PostRate({ file }: mainPostLikeType) {
             if (res.ok) {
                 const body: rateFetchType = await res.json();
                 setFileRates([...file.rates, body.rate]);
-                setBlogMsg({ loaded: true, msg: body.message })
+                toast.success(`thanks for the  ${body.rate.rate}`);
             }
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@like`)
             setBlogMsg({ loaded: false, msg: message })
+            toast.error("sorry something went wrong?")
         }
 
     }

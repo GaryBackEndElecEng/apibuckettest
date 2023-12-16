@@ -9,6 +9,7 @@ import { TextField } from '@mui/material';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { useGeneralContext } from '@/components/context/GeneralContextProvider';
 import { Session } from 'next-auth';
+import toast from 'react-hot-toast';
 
 type fetchType = {
     file: fileType,
@@ -29,6 +30,7 @@ export default function CreateBlog({ getuser, newfile }: creatablogType) {
         setUser(getuser);
         if (!newfile) return
         setFile_(newfile);
+        toast.success("starting new Blog")
     }, [user, setFile_, newfile, getuser, setUser]);
 
 
@@ -40,7 +42,7 @@ export default function CreateBlog({ getuser, newfile }: creatablogType) {
 
             try {
                 const res = await fetch("/api/file", {
-                    method: "POST",
+                    method: "PUT",
                     body: JSON.stringify(file_)
                 });
                 const body: fetchType = await res.json()
@@ -48,13 +50,16 @@ export default function CreateBlog({ getuser, newfile }: creatablogType) {
                     setFile_(body.file);
                     setBlogMsg({ loaded: true, msg: body.message });
                     setIsCreated(true);
+                    toast.success("saved");
                 } else if (res.status > 200 && res.status < 500) {
                     setBlogMsg({ loaded: false, msg: body.message })
+
                 }
             } catch (error) {
                 const message = getErrorMessage(error)
                 setBlogMsg({ loaded: false, msg: message })
                 console.error(`${message}@file`)
+                toast.error(`something went wrong`)
 
             }
         }

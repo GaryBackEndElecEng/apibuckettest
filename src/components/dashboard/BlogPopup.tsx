@@ -4,6 +4,7 @@ import styles from "./dashboard.module.css"
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { fileType } from '@/lib/Types';
 import { useBlogContext } from '../context/BlogContextProvider';
+import { toast } from 'react-hot-toast';
 
 type fetchDelType = {
     file: fileType,
@@ -31,6 +32,7 @@ export default function BlogPopup({ fileId, setShowPopup }: popupType) {
                 setBlogMsg({ loaded: true, msg: body.message });
                 const reduce_ = userBlogs.filter(file => file.id === fileId);
                 setUserBlogs(reduce_);
+                toast.success(body.message)
 
 
             }
