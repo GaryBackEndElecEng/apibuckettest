@@ -10,7 +10,7 @@ import { redirect } from 'next/navigation';
 import Redirect from "@component/comp/Redirect";
 import { notFound } from "next/navigation";
 import { Metadata, ResolvingMetadata } from 'next';
-import { NameSep, unifyName } from "@lib/ultils";
+import { NameSep, joinName, separateName, unifyName } from "@lib/ultils";
 
 const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string
@@ -31,14 +31,17 @@ const prisma = new PrismaClient();
 
 export async function generateStaticParams() {
     const users = await getUsers();
-    return users.map(user => ({ name: user.name as string }))
+    return users.map(user => ({ name: joinName(user.name as string) }))
 
 }
-export const revalidate = 60;
+
+export const revalidate = 0;
+export const dynamic = "force-dynamic"
 
 export default async function Userpage({ params }: { params: { name: string } }) {
     const { name } = params;
-    const user: userType | undefined = await getUser(name) as userType
+    const newName = separateName(name);
+    const user: userType | undefined = await getUser(newName) as userType
     if (user) {
         return (
             <div className={styles.pageContainer}>
@@ -77,6 +80,8 @@ export async function getUser(name: string) {
                 let tempUser = user;
                 if (tempUser.imgKey) {
                     tempUser.image = `${url}/${tempUser.imgKey}`
+                } else {
+                    tempUser.image = null
                 }
                 const files = tempUser.files.map((file) => {
                     if (file.imageKey) {
@@ -97,9 +102,12 @@ export async function getUser(name: string) {
 }
 
 export async function getUsers() {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({ include: { files: true, posts: true } });
+    const getusers = users.map(user => {
+        return user
+    })
     await prisma.$disconnect()
-    return users
+    return getusers
 }
 
 type rateType = {
@@ -113,8 +121,8 @@ type rateType = {
 
 export async function generateMetadata({ params }: { params: { name: string } }, parent: ResolvingMetadata): Promise<Metadata | undefined> {
     const { name } = params;
-
-    const getuser: userType = await getUser(name) as unknown as userType;
+    const newname = separateName(name)
+    const getuser: userType = await getUser(newname) as unknown as userType;
 
     const posts: postType[] = getuser.posts;
     const files: fileType[] = getuser.files;

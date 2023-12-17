@@ -43,7 +43,7 @@ export default async function Page() {
                 <Suspense fallback="Loading....">
                     {(files && users) ? files.map((file, index) => {
                         if (file.published === true) {
-                            const user: userType | undefined = users.find(user => (user.id === file.userId))
+                            const user: userType | undefined = users.find(user => ((user.id as string) === file.userId))
                             return (
 
                                 <React.Fragment key={index}>
@@ -81,7 +81,9 @@ export async function getUsers() {
         if (user.imgKey) {
             user.image = `${url}/${user.imgKey}`
         }
+
         return user
+
     })
     return usersInserts
 }

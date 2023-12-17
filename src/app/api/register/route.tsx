@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { transporter, mailOptions } from "@component/emails/nodemailer";
 import { NextApiResponse } from 'next';
 import { PrismaClient } from "@prisma/client";
-import { genHash } from "@lib/ultils";
+import { genHash, separateName } from "@lib/ultils";
 import type { userType } from "@lib/Types";
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { NameSep, unifyName } from "@lib/ultils"
@@ -37,7 +37,7 @@ export async function POST(
                         email: email
                     },
                     data: {
-                        name: name ? unifyName(name.trim()) : (check.name as string).trim(),
+                        name: name ? separateName(name.trim()) : (check.name as string).trim(),
                         password: hashPswd ? hashPswd : check.password,
                         imgKey: imgKey ? imgKey : check.imgKey
                     }
@@ -46,7 +46,7 @@ export async function POST(
             } else {
                 const user = await prisma.user.create({
                     data: {
-                        name: name ? unifyName(name.trim()) : null,
+                        name: name ? separateName(name.trim()) : null,
                         email: email,
                         password: hashPswd,
                         imgKey: imgKey ? imgKey : null
@@ -54,7 +54,7 @@ export async function POST(
                 });
                 await transporter.sendMail({
                     ...mailOptions(user.email, []),
-                    subject: `Thank you for contacting us!`,
+                    subject: `Thank you for joining us!`,
                     text: generateText(user as unknown as userType),
                     html: generateHTML(user as unknown as userType)
                 });

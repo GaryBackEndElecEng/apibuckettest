@@ -60,6 +60,8 @@ export async function getUser() {
                 let tUser = user as userType;
                 if (tUser.imgKey) {
                     tUser.image = `${url}/${tUser.imgKey}`;
+                } else {
+                    tUser.image = null
                 }
                 return tUser
             }

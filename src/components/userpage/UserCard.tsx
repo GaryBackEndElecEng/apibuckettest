@@ -10,12 +10,7 @@ export default function UserCard({ user }: { user: userType }) {
     const url = "/images/gb_logo.png";
     const windowSize = useWindowSize()
 
-    React.useEffect(() => {
-        if (user && user.name) {
-            const thisName = firstLast(user.name);
-            setName(thisName);
-        }
-    }, [user]);
+
 
 
     return (
@@ -24,7 +19,7 @@ export default function UserCard({ user }: { user: userType }) {
                 <div className={styles.MainUserCard}>
                     <div>
 
-                        <h3>{Name?.split(" ")[0]} {Name?.split(" ")[1]}</h3>
+                        <h3>{user && user.name}</h3>
 
 
                         {user.image ?

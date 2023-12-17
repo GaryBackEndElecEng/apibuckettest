@@ -15,6 +15,7 @@ import HomeHeader from "@component/home/HomeHeader";
 import authOptions from "@lib/authOptions";
 import { getServerSession } from "next-auth";
 import { Metadata, ResolvingMetadata } from "next";
+import { joinName } from "@lib/ultils";
 
 const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string;
@@ -59,7 +60,7 @@ export default async function Home() {
 }
 export async function generateStaticParams() {
   const users = await getUsers();
-  return users?.map(user => ({ name: user.name }))
+  return users?.map(user => ({ name: joinName(user.name as string) }))
 }
 export const revalidate = 30;
 
@@ -72,6 +73,7 @@ export async function getUsers() {
         if (user.imgKey) {
           user.image = `${url}/${user.imgKey}`;
         }
+        user.name = joinName(user.name as string)
         return user;
       })
 
@@ -119,6 +121,8 @@ export async function generateMetadata(parent: ResolvingMetadata): Promise<Metad
     }
   }
 }
+
+
 
 
 

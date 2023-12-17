@@ -201,6 +201,40 @@ export function unifyName(nam: string): string {
     }
     return wrd
 }
+export function joinName(name: string) {
+    const nameCheck = name.split(" ");
+    const check = nameCheck && nameCheck.length > 0 ? true : false;
+    let newName: string = ""
+    if (check) {
+        nameCheck.map((partN, index) => {
+            if (index === 0) {
+                newName = partN
+            } else {
+                newName = newName + "-" + partN;
+            }
+        });
+        return newName.trim()
+    } else {
+        return name
+    }
+}
+export function separateName(name: string) {
+    const nameCheck = name.split("-");
+    const check = nameCheck && nameCheck.length > 0 ? true : false;
+    let newName: string = ""
+    if (check) {
+        nameCheck.map((partN, index) => {
+            if (index === 0) {
+                newName = partN;
+            } else {
+                newName = newName + " " + partN;
+            }
+        });
+        return newName.trim()
+    } else {
+        return name
+    }
+}
 
 export function useChange(path: string | null) {
     const [hasChanged, setHasChanged] = React.useState<boolean>(false);
@@ -432,4 +466,5 @@ export function ConvertToFormula({ para }: { para: string }) {
 
 
 }
+
 

@@ -17,12 +17,6 @@ export default function UserHeader() {
     const bgWave = "/images/bgWave.png";
     const windowSize = useWindowSize()
 
-    React.useEffect(() => {
-        if (user && user.name) {
-            const thisName = firstLast(user.name);
-            setName(thisName);
-        }
-    }, [user]);
 
 
     return (
@@ -31,15 +25,17 @@ export default function UserHeader() {
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 place-items-center my-2 mx-0 py-2">
                     <div className="col-span-1 flex flex-col mt-2 ">
 
-                        <h3 className={`${ephesis.className} text-3xl`}>{Name?.split(" ")[0]} {Name?.split(" ")[1]}</h3>
+                        <h3 className={`${ephesis.className} text-3xl`}>{user && user.name}</h3>
 
 
-                        {user.image ?
+                        {(user.image && user.imgKey) ?
                             <Image src={user.image} alt={user.name ? user.name : "www.ablogroom.com"} width={75} height={75}
                                 className={`${styles.profileImage}`}
                             />
                             :
-                            <Image src={url} alt={"www.ablogroom.com"} width={75} height={75} />
+                            <Image src={url} alt={"www.ablogroom.com"} width={75} height={75}
+                                className={`${styles.profileImageDefault}`}
+                            />
                         }
                     </div>
 

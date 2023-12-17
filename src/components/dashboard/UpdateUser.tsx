@@ -196,7 +196,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                 <div className="text-center text-xl mb-2">{user.name}</div>
                                 <h3 className="text-xl px-1 py-1 underline underline-offest-8 ">Who am I</h3>
                                 <p className="text-md px-2 my-2 text-white">
-                                    {user.image ?
+                                    {user.image && user.imgKey ?
                                         <Image src={user.image}
                                             width={125}
                                             height={125}
