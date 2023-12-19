@@ -12,7 +12,7 @@ import PostMsg from "@component/dashboard/createPost/PostMsg";
 import styles from "@component/dashboard/editPost/editPostStyle.module.css";
 import { useRouter } from "next/navigation";
 import { useGeneralContext } from '@/components/context/GeneralContextProvider';
-import toast from 'react-hot-toast';
+import toast, { ToastBar, ToastIcon } from 'react-hot-toast';
 
 type postFetchType = {
     post: postType,
@@ -39,12 +39,13 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
         setUser(getuser);
         if (!getpost) return
         setPost(getpost);
-        setPostMsg({ loaded: true, msg: "recieved" });
-    }, [getpost, setPost, setUser, getuser, setPostMsg]);
+        toast.success("ready")
+    }, []);
+
 
     React.useEffect(() => {
         if (!getblogLinks) return;
-        setBlogLinks(getblogLinks)
+        setBlogLinks(getblogLinks);
     }, [setBlogLinks, getblogLinks]);
 
 

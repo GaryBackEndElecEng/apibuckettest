@@ -84,6 +84,7 @@ model File {
 model InputType {
   id      Int      @id @default(autoincrement())
   name    String
+  order   Int?
   content String
   type    String
   url     String?

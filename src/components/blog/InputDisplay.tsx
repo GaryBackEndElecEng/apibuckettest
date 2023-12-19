@@ -10,6 +10,8 @@ import { TextField } from '@mui/material';
 import { useBlogContext } from '../context/BlogContextProvider';
 import { IoMdHappy } from "react-icons/io";
 import toast from 'react-hot-toast';
+import Link from 'next/link';
+import { FaArrowRightLong } from "react-icons/fa6";
 
 type contactFetchType = {
     contact: contactType,
@@ -41,6 +43,13 @@ function GenInput({ input }: { input: inputType }) {
         }
     }, [setReply, user, reply, type]);
 
+    const handleLink = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, link: string) => {
+        e.preventDefault();
+        if (window) {
+            window.open(link, "blank")
+        }
+    }
+
     switch (type) {
         case "image":
             return (
@@ -59,7 +68,7 @@ function GenInput({ input }: { input: inputType }) {
             )
         case "heading":
             return (
-                <div className="inputHeading">
+                <div className="heading">
                     {input.name && <h2 className="inputBold">
                         {input.name}
                     </h2>}
@@ -70,7 +79,7 @@ function GenInput({ input }: { input: inputType }) {
             )
         case "subHeading":
             return (
-                <div className="inputSubHeading">
+                <div className="subHeading">
                     {input.name && <h3>
                         {input.name}
                     </h3>}
@@ -81,13 +90,24 @@ function GenInput({ input }: { input: inputType }) {
             )
         case "section":
             return (
-                <div className="">
+                <section className="section">
                     {input.name && <h4>
-                        {input.name}
+                        {input.name} :
                     </h4>}
-                    <section>
+                    <div>
                         <SeparatePara para={input.content} class_={"pSection"} />
-                    </section>
+                    </div>
+                </section>
+            )
+        case "link":
+            return (
+                <div className="link" style={{ position: "relative", width: "100%" }}>
+                    {input.name && <h3>
+                        {input.name} :
+                    </h3>}
+                    <div onClick={(e) => handleLink(e, input.content)} >
+                        <FaArrowRightLong style={{ color: "orange" }} />    {input.content}
+                    </div>
                 </div>
             )
         case "list":
@@ -102,25 +122,15 @@ function GenInput({ input }: { input: inputType }) {
             )
         case "article":
             return (
-                <div className="">
-                    {input.name && <h3>
+                <article className="article">
+                    {input.name && <h2>
                         {input.name}
-                    </h3>}
+                    </h2>}
                     <section>
                         <SeparatePara para={input.content} class_={"pSection"} />
                     </section>
-                </div>
+                </article>
             )
-        case "conclusion":
-            return (
-                <section className="inputConclusion">
-                    {input.name && <h4>
-                        {input.name}
-                    </h4>}
-                    <SeparatePara para={input.content} class_={"pSection"} />
-                </section>
-
-            );
         case "code":
             return (
 
@@ -132,6 +142,16 @@ function GenInput({ input }: { input: inputType }) {
                 </section>
 
             )
+        case "conclusion":
+            return (
+                <section className="conclusion">
+                    {input.name && <h4>
+                        {input.name}
+                    </h4>}
+                    <SeparatePara para={input.content} class_={"pSection"} />
+                </section>
+
+            );
         case "reply":
 
             const handleReplySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -241,6 +261,7 @@ function GenInput({ input }: { input: inputType }) {
                 </React.Fragment>
 
             );
+
         default:
             return <></>
     }

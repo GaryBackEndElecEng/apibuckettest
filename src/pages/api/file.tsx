@@ -74,7 +74,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     imageKey: file.imageKey,
                     published: file.published,
                     fileUrl: file.fileUrl,
-                    imageUrl: file && file.imageUrl ? file.imageUrl : null
+                    imageUrl: file && file.imageUrl ? file.imageUrl : null,
+
                 }
             });
 

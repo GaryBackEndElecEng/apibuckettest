@@ -40,11 +40,54 @@
   text-decoration: underline;
   text-underline-offset: 0.25rem;
 }
+.listFormGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 1rem;
+  place-items: center;
+  width: 100%;
+  position: relative;
+}
+.listGridOne {
+  grid-column: 1 / span 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 0.5rem;
+}
+.formListGridTwo {
+  grid-column: 2 / span 3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 0.5rem;
+  padding-inline: 1rem;
+}
+@media screen and (max-width: 980px) {
+  .listFormGrid {
+    grid-template-columns: repeat(1, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  .listGridOne {
+    grid-column: auto;
+  }
+  .formListGridTwo {
+    grid-column: auto;
+
+    padding-inline: 1rem;
+  }
+}
 @media screen and (max-width: 480px) {
   .formGrid {
     grid-template-columns: repeat(1, minmax(275px, 1fr));
     grid-auto-flow: dense;
     gap: 1rem;
     padding: 0.5rem;
+  }
+  .formList {
+    padding-inline: 0.5rem;
   }
 }

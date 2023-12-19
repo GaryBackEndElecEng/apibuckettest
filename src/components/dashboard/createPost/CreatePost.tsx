@@ -13,6 +13,8 @@ import PostMsg from "@component/dashboard/createPost/PostMsg";
 import styles from "@component/dashboard/createPost/createpost.module.css";
 import { Session } from 'next-auth';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
+import { joinName } from '@/lib/ultils';
 
 type postFetchType = {
     post: postType,
@@ -28,23 +30,19 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
     const { setPost, setPosts, posts, setPostMsg, postMsg } = usePostContext()
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
-    const [temPost, setTemPost] = React.useState<postType>({} as postType);
+
     const [temImage, setTemImage] = React.useState<string | undefined>();
 
 
 
     //bloglink: `/blog/${file_.id}`
-    React.useEffect(() => {
-        if (user && !temPost.userId) {
-            setTemPost({ ...temPost, userId: user.id as string });
-        }
-    }, [user, setTemPost, temPost]);
+
 
     React.useEffect(() => {
-        if (temPost && temPost.name && temPost.content && temPost.userId) {
+        if (post && post.name && post.content && post.userId) {
             setComplete(true);
         }
-    }, [temPost, user, setComplete]);
+    }, [post, user, setComplete]);
 
 
     const handlepost = async (e: React.FormEvent<HTMLFormElement>
@@ -54,14 +52,13 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
             try {
                 const res = await fetch("/api/post", {
                     method: "POST",
-                    body: JSON.stringify(temPost)
+                    body: JSON.stringify(post)
                 });
                 if (res.ok) {
                     const body: postFetchType = await res.json();
                     setPost(body.post);
                     setPostMsg({ loaded: true, msg: body.message });
                     setTemImage(undefined);
-                    setTemPost({} as postType);
                     setLoaded(true);
                     setComplete(false);
                     setPosts([...posts as postType[], body.post]);
@@ -77,33 +74,35 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
 
     const postOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
-        setTemPost({
-            ...temPost,
+        setPost({
+            ...post as postType,
             [e.target.name]: e.target.value
         })
     }
     const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>
     ) => {
         e.preventDefault();
-        if (e.target.files && temPost && temPost.name) {
+        if (e.target.files && post && post.name && user) {
             const file = e.target.files[0]
             const formData = new FormData();
             formData.set("file", file);
-            const Key = `${temPost.name.trim()}/${uuidv4()}-${file.name}`;
+            const joinUser = joinName(user.name as string)
+            const combinedName = joinName(post.name)
+            const Key = `${joinUser}/post/${combinedName.replace("?", "")}-${uuidv4()}-${file.name}`;
             formData.set("Key", Key);
             setTemImage(URL.createObjectURL(file));
             const res = await fetch("/api/media", {
                 method: "POST", body: formData
             });
             if (res.ok) {
-                setTemPost({ ...temPost, s3Key: Key });
-                setPostMsg({ loaded: true, msg: "saved" })
+                setPost({ ...post, s3Key: Key });
+                toast.success("image uploaded")
             } else {
-                setPostMsg({ loaded: false, msg: "not saved" })
+                toast.error("image not uploaded")
             }
 
         } else {
-            setPostMsg({ loaded: false, msg: " missing name or content" })
+            toast.error(" missing name or content")
         }
 
     }
@@ -112,7 +111,8 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
         e.preventDefault();
         setPost(undefined);
         setTemImage(undefined);
-        setTemPost({} as postType);
+        const tempPost = { ...post, name: "fill", content: "body" } as postType
+        setPost(tempPost);
         setLoaded(false);
         setComplete(false);
         setPostMsg({ loaded: false, msg: "" })
@@ -136,7 +136,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
                             size={"medium"}
                             type="text"
                             variant="filled"
-                            value={temPost ? temPost?.name : " "}
+                            value={post?.name}
                             onChange={postOnChange}
                         />
                         <TextField
@@ -152,7 +152,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
                             size={"medium"}
                             type="text"
                             variant="filled"
-                            value={temPost ? temPost?.content : " "}
+                            value={post?.content}
                             onChange={postOnChange}
                             style={{ width: "100%" }}
                         />
@@ -162,7 +162,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
                                 <select
                                     id="bloglink"
                                     name="bloglink"
-                                    onChange={(e) => setTemPost({ ...temPost, [e.target.name]: e.target.value })}
+                                    onChange={(e) => setPost({ ...post as postType, [e.target.name]: e.target.value })}
                                 >
                                     {userBlogs.map((file, index) => {
                                         if (file.id) {
@@ -186,7 +186,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
 
 
                 <div className="flex flex-col mx-auto px-1 my-3">
-                    {temPost && temPost.name && <input
+                    {post && post.name && <input
                         accept={"image/png image/jpg image/jpeg"}
                         type="file"
                         name="file"
@@ -199,7 +199,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
             </React.Fragment>
 
 
-            {post &&
+            {post && !temImage &&
                 <div className={styles.displayContent}>
 
                     <h1 >{post.name}</h1>
@@ -212,17 +212,17 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
 
                 </div>
             }
-            {temPost &&
+            {post && temImage &&
                 <div className={styles.displayContent}>
 
-                    <h1 >{temPost.name}</h1>
+                    <h1 >{post.name}</h1>
 
                     {temImage &&
                         <Image src={temImage} width={600} height={400} alt="www"
                             className="aspect-video"
                         />
                     }
-                    <p>{temPost.content}</p>
+                    <p>{post.content}</p>
 
 
                 </div>

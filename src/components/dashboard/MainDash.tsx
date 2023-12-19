@@ -32,7 +32,7 @@ export default async function MainDash({ user }: maindashType) {
     return (
 
         // <Dashboard_ContextProvider>
-        <Dashboard_ getuser={user} files={userFiles} posts={userPosts} />
+        <Dashboard_ getuser={user} getUserfiles={userFiles} getUserPosts={userPosts} />
 
 
     )

@@ -27,17 +27,27 @@ type resType = { user: userType | null, message: string }
 
 type DashboardType = {
     getuser: userType,
-    files: fileType[],
-    posts: postType[]
+    getUserfiles: fileType[],
+    getUserPosts: postType[]
 }
 
-export default function DashBoard_({ getuser, files, posts }: DashboardType) {
+export default function DashBoard_({ getuser, getUserfiles, getUserPosts }: DashboardType) {
 
     const { setUser, user, setMsg, msg } = useGeneralContext();
     const { setBlogMsg, blogMsg, setUserBlogs, userBlogs } = useBlogContext()
+    const { userPosts, setUserPosts } = usePostContext();
     // const {setUserPosts}=usePostContext();
     const [open, setOpen] = React.useState<boolean>(false);
     const [contactBtn, setContactBtn] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        if (!getuser) return
+        setUser(getuser);
+        if (!getUserfiles) return
+        setUserBlogs(getUserfiles);
+        if (!getUserPosts) return
+        setUserPosts(getUserPosts)
+    }, []);
 
     React.useEffect(() => {
         if (msg && msg.msg) {
@@ -74,35 +84,35 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
                             <h3 className="font-bold text-center underline underline-offset-8 my-2">Blog rates</h3>
                             <details>
                                 <summary>Blogs</summary>
-                                <UserFilesRates files={files} />
+                                <UserFilesRates files={userBlogs} />
                             </details>
                         </div>
                         <div>
                             <h3 className="font-bold text-center underline underline-offset-8 my-2">Post rates</h3>
                             <details>
                                 <summary>posts</summary>
-                                <UserPostsRates posts={posts} />
+                                <UserPostsRates posts={userPosts} />
                             </details>
                         </div>
                         <div className="col-span-2">
                             <h3 className="font-bold text-center underline underline-offset-8 my-2">Blog hits</h3>
                             <details>
                                 <summary>hits</summary>
-                                <BlogHits files={files} />
+                                <BlogHits files={userBlogs} />
                             </details>
                         </div>
                         <div className="col-span-2">
                             <h3 className="font-bold text-center underline underline-offset-8 my-2">Post hits</h3>
                             <details>
                                 <summary>hits</summary>
-                                <PostHits posts={posts} />
+                                <PostHits posts={userPosts} />
                             </details>
                         </div>
                         <div className="col-span-2">
                             <h3 className="font-bold text-center underline underline-offset-8 my-2">likes</h3>
                             <details>
                                 <summary>likes</summary>
-                                <MasterLikes files={files} posts={posts} />
+                                <MasterLikes files={userBlogs} posts={userPosts} />
                             </details>
                         </div>
                     </div>
@@ -151,7 +161,7 @@ export default function DashBoard_({ getuser, files, posts }: DashboardType) {
 
                 <UpdateUser user={user} />
             </div>
-            <UserBlogs user={user} getFiles={files} />
+            <UserBlogs user={user} userBlogs={userBlogs} />
         </main>
     )
 }

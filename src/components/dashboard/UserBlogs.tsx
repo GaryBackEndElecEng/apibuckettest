@@ -16,16 +16,12 @@ type userFetchType = {
 }
 type userBlogsType = {
     user: userType | null,
-    getFiles: fileType[]
+    userBlogs: fileType[]
 }
-export default function UserBlogs({ user, getFiles }: userBlogsType) {
-    const { userBlogs, setUserBlogs, setBlogMsg, blogMsg } = useBlogContext();
+export default function UserBlogs({ user, userBlogs }: userBlogsType) {
+    const { setUserBlogs, setBlogMsg, blogMsg } = useBlogContext();
     const [showPopup, setShowPopup] = React.useState<{ loaded: boolean, id: string | undefined }>({ loaded: false, id: undefined })
 
-    React.useEffect(() => {
-        if (!getFiles) return
-        setUserBlogs(getFiles);
-    }, [getFiles, setUserBlogs])
 
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
         e.preventDefault();

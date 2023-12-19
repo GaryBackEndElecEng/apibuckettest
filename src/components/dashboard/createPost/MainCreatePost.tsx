@@ -8,6 +8,7 @@ import { usePostContext } from '@/components/context/PostContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import styles from "@component/dashboard/createPost/createpost.module.css"
 import { useBlogContext } from '@/components/context/BlogContextProvider';
+import toast from 'react-hot-toast';
 
 type userFetchType = {
     user: userType,
@@ -31,7 +32,9 @@ export default function MainCreatePost({ getuser, newpost }: mainCreateType) {
         }
         if (newpost) {
             setPost(newpost)
-            setPostMsg({ loaded: true, msg: "recieved" });
+            toast.success("uploaded newPost")
+        } else {
+            toast.error("post not uploaded")
         }
 
     }, [setUser, setPostMsg, getuser, newpost, setPost, setUserPosts, setUserBlogs]);

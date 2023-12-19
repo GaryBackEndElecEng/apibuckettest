@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
-import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType, nameRateType, postType } from "./Types";
+import { rateType, likeType, likeIcon, likeArr, pageHitType, fileType, nameRateType, postType, inputType } from "./Types";
 import React from "react";
 import { useGeneralContext } from "@/components/context/GeneralContextProvider";
+import { getErrorMessage } from "./errorBoundaries";
+import toast from "react-hot-toast";
 
 
 
@@ -74,12 +76,16 @@ export function ConvertToList({ para }: { para: string }) {
     const numLis: RegExp = /[0-9]+./gm; //This matches 1.),2.),,etc
     const hyphen: RegExp = /-/gm; //matches "-"
     const endHyphen: RegExp = /;/gm; //matches ";"
+    const colon: RegExp = /:/gm;
+    const end: RegExp = /./gm;
     const nextLine: RegExp = /\n/gm; //matches "return"
     const searchList = [
-        { name: "hyphen", match: hyphen, repl: `<li>  ` },
-        { name: "num", match: numLis, repl: `<li>$&  ` },
+        { name: "hyphen", match: hyphen, repl: `<li>` },
+        { name: "num", match: numLis, repl: `<li> ` },
         { name: "endHyphen", match: endHyphen, repl: "</li>" },
         { name: "endHyphen", match: nextLine, repl: "</li>" },
+        // { name: "end", match: end, repl: "</li>" },
+        { name: "colon", match: colon, repl: `<span style="color:red">: </span> </br>` },
     ]
     let para2: string = "";
     const getResults = searchList.map((item, index) => {
@@ -215,7 +221,7 @@ export function joinName(name: string) {
         });
         return newName.trim()
     } else {
-        return name
+        return name.trim()
     }
 }
 export function separateName(name: string) {
@@ -465,6 +471,73 @@ export function ConvertToFormula({ para }: { para: string }) {
     )
 
 
+}
+
+export function sortInput(inputs: inputType[]) {
+
+    const retInputs: inputType[] = inputs.sort((a, b) => {
+        if (a.order && b.order && a.order > b.order) {
+            return 1
+        } else {
+            return -1
+        }
+    });
+    return retInputs
+}
+export async function insertOrder(inputs: inputType[], input: inputType, reqorder: number) {
+    const checkInput = inputs.find(inp => (inp.order === reqorder));
+    let tempOrder: number = 0;
+    let arr: inputType[] = [];
+    if (checkInput) {
+        const retInputs = inputs.map((inp, index) => {
+            let inputToChange = inputs.find(in_ => in_.order === input.order);//presently on
+            if (inp.order === reqorder && tempOrder === 0 && inputToChange) {
+                tempOrder = inp.order as number;//15
+                inp.order = input.order //16
+                inputToChange.order = reqorder
+                arr.push(inp)
+                arr.push(inputToChange)
+            }
+
+
+
+            return inp
+        });
+        if (arr && arr.length > 0) {
+
+            const message: string[] | undefined = await Promise.all(
+                arr.map(async (inp) => {
+                    return await storeInput(inp)
+
+                })
+            );
+            if (message) { toast.success(`order ${message[0]}-${message[1]}`) }
+
+        }
+        return sortInput(retInputs)
+    } else {
+        toast.success("no order performed")
+        return inputs
+    }
+
+}
+
+export async function storeInput(input: inputType) {
+    let message: string = ""
+    try {
+        const res = await fetch("/api/input", {
+            method: "PUT",
+            body: JSON.stringify(input)
+        });
+        const body: { input: inputType, message: string } = await res.json()
+        message = body.message
+    } catch (error) {
+        const msg = getErrorMessage(error);
+        toast.error("order was not performed")
+        message = " not success"
+    } finally {
+        return message
+    }
 }
 
 

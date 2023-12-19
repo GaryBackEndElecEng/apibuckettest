@@ -88,7 +88,7 @@ export async function getUser() {
     if (session && session.user && session.user.email) {
         const email = session.user.email;
         try {
-            const user = await prisma.user.findMany({
+            const user = await prisma.user.findUnique({
                 where: {
                     email: email
                 },

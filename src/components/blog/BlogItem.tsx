@@ -4,12 +4,13 @@ import React from 'react'
 import styles from "@component/blog/blog.module.css";
 import Image from 'next/image';
 import getFormattedDate from "@lib/getFormattedDate";
-import { calcAvg, calcLikes, calcHits } from "@lib/ultils";
+import { calcAvg, calcLikes, calcHits, sortInput } from "@lib/ultils";
 import InputDisplay from "@component/blog/InputDisplay";
 import UserCard from "@component/blog/UserCard";
 import { getPageHits } from '@/lib/fetchTypes';
 import BlogRatesLikes from "@component/blog/BlogRatesLikes";
 import { useGeneralContext } from '@context/GeneralContextProvider';
+import { useBlogContext } from '../context/BlogContextProvider';
 
 
 type MainItemType = {
@@ -18,7 +19,16 @@ type MainItemType = {
 }
 export default function BlogItem({ file, getuser }: MainItemType) {
     const { pageHits, setUser, user } = useGeneralContext();
+    const { setInput_s, input_s } = useBlogContext();
     const arrLikeIcon: likeIcon[] | null = file.likes ? calcLikes(file.likes) : null;
+
+    React.useEffect(() => {
+        if (file) {
+            const newOrder = sortInput(file.inputs)
+            setInput_s(newOrder)
+        }
+    }, [file, setInput_s]);
+
     React.useEffect(() => {
         if (getuser) {
             setUser(getuser)
@@ -31,12 +41,18 @@ export default function BlogItem({ file, getuser }: MainItemType) {
             {file && file.imageUrl && <Image src={file.imageUrl} width={600} height={400} alt="www.ablogroom.com" className={styles.fileImage} />}
             <p className="paraCreator">{file.content}</p>
             <div className="flexcol">
-                {file.inputs &&
-                    file.inputs.map((input, index) => (
-                        <React.Fragment key={index}>
-                            <InputDisplay input={input} />
-                        </React.Fragment>
-                    ))
+                {input_s &&
+                    input_s.map((input, index) => {
+                        const check: boolean = input.type ? true : false;
+                        if (check) {
+                            return (
+                                <React.Fragment key={index}>
+                                    <InputDisplay input={input} />
+                                </React.Fragment>
+                            )
+                        }
+
+                    })
                 }
             </div>
             <div className="line-break-sm" />

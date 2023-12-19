@@ -33,6 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 data: {
                     name: input.name,
                     type: input.type,
+                    order: input.order ? input.order : null,
                     content: input.content,
                     s3Key: input.s3Key,
                     fileId: input.fileId,
@@ -64,6 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 data: {
                     id: input.id,
                     name: input.name,
+                    order: input.order ? input.order : null,
                     type: input.type,
                     content: input.content,
                     s3Key: input.s3Key,

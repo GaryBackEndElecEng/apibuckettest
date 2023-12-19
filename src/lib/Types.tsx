@@ -30,6 +30,7 @@ export type sessionType = {
 export type inputType = {
     id?: number,
     name: string,
+    order: number | null,
     content: string,
     type: string,
     url: string | null,
@@ -181,16 +182,16 @@ export type GetServerSidePropsResult<P> =
     | { notFound: true }
 
 export const inputNames: inputType[] = [
-    { type: "image", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "heading", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "subHeading", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "section", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "list", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "link", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "article", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "conclusion", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "reply", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
-    { type: "code", name: "fill", content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "image", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "heading", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "subHeading", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "section", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "list", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "link", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "article", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "conclusion", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "reply", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "code", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
 ]
 export type targetType = {
     loaded: boolean,

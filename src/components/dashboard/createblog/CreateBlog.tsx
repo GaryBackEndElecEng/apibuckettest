@@ -31,7 +31,7 @@ export default function CreateBlog({ getuser, newfile }: creatablogType) {
         if (!newfile) return
         setFile_(newfile);
         toast.success("starting new Blog")
-    }, [user, setFile_, newfile, getuser, setUser]);
+    }, []);
 
 
 

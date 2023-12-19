@@ -6,6 +6,7 @@ import { getErrorMessage } from "@lib/errorBoundaries";
 const base_url = process.env.NEXT_PUBLIC_baseurl;
 
 
+
 type blog_ContextType = {
     setMessage: React.Dispatch<React.SetStateAction<msgType | undefined>>,
     message: msgType | undefined,
@@ -25,7 +26,8 @@ type blog_ContextType = {
     fileLikes: fileLikeType[],
     setFileRates: React.Dispatch<React.SetStateAction<fileRateType[]>>,
     fileRates: fileRateType[],
-
+    setIsOrdered: React.Dispatch<React.SetStateAction<boolean>>,
+    isOrdered: boolean
 
 }
 export const BlogContext = React.createContext<blog_ContextType>({} as blog_ContextType);
@@ -42,11 +44,12 @@ const BlogContextProvider = (props: any) => {
     const [userBlogs, setUserBlogs] = React.useState<fileType[]>([]);
     const [fileRates, setFileRates] = React.useState<fileRateType[]>([]);
     const [fileLikes, setFileLikes] = React.useState<fileLikeType[]>([]);
+    const [isOrdered, setIsOrdered] = React.useState<boolean>(false);
 
 
 
     return (
-        <BlogContext.Provider value={{ blogMsg, setBlogMsg, input, setInput, file_, setFile_, setInput_s, input_s, userBlogs, setUserBlogs, generalMsg, setGeneralMsg, message, setMessage, fileLikes, setFileLikes, fileRates, setFileRates }}>
+        <BlogContext.Provider value={{ blogMsg, setBlogMsg, input, setInput, file_, setFile_, setInput_s, input_s, userBlogs, setUserBlogs, generalMsg, setGeneralMsg, message, setMessage, fileLikes, setFileLikes, fileRates, setFileRates, isOrdered, setIsOrdered }}>
             {props.children}
         </BlogContext.Provider>
     )

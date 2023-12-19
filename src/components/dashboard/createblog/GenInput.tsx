@@ -114,19 +114,19 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
             )
         case "section":
             return (
-                <div className="inputSection" style={{ position: "relative", width: "100%" }}>
+                <section className="section" style={{ position: "relative", width: "100%" }}>
                     {input.name && <h4>
                         {input.name}
                     </h4>}
-                    <section>
+                    <div>
                         <SeparatePara para={input.content} class_={"pSection"} />
-                    </section>
-                </div>
+                    </div>
+                </section>
             )
         case "list":
             return (
 
-                <section className="list" style={{ position: "relative", width: "100%" }}>
+                <section className="list">
                     <ul>{input.name && input.name}
                         <ConvertToList para={input.content} />
                     </ul>
@@ -146,14 +146,14 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
             )
         case "article":
             return (
-                <div className="inputArticle" style={{ position: "relative", width: "100%" }}>
+                <article className="article" style={{ position: "relative", width: "100%" }}>
                     {input.name && <h3>
                         {input.name}
                     </h3>}
                     <section>
                         <SeparatePara para={input.content} class_={"pSection"} />
                     </section>
-                </div>
+                </article>
             )
         case "reply":
 
@@ -175,7 +175,7 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
             )
         case "conclusion":
             return (
-                <section className="inputConclusion" style={{ position: "relative", width: "100%" }}>
+                <section className="conclusion" style={{ position: "relative", width: "100%" }}>
                     {input.name && <h4>
                         {input.name}
                     </h4>}

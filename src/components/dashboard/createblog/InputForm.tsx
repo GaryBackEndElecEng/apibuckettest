@@ -27,14 +27,19 @@ type inputFormType = {
 //-------------THIS IS LOOPED!!-----------------//
 export default function InputForm({ input, setInput, imgLoaded, setImgLoaded, user, setIsSelected }: inputFormType) {
     const { setInput_s, input_s, setBlogMsg } = useBlogContext();
+    const [inputsLen, setInputsLen] = React.useState<number[]>([]);
 
-
+    React.useEffect(() => {
+        if (input_s) {
+            setInputsLen(input_s.map(input => input.order as number));
+        }
+    }, [input_s]);
 
 
     const handleSaveInput = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         //SEND SERVER=> update inputs, then NULLIFY INPUT
-
+        // console.log("Ln:42@inputForm", input_s)
 
         try {
             const res = await fetch("/api/input", {
@@ -71,6 +76,7 @@ export default function InputForm({ input, setInput, imgLoaded, setImgLoaded, us
                 setInput={setInput}
                 setImgLoaded={setImgLoaded}
                 input={input}
+                inputsLen={inputsLen}
 
             />
             <button className={styles.inputFormButton} onClick={(e) => handleSaveInput(e)}>
@@ -86,10 +92,11 @@ type GenFormType = {
     setInput: React.Dispatch<React.SetStateAction<inputType | undefined>>,
     setImgLoaded: React.Dispatch<React.SetStateAction<boolean>>,
     user: userType | null,
-    input: inputType | undefined
+    input: inputType | undefined,
+    inputsLen: number[]
 };
 
-export function GenForm({ setInput, input, setImgLoaded, user }: GenFormType) {
+export function GenForm({ setInput, input, setImgLoaded, user, inputsLen }: GenFormType) {
     const { setBlogMsg, } = useBlogContext();
 
 
@@ -98,19 +105,20 @@ export function GenForm({ setInput, input, setImgLoaded, user }: GenFormType) {
 
         return (
             <>
-                <SecPlusForm input={input} setInput={setInput} />
-                <HeaderPlusForm input={input} setInput={setInput} />
+                <SecPlusForm input={input} setInput={setInput} inputsLen={inputsLen} />
+                <HeaderPlusForm input={input} setInput={setInput} inputsLen={inputsLen} />
                 <ImgForm
                     input={input}
                     setInput={setInput}
                     user={user}
                     setImgLoaded={setImgLoaded}
                     setBlogMsg={setBlogMsg}
+                    inputsLen={inputsLen}
                 />
-                <LinkForm input={input} setInput={setInput} />
-                <ReplyForm input={input} setInput={setInput} />
-                <ListForm input={input} setInput={setInput} />
-                <CodeForm input={input} setInput={setInput} />
+                <LinkForm input={input} setInput={setInput} inputsLen={inputsLen} />
+                <ListForm input={input} setInput={setInput} inputsLen={inputsLen} />
+                <CodeForm input={input} setInput={setInput} inputsLen={inputsLen} />
+                <ReplyForm input={input} setInput={setInput} inputsLen={inputsLen} />
             </>
         )
     }

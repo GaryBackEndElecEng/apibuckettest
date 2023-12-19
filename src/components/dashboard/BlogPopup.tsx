@@ -29,8 +29,7 @@ export default function BlogPopup({ fileId, setShowPopup }: popupType) {
             });
             if (res.ok) {
                 const body: fetchDelType = await res.json();
-                setBlogMsg({ loaded: true, msg: body.message });
-                const reduce_ = userBlogs.filter(file => file.id === fileId);
+                const reduce_ = userBlogs.filter(file => file.id !== fileId);
                 setUserBlogs(reduce_);
                 toast.success(body.message)
 
@@ -39,6 +38,7 @@ export default function BlogPopup({ fileId, setShowPopup }: popupType) {
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@BlogPopup@file@delete`)
+            toast.error("was not deleted")
         }
 
     }

@@ -13,6 +13,7 @@ import { FaTrash } from "react-icons/fa6";
 import { MdEditSquare } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import toast from 'react-hot-toast';
+import { sortInput } from '@/lib/ultils';
 
 type fetchInType = {
     input: inputType,
@@ -41,7 +42,8 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                 const res = await fetch(`/api/input_s?fileId=${fileId}`);
                 const body: fetchInTypes = await res.json()
                 if (res.ok) {
-                    setInput_s(body.inputs);
+                    const sortInputs = sortInput(body.inputs)
+                    setInput_s(sortInputs);
                     setBlogMsg({ loaded: true, msg: body.message })
                     toast.success(`extensions: ${body.message}`)
                 } else if (res.status > 200 && res.status < 500) {
@@ -65,8 +67,9 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
         e.preventDefault();
         //INITIAL INPUT ADDED----------------//
         const inputSelect: inputType | undefined = inputNames.find(select => (select.type === selectType));
-        if (fileId && inputSelect) {
-            const input_type = { ...inputSelect, fileId: fileId }
+        if (fileId && inputSelect && input_s) {
+            const inputLen = input_s ? input_s.length + 1 : 1;
+            const input_type = { ...inputSelect, fileId: fileId, order: inputLen }
 
             if (input_type && input_s) {
 
@@ -140,9 +143,10 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                 {input_s && input_s.map((inputDown, index) => {
                     const check: inputType | undefined = inputNames.find(obj => (obj.type === inputDown.type)) ? inputDown : undefined;
                     if (check) {
+
                         return (
 
-                            <div key={index} className={styles.genInputContainer}>
+                            <div key={inputDown.id} className={styles.genInputContainer}>
                                 {isDeleted.loaded && isDeleted.id === check.id && <GenericMsg setPostMsg={setBlogMsg} postMsg={blogMsg} />}
                                 <div className={styles.editDeleteContainer}>
                                     <IconButton onClick={(e) => handleDelete(e, check.id)}
@@ -167,6 +171,8 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                             </div>
 
                         )
+
+
                     }
 
                 })}

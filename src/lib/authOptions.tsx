@@ -31,8 +31,8 @@ const authOptions: NextAuthOptions = {
         },
         async redirect({ url, baseUrl }) {
             // Allows relative callback URLs: The redirect callback may be invoked more than once in the same flow.
-            if (url.startsWith("/")) return `${baseUrl}${url}`
-            // Allows callback URLs on the same origin
+            if (url.startsWith("/") || url.startsWith("/dashboard")) return `${baseUrl}${url}`
+
             else if (new URL(url).origin === baseUrl) return url
             return baseUrl
         },

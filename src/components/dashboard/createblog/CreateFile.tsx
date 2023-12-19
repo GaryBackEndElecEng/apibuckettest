@@ -11,6 +11,7 @@ import CreateInputs from "@component/dashboard/createblog/CreateInputs";
 import Link from 'next/link';
 import styles from "@component/dashboard/createblog/createablog.module.css"
 import toast from 'react-hot-toast';
+import { joinName } from '@/lib/ultils';
 const url = "https://garyposttestupload.s3.amazonaws.com";
 
 type fetchType = {
@@ -22,10 +23,12 @@ type mainCreateFileType = {
     file: fileType
 }
 export default function CreateFile({ user, file }: mainCreateFileType) {
-    const { setFile_, file_, setBlogMsg, blogMsg, input_s } = useBlogContext();
+    const { setFile_, file_, setBlogMsg, blogMsg, input_s, isOrdered } = useBlogContext();
     const [message, setMessage] = React.useState<msgType>({} as msgType);
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
+
+
 
     const handleFileUpdate = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
@@ -46,7 +49,6 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
             const body: fetchType = await res.json();
             if (res.ok) {
                 setFile_(body.file);
-                setBlogMsg({ loaded: true, msg: body.message });
                 setLoaded(true);
                 toast.success(`blog saved: ${body.message}`)
             }
@@ -67,7 +69,8 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
             const pic = e.target.files[0]
             const formData = new FormData();
             formData.set("file", pic);
-            const Key = `${user.name?.trim()}/${file.id}/${uuidv4()}-${pic.name}`;
+            const joinUser = joinName(user.name as string)
+            const Key = `${joinUser}/${file.id}/${uuidv4()}-${pic.name}`;
             formData.set("Key", Key);
             const res = await fetch("/api/media", { method: "POST", body: formData })
             if (res.ok) {
