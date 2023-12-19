@@ -83,6 +83,7 @@ export default function Register() {
                                 id="password"
                                 type="password"
                                 required
+                                autoComplete="current-password"
                                 minLength={5}
                             />
                             <div>

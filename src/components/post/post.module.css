@@ -365,11 +365,29 @@
   .mainPostItemCard {
     margin: auto;
   }
-  .mainPostItemCard > h2 {
-    font-size: 110%;
+  .cardTitle {
+    background-image: url("/images/colorWorld.png");
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 145%;
     font-weight: bold;
     margin-block: 1.5rem;
     letter-spacing: 0.05em;
+    background-position: 0% 0%;
+    background-size: 200% 200%;
+    animation: moveAbout 10s infinite;
+  }
+  @keyframes moveAbout {
+    from {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 200% 200%;
+    }
+    to {
+      background-position: 0% 0%;
+    }
   }
   .postImage {
     padding-inline: 0.25rem;

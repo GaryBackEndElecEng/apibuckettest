@@ -30,7 +30,7 @@ export default function UserBlog({ blog, user }: { blog: fileType, user: userTyp
                     <Image src={logo} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }} priority />
                 }
                 <p className="TWO">
-                    {blog.content}
+                    {blog.content.slice(0, 75)},,,see detail
                 </p>
 
                 <div className="flex flex-row mx-auto gap-2">

@@ -568,7 +568,7 @@ h1 {
 p {
   line-height: 1.25rem;
   margin-block: 1.25rem;
-  padding-inline: 2rem;
+  padding-inline: 0.5rem;
 }
 p.style {
   background-image: var(--colorWorld);

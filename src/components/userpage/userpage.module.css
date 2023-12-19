@@ -240,7 +240,7 @@
     padding-inline: 0;
   }
   .mainUserHeader {
-    height: 28vh;
+    min-height: 32vh;
   }
   .userHeaderContainer {
     margin-block: 1rem;
@@ -284,6 +284,9 @@
     grid-template-columns: repeat(1, minmax(400px, 1fr));
     gap: 1rem;
   }
+  .mainUserHeader {
+    min-height: 35vh;
+  }
 
   .MainUserCard {
     flex-direction: column;
@@ -299,7 +302,7 @@
     padding-inline: 0;
   }
   .mainUserHeader {
-    height: 38vh;
+    min-height: 38vh;
   }
   .userHeaderContainer {
     margin-inline: 0.25rem;

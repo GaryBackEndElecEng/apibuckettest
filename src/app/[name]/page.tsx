@@ -129,8 +129,8 @@ export async function generateMetadata({ params }: { params: { name: string } },
 
     if (getuser) {
         const image = "/images/logo_512.png";
-
-        const authorFound = (getuser.name) ? { name: NameSep(getuser.name), url: `/${getuser.name}` } : { name: "author", url: "/" };
+        const userImage = (getuser && getuser.image) ? getuser.image : image;
+        const authorFound = (getuser.name) ? { name: newname, url: `/${name}` } : { name: "author", url: "/" };
 
         const postRates: rateType[] = posts.map((post, index) => {
             const postId = post.id ? String(post.id) : "#";
@@ -144,14 +144,16 @@ export async function generateMetadata({ params }: { params: { name: string } },
                 name: post.name,
                 rate: avrate,
                 img: postImg,
-                author: authorFound
+                author: authorFound,
+
             }
         });
         const fileRates: rateType[] = files.map((file, index) => {
             const fileId = file.id ? file.id : "#";
-            const fileImg = file.imageUrl ? file.imageUrl : "#";
+            const fileImg = file.imageUrl ? file.imageUrl : image;
             const reduce = file.rates.reduce((a, b) => (a + b.rate), 0);
-            const avrate = Math.round(reduce / (file.rates.length))
+            const avrate = Math.round(reduce / (file.rates.length));
+            const userImg = (getuser && getuser.image) ? getuser.image : image;
 
             return {
                 id: fileId,
@@ -159,7 +161,8 @@ export async function generateMetadata({ params }: { params: { name: string } },
                 name: file.name,
                 rate: avrate,
                 img: fileImg,
-                author: authorFound
+                author: authorFound,
+
             }
         });
 
@@ -170,6 +173,7 @@ export async function generateMetadata({ params }: { params: { name: string } },
         const prevDesc = (await parent).openGraph?.description;
         const keywords = (await parent).keywords || [];
         const authors = (await parent).authors || [];
+        const referrer = (await parent).referrer;
         const creator: string | null = (await parent).creator;
         const postNames: string[] = postRates.map(rate => (rate.name));
         const fileNames: string[] = fileRates.map(rate => (rate.name));
@@ -192,9 +196,10 @@ export async function generateMetadata({ params }: { params: { name: string } },
             keywords: newKwds,
             authors: newAuths,
             creator: newCreator,
+            referrer: referrer,
 
             openGraph: {
-                images: [image, ...newImages],
+                images: [userImage, ...newImages],
                 description: `${desc}, ${prevDesc}`,
                 url: userUrl,
             },

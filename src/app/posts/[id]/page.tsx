@@ -177,7 +177,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
             referrer,
 
             openGraph: {
-                images: [image, Rate.img, ...previousImages],
+                images: [Rate.img, ...previousImages],
                 url: blogUrl,
                 emails: [user.email, ...emails]
             },

@@ -21,8 +21,8 @@ export default function PostItem({ post, user }: { post: postType, user: userTyp
     }
 
     return (
-        <div className={`${styles.mainPostItemCard}  `} >
-            <h2>{post.name}</h2>
+        <div className={`${styles.mainPostItemCard}`} >
+            <h2 className={styles.cardTitle}>{post.name.toUpperCase()}</h2>
             <div onClick={(e) => handleLink(e)} className={styles.handleLink}>
                 {post.imageUrl &&
 
