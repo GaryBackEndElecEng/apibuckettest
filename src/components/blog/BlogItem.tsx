@@ -39,7 +39,7 @@ export default function BlogItem({ file, getuser }: MainItemType) {
         <div className={styles.card}>
             <h2 className={styles.textStyle}>{file && file.title.toUpperCase()}</h2>
             {file && file.imageUrl && <Image src={file.imageUrl} width={600} height={400} alt="www.ablogroom.com" className={styles.fileImage} />}
-            <p className="paraCreator">{file.content}</p>
+            <p className={styles.paraCreator}>{file.content}</p>
             <div className="flexcol">
                 {input_s &&
                     input_s.map((input, index) => {

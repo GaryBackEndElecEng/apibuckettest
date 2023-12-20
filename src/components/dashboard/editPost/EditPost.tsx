@@ -30,7 +30,7 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
     const { blogLinks, setBlogLinks } = usePostContext()
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [temImage, setTemImage] = React.useState<string | undefined>();
-    const [blogLink, setBlogLink] = React.useState<string>("")
+
 
 
 
@@ -45,7 +45,7 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
 
     React.useEffect(() => {
         if (!getblogLinks) return;
-        setBlogLinks(getblogLinks);
+        setBlogLinks([{ name: "default", fileId: "#", title: "default" }, ...getblogLinks]);
     }, [setBlogLinks, getblogLinks]);
 
 
@@ -88,6 +88,7 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
 
     const handleBlogLinkOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault();
+        console.log(e.target.value)
         if (e) {
 
             if (post) {
@@ -144,6 +145,7 @@ export default function EditPost({ getuser, getpost, getblogLinks }: EditPostTyp
                         <select
                             name="bloglink"
                             onChange={(e) => handleBlogLinkOnChange(e)}
+                            value={(post && post.bloglink) ? post.bloglink : "#"}
                         >
                             {blogLinks && blogLinks.map((blogLn, index) => {
                                 if (blogLn.fileId) {

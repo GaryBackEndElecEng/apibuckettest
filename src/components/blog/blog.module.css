@@ -153,11 +153,30 @@
   aspect-ratio: auto;
   padding-inline: 0px;
 }
+.paraCreator::first-letter {
+  /* font-weight: bold; */
+  color: white;
+  /* font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; */
+  margin-right: 0.25rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+  -webkit-initial-letter: 1.25;
+  initial-letter: 1.25;
+}
+.paraCreator {
+  background: rgba(0, 0, 0, 1);
+  margin-block: 0.5rem;
+  padding-block: 0.5rem;
+  color: white;
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+  line-height: 2rem;
+}
 .fileImage {
   aspect-ratio: 16 / 9;
   width: auto;
   box-shadow: 1px 1px 5px 1px grey;
-  border-radius: 7px 7px 7px 7px;
+  border-radius: 12px 12px 12px 12px;
   margin-inline: 0.5rem;
 }
 .blogGrid {

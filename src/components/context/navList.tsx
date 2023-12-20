@@ -25,6 +25,7 @@ export const navList: navLinkType[] = [
     { id: 3, icon: <RxDashboard style={{ color: "white", fontSize: "100%", borderRadius: "50%", border: "1px solid white", filter: "drop-shadow(1px,1px,5x,white)" }} />, name: "dashboard", image: logo, link: "/dashboard", desc: "dashboard" },
     { id: 4, icon: <SiGnuprivacyguard style={{ color: "white", fontSize: "100%", borderRadius: "50%", border: "1px solid white", filter: "drop-shadow(1px,1px,5x,white)" }} />, name: "register", image: logo, link: "/register", desc: "dashboard" },
     { id: 5, icon: <SiGnuprivacyguard style={{ color: "white", fontSize: "100%", borderRadius: "50%", border: "1px solid white", filter: "drop-shadow(1px,1px,5x,white)" }} />, name: "signup", image: logo, link: "/api/auth/signin", desc: "dashboard" },
+    { id: 6, icon: <SiGnuprivacyguard style={{ color: "white", fontSize: "100%", borderRadius: "50%", border: "1px solid white", filter: "drop-shadow(1px,1px,5x,white)" }} />, name: "privacy", image: logo, link: "/privacy", desc: "privacy" },
 
 ]
 export const navList2: navLinkType[] = [
