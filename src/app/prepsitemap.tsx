@@ -1,6 +1,7 @@
 import { navList } from "@context/navList";
 import { MetadataRoute } from 'next';
 import { PrismaClient } from "@prisma/client";
+import { joinName } from "@/lib/ultils";
 
 const prisma = new PrismaClient();
 
@@ -29,13 +30,20 @@ export async function getFileUrls() {
     const files = await prisma.file.findMany();
     return files?.map(file => ({ url: `/blogs/${file.id}` }))
 }
+export async function getUsers() {
+    const users = await prisma.user.findMany();
+    return users?.map(user => ({ url: `/${joinName(user.name as string)}` }))
+}
 export async function combined() {
     let arr: { url: string }[] = [];
     const posts = await getPostUrls();
     const files = await getFileUrls();
+    const users = await getUsers();
     const navlinks = navList.map(nav => ({ url: nav.link }));
     arr = navlinks;
     arr = arr.concat(posts);
     arr = arr.concat(files);
+    arr = arr.concat(users);
     return arr
 }
+

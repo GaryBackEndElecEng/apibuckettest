@@ -48,7 +48,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/dashboard"
+    "src/app/dashboard",
+    "src/app/removeAccount"
   ],
   "exclude": [
     "node_modules"

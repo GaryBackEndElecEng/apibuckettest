@@ -41,13 +41,21 @@ export const dynamic = "force-dynamic"
 export default async function Userpage({ params }: { params: { name: string } }) {
     const { name } = params;
     const newName = separateName(name);
-    const user: userType | undefined = await getUser(newName) as userType
-    if (user) {
-        return (
-            <div className={styles.pageContainer}>
-                <MainUserPage user={user} />
-            </div>
-        )
+    const users = await getUsers();
+    const isUser = users.find(user => (user.name === newName));
+    const check: boolean = isUser ? true : false;
+    if (check) {
+        const user: userType | undefined = await getUser(newName) as userType
+
+        if (user && user.email) {
+            return (
+                <div className={styles.pageContainer}>
+                    <MainUserPage user={user} />
+                </div>
+            )
+        } else {
+            notFound()
+        }
     } else {
         notFound()
     }
@@ -122,12 +130,15 @@ type rateType = {
 export async function generateMetadata({ params }: { params: { name: string } }, parent: ResolvingMetadata): Promise<Metadata | undefined> {
     const { name } = params;
     const newname = separateName(name)
-    const getuser: userType = await getUser(newname) as unknown as userType;
+    const users = await getUsers();
+    const isUser = users.find(user => (user.name === newname));
+    const check: boolean = isUser ? true : false;
 
-    const posts: postType[] = getuser.posts;
-    const files: fileType[] = getuser.files;
+    if (check) {
+        const getuser: userType = await getUser(newname) as unknown as userType;
 
-    if (getuser) {
+        const posts: postType[] = getuser.posts;
+        const files: fileType[] = getuser.files;
         const image = "/images/logo_512.png";
         const userImage = (getuser && getuser.image) ? getuser.image : image;
         const authorFound = (getuser.name) ? { name: newname, url: `/${name}` } : { name: "author", url: "/" };

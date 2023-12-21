@@ -1,4 +1,5 @@
-export const arr = [
+import { termsofServiceType } from "@lib/Types";
+export const arr: { id: number, name: string }[] = [
     {
         id: 1,
         name: "Information disclosure of personal information means information about an identifiable individual that is recorded in any form will be restricted in that"
@@ -49,22 +50,10 @@ export const arr = [
     },
     {
         id: 13,
-        name: "(a) for the purpose for which the information was obtained or compiled by the company or for a use consistent with that purpose; (b) for any purpose in accordance with any Act of Parliament or any regulation made there under that authorizes its disclosure;"
+        name: "(a) for the purpose for which the information was obtained or compiled by the company or for a use consistent with that purpose; (b) for any purpose in accordance with any Act of Parliament or any regulation made there under that authorizes its disclosure; (c) for the purpose of complying with a subpoena or warrant issued or order made by a court, person or body with jurisdiction to compel the production of information or for the purpose of complying with rules of court relating to the production of information;(d) to the Attorney General of Canada for use in legal proceedings involving the Crown in right of Canada or the Government of Canada; (e) to an investigative body specified in the regulations, on the written request of the body, for the purpose of enforcing any law of Canada or a province or carrying out a lawful investigation, if the request specifies the purpose and describes the information to be disclosed;(f) under an agreement or arrangement between the Government of Canada and company or carrying out a lawful investigation; (g) to a member of Parliament for the purpose of assisting the individual to whom the information relates in resolving a problem;"
     },
     {
         id: 14,
-        name: "(c) for the purpose of complying with a subpoena or warrant issued or order made by a court, person or body with jurisdiction to compel the production of information or for the purpose of complying with rules of court relating to the production of information;"
-    },
-    {
-        id: 15,
-        name: "(d) to the Attorney General of Canada for use in legal proceedings involving the Crown in right of Canada or the Government of Canada; (e) to an investigative body specified in the regulations, on the written request of the body, for the purpose of enforcing any law of Canada or a province or carrying out a lawful investigation, if the request specifies the purpose and describes the information to be disclosed;"
-    },
-    {
-        id: 16,
-        name: "(f) under an agreement or arrangement between the Government of Canada and company or carrying out a lawful investigation; (g) to a member of Parliament for the purpose of assisting the individual to whom the information relates in resolving a problem;"
-    },
-    {
-        id: 17,
         name: "(h) to officers or employees of the company for internal audit purposes, or to the office of the Comptroller General or any other person or body specified in the regulations for audit purposes; (i) to the Library and Archives of Canada for archival purposes; "
     },
     {
@@ -77,11 +66,60 @@ export const arr = [
     },
     {
         id: 20,
-        name: "(l) to any government institution for the purpose of locating an individual in order to collect a debt owing to Her Majesty in right of Canada by that individual or make a payment owing to that individual by Her Majesty in right of Canada; and (m) for any purpose where, in the opinion of the head of the institution, (i) the public interest in disclosure clearly outweighs any invasion of privacy that could result from the disclosure, or "
+        name: "(l) to any government institution for the purpose of locating an individual in order to collect a debt owing to Her Majesty in right of Canada by that individual or make a payment owing to that individual by Her Majesty in right of Canada; and (m) for any purpose where, in the opinion of the head of the institution, (i) the public interest in disclosure clearly outweighs any invasion of privacy that could result from the disclosure, or disclosure would clearly benefit the individual to whom the information relates. USER DELETION INSTRUCTIONS: The user can at any time send an email through our contact page requesting their information to be deleted and or can delete their information through their account. "
+    },
+
+
+]
+export const arrayService = [
+    {
+        id: 0,
+        name: "User guidelines (rules, restrictions on use)",
+        content: {
+            points: [
+                {
+                    point: " We allow all visitors to see published posts and blogs. "
+
+                },
+                {
+                    point: "  if posts or blogs are not published ( boolean), then the blog and or Post will not  be disclosed to the public. "
+
+                },
+                {
+                    point: "  We allow proper conduct of communication and DO NOT allow improper communication conduct consisting with improper verbige. "
+
+                },
+            ]
+        }
     },
     {
-        id: 21,
-        name: "(ii) disclosure would clearly benefit the individual to whom the information relates. USER DELETION INSTRUCTIONS: The user can at any time send an email through our contact page requesting their information to be deleted and or can delete their information through their account."
-    }
-
+        id: 0,
+        name: "Your right to terminate abusive accounts.",
+        content: ""
+    },
+    {
+        id: 0,
+        name: "How users can terminate accounts.",
+        content: ""
+    },
+    {
+        id: 0,
+        name: "Warranty disclaimer.",
+        content: ""
+    },
+    {
+        id: 0,
+        name: "Limitation of liability",
+        content: ""
+    },
+    {
+        id: 0,
+        name: "Governing law and legal disputes",
+        content: ""
+    },
+    {
+        id: 0,
+        name: "Contact information.",
+        content: ""
+    },
 ]

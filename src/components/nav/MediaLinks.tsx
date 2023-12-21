@@ -33,7 +33,8 @@ export default function MediaLinks() {
         try {
             const { data } = await axios.get("/api/geninfo");
             const body: generalInfoType[] = data
-            setGenInfos(body);
+            const links = body.filter(info => (info.category === "link"));
+            setGenInfos(links);
         } catch (error) {
             console.error(`${getErrorMessage(error)}@geninfo`)
         }

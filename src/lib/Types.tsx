@@ -197,3 +197,13 @@ export type targetType = {
     loaded: boolean,
     id: number | null
 }
+
+export type termsofServiceType = {
+    id: number,
+    name: string,
+    content: {
+        points: [
+            { point: string; }
+        ]
+    }
+}

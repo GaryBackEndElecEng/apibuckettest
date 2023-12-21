@@ -261,6 +261,9 @@
   font-size: 150%;
   font-weight: bold;
 }
+.userCard > p {
+  padding-inline: 1rem;
+}
 .profileImage {
   border-radius: 50%;
   filter: drop-shadow(1px 1px 7px white);
@@ -330,8 +333,8 @@
     padding-block: 0.5rem;
   }
   .homeUserGrid {
-    grid-template-columns: repeat(1, minmax(550px, 1fr));
-    grid-template-rows: minmax(200px, 35vh);
+    grid-template-columns: repeat(1, minmax(380px, 1fr));
+    grid-template-rows: min-content;
     gap: 1rem;
   }
   .p_grid {
@@ -344,11 +347,6 @@
   }
 }
 @media screen and (max-width: 480px) {
-  .homeUserGrid {
-    grid-template-columns: repeat(1, minmax(350px, 1fr));
-    grid-auto-flow: dense;
-    gap: 1rem;
-  }
   .p_grid {
     flex-direction: column;
   }
@@ -366,6 +364,9 @@
   }
 }
 @media screen and (max-width: 400px) {
+  .homeUserGrid {
+    grid-template-columns: repeat(1, minmax(360px, 1fr));
+  }
   .finalMsg {
     gap: 0.25rem;
     inset: 30% auto 0% auto;
