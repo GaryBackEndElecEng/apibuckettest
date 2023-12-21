@@ -168,9 +168,10 @@
   margin-block: 0.5rem;
   padding-block: 0.5rem;
   color: white;
-  padding-inline: 1.5rem;
+  padding-inline: 1rem;
   padding-block: 1rem;
   line-height: 2rem;
+  font-size: 110%;
 }
 .fileImage {
   aspect-ratio: 16 / 9;
@@ -377,6 +378,9 @@
     width: 100%;
     padding-inline: 0.5rem;
     position: relative;
+  }
+  .paraCreator {
+    padding-inline: 0.15rem;
   }
   .blogCard {
     align-self: stretch;

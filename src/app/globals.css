@@ -88,6 +88,12 @@ div.link > h3 {
     padding: 0.5rem;
     font-size: 150%;
   }
+  section.section p,
+  article.article p,
+  section.conclusion p {
+    padding-inline: 0.25rem;
+    font-size: 110%;
+  }
 }
 @media screen and (max-width: 480px) {
   .mainHeaderTrue {
