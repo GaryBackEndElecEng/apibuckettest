@@ -3,9 +3,9 @@ import React from 'react'
 import { introArr } from "@component/home/homeExtra";
 import styles from "./home.module.css";
 import { usePathname } from "next/navigation";
-import { useOnScroll } from "@lib/ultils";
 import GridOneTwo from "./GridOneTwo";
 import RequestInfo from "./RequestInfo";
+
 
 type lineType = {
     id: number,
@@ -18,7 +18,7 @@ type lineType = {
 }
 
 export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
-    const isScroll = useOnScroll();
+
     const pathname = usePathname();
     const url = "/images/bgWave.png";
     const picGridOne = "/images/gridOneTwo1.png"
@@ -54,7 +54,6 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
                     <RequestInfo
                         setShow={setShow}
                         show={show}
-                        isScroll={isScroll}
                         setShow1={setShow1}
                         show1={show1}
                         setTurnOn={setTurnOn}
@@ -65,11 +64,15 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
 
 
             <div className="flex flex-col mx-auto py-2">
-                {!isScroll &&
-                    <button className="rounded-full px-3 py-1 bg-slate-700 text-white shadow shadow-slate-200" onClick={(e) => handleTurnOn(e)}>
-                        info
-                    </button>
+
+                {turnOn ? (<button className="rounded-full px-3 py-1 bg-slate-700 text-white shadow shadow-slate-200" onClick={(e) => handleTurnOn(e)}>
+                    close info
+                </button>) :
+                    (<button className="rounded-full px-3 py-1 bg-slate-700 text-white shadow shadow-slate-200" onClick={(e) => handleTurnOn(e)}>
+                        see info
+                    </button>)
                 }
+
             </div>
 
         </div>

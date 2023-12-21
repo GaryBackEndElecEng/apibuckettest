@@ -23,9 +23,15 @@ export default function UserCard({ user }: { user: userType }) {
 
 
                         {user.image ?
-                            <Image src={user.image} alt={user.name ? user.name : "www.ablogroom.com"} width={75} height={75} />
+                            <Image src={user.image} alt={user.name ? user.name : "www.ablogroom.com"} width={75} height={75}
+                                placeholder="blur"
+                                blurDataURL={user.image}
+                            />
                             :
-                            <Image src={url} alt={"www.ablogroom.com"} width={75} height={75} />
+                            <Image src={url} alt={"www.ablogroom.com"} width={75} height={75}
+                                placeholder="blur"
+                                blurDataURL={url}
+                            />
                         }
                     </div>
                     <div>

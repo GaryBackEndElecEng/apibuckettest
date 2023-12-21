@@ -18,24 +18,19 @@ type mainRequestType = {
     show: boolean,
     setShow1: React.Dispatch<React.SetStateAction<boolean>>,
     show1: boolean,
-    isScroll: boolean,
     setTurnOn: React.Dispatch<React.SetStateAction<boolean>>,
     turnOn: boolean,
 }
 
-export default function RequestInfo({ isScroll, setShow, show, setShow1, show1, turnOn, setTurnOn }: mainRequestType) {
+export default function RequestInfo({ setShow, show, setShow1, show1, turnOn, setTurnOn }: mainRequestType) {
     const [count, setCount] = React.useState<number>(0);
     const [line, setLine] = React.useState<lineType>({ id: 0, phr: "", phr1: "", phr2: "", phr3: "", phr4: "", phr5: "" });
     React.useEffect(() => {
-        if (isScroll) {
-            setTurnOn(false);
-            setShow1(true);
-        }
         if (turnOn) {
             setShow1(false);
             setCount(0);
         }
-    }, [setCount, turnOn, setShow1, isScroll, setTurnOn])
+    }, [setCount, turnOn, setShow1, setTurnOn])
 
 
     React.useEffect(() => {
@@ -78,7 +73,7 @@ export default function RequestInfo({ isScroll, setShow, show, setShow1, show1, 
                     })
                 }
             </p>
-            {(isScroll || show1 || !turnOn) &&
+            {(show1 || !turnOn) &&
                 <div className={styles.helpYou}>
                     <p> Helping you helps us,,,</p>
                     <h3> ablogroom.com</h3>

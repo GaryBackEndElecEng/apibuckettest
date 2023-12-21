@@ -31,10 +31,14 @@ export default function UserHeader() {
                         {(user.image && user.imgKey) ?
                             <Image src={user.image} alt={user.name ? user.name : "www.ablogroom.com"} width={75} height={75}
                                 className={`${styles.profileImage}`}
+                                placeholder="blur"
+                                blurDataURL={user.image}
                             />
                             :
                             <Image src={url} alt={"www.ablogroom.com"} width={75} height={75}
                                 className={`${styles.profileImageDefault}`}
+                                placeholder="blur"
+                                blurDataURL={url}
                             />
                         }
                     </div>

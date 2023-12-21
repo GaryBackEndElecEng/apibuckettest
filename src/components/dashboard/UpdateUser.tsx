@@ -11,6 +11,7 @@ import styles from '@component/dashboard/dashboard.module.css';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import Message from "./Message";
 import toast from 'react-hot-toast';
+import { SeparateParaBio } from "@lib/ultils";
 
 type fetchUserType = {
     user: userType,
@@ -85,6 +86,7 @@ export default function UpdateUser({ user }: { user: userType | null }) {
             [e.target.name]: e.target.value
         })
     }
+    const paraclass = "text-md px-2 my-2 text-white"
     return (
         <div className={styles.userUpDatemain}>
             {user &&
@@ -195,6 +197,8 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                             <React.Fragment>
                                 <div className="text-center text-xl mb-2">{user.name}</div>
                                 <h3 className="text-xl px-1 py-1 underline underline-offest-8 ">Who am I</h3>
+
+
                                 <p className="text-md px-2 my-2 text-white">
                                     {user.image && user.imgKey ?
                                         <Image src={user.image}
@@ -202,6 +206,8 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                             height={125}
                                             className={styles.userImage}
                                             alt="www"
+                                            placeholder="blur"
+                                            blurDataURL={user.image}
                                         />
                                         :
                                         <Image src={logo}
@@ -209,6 +215,8 @@ export default function UpdateUser({ user }: { user: userType | null }) {
                                             height={125}
                                             className={styles.userImage}
                                             alt="www"
+                                            placeholder="blur"
+                                            blurDataURL={logo}
                                         />
                                     }
                                     {user.bio}

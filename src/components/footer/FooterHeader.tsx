@@ -1,6 +1,5 @@
 "use client";
 import React from 'react';
-import Image from "next/image";
 import styles from "./footer.module.css";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";

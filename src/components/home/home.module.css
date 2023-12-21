@@ -12,7 +12,6 @@
   z-index: -1;
   margin-block: 0;
   padding: 1rem;
-  padding-inline: 2rem;
   background-size: 100% 100%;
   background-position: 50% 50%;
   min-height: 30vh;
@@ -27,6 +26,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-flow: row;
+  grid-template-rows: max-content;
   width: 100%;
   gap: 2rem;
   position: relative;
@@ -93,8 +93,9 @@
   height: 100%;
   display: flex;
   align-items: center;
+  gap: 1rem;
   justify-content: space-around;
-  padding-inline: 3rem;
+  padding-inline: 1rem;
 }
 .insideGridOneImg > img {
   width: 200px;
@@ -283,7 +284,6 @@
   .homeGrid,
   .finalMsg {
     grid-template-columns: repeat(2, minmax(300px, 1fr));
-    grid-template-rows: minmax(200px, 32vh);
     gap: 2rem;
   }
   .insideGridOne {
@@ -316,12 +316,13 @@
   }
   .homeHeader {
     width: 100%;
-    height: 70vh;
+    height: auto;
   }
   .homeGrid,
   .finalMsg {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(200px, 35vh);
+    grid-template-rows: max-content;
+    grid-auto-rows: auto;
     gap: 0.5rem;
   }
   .gridOneTwo,
@@ -345,6 +346,10 @@
   .finalMsg {
     gap: 0.25rem;
   }
+  .insideGridOneImg {
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 @media screen and (max-width: 480px) {
   .p_grid {
@@ -356,10 +361,9 @@
   }
   .homeHeader {
     width: 100%;
-    height: 75vh;
+    height: auto;
   }
   .homeGrid {
-    grid-template-rows: minmax(200px, 43vh);
     gap: 1.25rem;
   }
 }
@@ -371,11 +375,9 @@
     gap: 0.25rem;
     inset: 30% auto 0% auto;
   }
-  .homeGrid {
-    grid-template-rows: minmax(px, 450px);
-  }
+
   .homeHeader {
     width: 100%;
-    height: 83vh;
+    height: auto;
   }
 }

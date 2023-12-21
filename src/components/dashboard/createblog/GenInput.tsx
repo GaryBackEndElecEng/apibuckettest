@@ -71,6 +71,8 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                             <div className="flexcol">
                                 <Image src={input.url} width={900} height={600} alt={input.name}
                                     className="inputImage"
+                                    placeholder="blur"
+                                    blurDataURL={input.url}
                                     style={{ width: "auto" }}
                                 />
                                 <small>{input.content}</small>

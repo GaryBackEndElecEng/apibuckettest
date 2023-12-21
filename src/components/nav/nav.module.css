@@ -64,20 +64,20 @@
   position: relative;
   transition: all 0.75s ease-in-out;
 }
-.navlist > a:hover {
+.navlist > div:hover {
   background: hsl(0, 0%, 0%);
   box-shadow: 1px 1px 7px 3px black;
   transition: 0.75s ease-in-out;
 }
-.navlist > a:hover::before {
+.navlist > div:hover::before {
   display: block;
   position: absolute;
   content: attr(data-desc);
-  inset: 115% 0% 115% 0%;
-  width: 110%;
+  inset: 115% -20% -145% -20%;
+  /* width: 110%; */
+  height: max-content;
   background-color: black;
-  min-height: 20vh;
-  border: 1px solid white;
+
   z-index: 2;
   padding: 0.5rem;
   border-radius: 20px 20px 20px 20px;
@@ -197,7 +197,8 @@
   align-items: center;
   animation: none;
 }
-.subLoading {
+.subLoading,
+.signedIn {
   position: absolute;
   margin-inline: 0.25rem;
   display: flex;
@@ -206,6 +207,41 @@
   flex-direction: column;
   align-items: center;
   font-size: 80%;
+  position: relative;
+}
+.subLoading > a::before {
+  display: none;
+}
+.subLoading > a:hover::before {
+  display: flex;
+  flex-wrap: wrap;
+  content: attr(data-link);
+  position: absolute;
+  inset: 0% -20% -30% -20%;
+  text-align: center;
+  padding: 2px;
+  transform: translateX(-100%);
+  animation: slideOut 0.75s ease-in-out;
+  background: white;
+  color: black;
+  border-radius: 10px;
+}
+@keyframes slideOut {
+  from {
+    background: transparent;
+    transform: translateX(0%);
+    opacity: 0.2;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 1;
+    background: white;
+  }
+}
+.signedIn {
+  background: black;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 1px 1px 4px 1px black;
 }
 .btnSmall {
   margin: auto;
@@ -344,6 +380,13 @@
   .loading,
   .notLoading {
     top: 1rem;
+    transition: none;
+  }
+  .notLoading:hover::before,
+  .notLoading::before {
+    background: transparent;
+    animation: none;
+    transition: none;
   }
   .subLoading {
     position: absolute;

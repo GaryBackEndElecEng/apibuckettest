@@ -21,11 +21,15 @@ export default function Post({ post, user }: { post: postType, user: userType | 
                     <Image src={post.imageUrl} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }}
                         className={styles.postImage}
                         priority
+                        placeholder="blur"
+                        blurDataURL={post.imageUrl}
                     />
                     :
                     <Image src={logo} width={320} height={200} alt="www.ablogroom.com" style={{ width: "auto" }}
                         className={styles.postImage}
                         priority
+                        placeholder="blur"
+                        blurDataURL={logo}
                     />
                 }
                 <p className="my-2 leading-8 w-full mx-2">

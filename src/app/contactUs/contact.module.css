@@ -3,6 +3,7 @@
   display: grid;
   place-items: center;
   margin: 1rem;
+  z-index: -1;
   margin-block: 2rem;
   position: relative;
   box-shadow: 1px 1px 10px 2px black;

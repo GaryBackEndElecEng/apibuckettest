@@ -26,7 +26,7 @@
 .mainHeaderTrue {
   margin-inline: 2px;
   padding-inline: 1px;
-  height: 20vh;
+  height: 10vh;
   width: 100vw;
   background-image: var(--logoUrl);
   margin-bottom: 2rem;
@@ -34,6 +34,7 @@
   background-size: 100% 100%;
   filter: grayscale(80);
   position: relative;
+  margin: 0;
 }
 div.link {
   display: flex;

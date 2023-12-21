@@ -197,13 +197,13 @@
     order: 3;
   }
   .genContactContainer {
-    top: -200%;
+    top: -400%;
     right: 9.5rem;
   }
 }
 @media screen and (max-width: 480px) {
   .privacyService {
-    transform: translateY(-340%);
+    transform: translateY(-390%);
   }
   .masterFooterHeader {
     background-position: 10% 10%;
@@ -227,7 +227,7 @@
     order: 3;
   }
   .genContactContainer {
-    top: -150%;
+    top: -200%;
     right: 1rem;
   }
 }

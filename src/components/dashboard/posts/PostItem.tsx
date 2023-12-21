@@ -59,7 +59,10 @@ export default function PostItem({ post }: postItemType) {
                         <RiDeleteBin3Fill />
                     </IconButton>
                     <h2>{post.name}</h2>
-                    {post.imageUrl && <Image src={post.imageUrl} width={600} height={400} alt={post.name} priority />}
+                    {post.imageUrl && <Image src={post.imageUrl} width={600} height={400} alt={post.name} priority
+                        placeholder="blur"
+                        blurDataURL={post.imageUrl}
+                    />}
                     <p>{post.content}</p>
 
                     <button className={styles.btnPostItem} onClick={(e) => handleRout(e, post)}>edit</button>

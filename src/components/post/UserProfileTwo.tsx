@@ -19,10 +19,14 @@ export default function UserProfile({ user }: { user: userType | undefined }) {
                 <p>
                     {user.image ?
                         <Image src={user.image} width={75} height={75} alt="www.ablogroom.com" priority
+                            placeholder="blur"
+                            blurDataURL={user.image}
                             className={styles.profileImage}
                         />
                         :
                         <Image src={logo} width={75} height={75} alt="www.ablogroom.com"
+                            placeholder="blur"
+                            blurDataURL={logo}
                             className={styles.profileImage}
                         />
                     }

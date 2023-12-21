@@ -30,9 +30,9 @@ export default function DropDownTrigger() {
     }, [data]);
 
     return (
-        <div className={isLoading ? styles.loading : styles.notLoading}>
+        <main className={isLoading ? styles.loading : styles.notLoading}>
             {check ?
-                <div className={styles.subLoading}>
+                <div className={styles.isSignedIn}>
                     <small>{name && name}</small>
 
                     <button className={styles.btnSmall}
@@ -41,20 +41,20 @@ export default function DropDownTrigger() {
 
                 </div>
                 :
-                <div className={styles.subLoading}>
-                    <Link href={"/api/auth/signin"}>
+                <div className={styles.subLoading} >
+                    <Link href={"/api/auth/signin"} data-link={" sign up with a provider"}>
                         <button className={styles.btnSmall}>
                             <SiGnuprivacyguard sx={{ backround: "black", color: "white", mr: "2px" }} />
                             signup</button>
                     </Link>
-                    <Link href={"/register"}>
-                        <button className={styles.btnSmall}>
+                    <Link href={"/register"} data-link={"sign up using name and pswd."}>
+                        <button className={styles.btnSmall} >
                             <SiGnuprivacyguard sx={{ backround: "black", color: "white", mr: "2px" }} />
                             register</button>
                     </Link>
 
                 </div>
             }
-        </div>
+        </main>
     )
 }

@@ -37,7 +37,10 @@ export default function BlogDetail({ file, getuser }: MainItemType) {
         <div className={`${styles.detailContainer} `}>
             <div className={styles.card}>
                 <h2 className="text-style">{file_ ? file_.title.toUpperCase() : file.title.toUpperCase()}</h2>
-                {file_ && file_.imageUrl && <Image src={file_.imageUrl} width={600} height={400} alt="www.ablogroom.com" className="fileImage" />}
+                {file_ && file_.imageUrl && <Image src={file_.imageUrl} width={600} height={400} alt="www.ablogroom.com" className="fileImage"
+                    placeholder="blur"
+                    blurDataURL={file && file.imageUrl as string}
+                />}
                 <p className="paraCreator">{file_ ? file_.content : file.content}</p>
                 <div className="flexcol">
                     {input_s &&

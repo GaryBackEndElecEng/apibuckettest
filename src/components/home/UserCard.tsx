@@ -25,7 +25,10 @@ export default function UserCard({ user }: { user: userType }) {
                     <h3 className={ephesis.className}>{user.name && separateName(user.name)}</h3>
                     <p style={{ color: "white", background: "black" }}>
 
-                        {user.name && image && <Image src={image} width={75} height={75} alt={user.name} className={styles.profileImage} />}
+                        {user.name && image && <Image src={image} width={75} height={75} alt={user.name} className={styles.profileImage}
+                            placeholder="blur"
+                            blurDataURL={image}
+                        />}
                         {user.bio}
                     </p>
 

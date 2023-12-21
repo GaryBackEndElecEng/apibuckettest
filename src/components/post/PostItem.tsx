@@ -30,6 +30,8 @@ export default function PostItem({ post, user }: { post: postType, user: userTyp
                         alt={post.name}
                         className={styles.postImage}
                         priority
+                        placeholder="blur"
+                        blurDataURL={post.imageUrl}
                         onClick={(e) => handleLink(e)}
                     />
 

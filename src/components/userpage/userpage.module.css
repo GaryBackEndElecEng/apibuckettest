@@ -17,7 +17,7 @@
   place-items: center;
 }
 .mainUserHeader {
-  height: 26vh;
+  min-height: 26vh;
   z-index: -1;
   width: 100%;
   color: white;
@@ -240,7 +240,8 @@
     padding-inline: 0;
   }
   .mainUserHeader {
-    min-height: 32vh;
+    height: auto;
+    padding-inline: 1rem;
   }
   .userHeaderContainer {
     margin-block: 1rem;
@@ -284,9 +285,6 @@
     grid-template-columns: repeat(1, minmax(400px, 1fr));
     gap: 1rem;
   }
-  .mainUserHeader {
-    min-height: 35vh;
-  }
 
   .MainUserCard {
     flex-direction: column;
@@ -301,9 +299,7 @@
     margin-inline: 0;
     padding-inline: 0;
   }
-  .mainUserHeader {
-    min-height: 38vh;
-  }
+
   .userHeaderContainer {
     margin-inline: 0.25rem;
   }

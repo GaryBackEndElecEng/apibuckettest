@@ -19,7 +19,12 @@ export default function BlogCard({ file }: { file: fileType }) {
         <div className={styles.mainPostcard} onClick={(e) => handleRoute(e)}>
             <div >
                 <h2 style={{ color: "white" }}>{file.title}</h2>
-                {file && file.imageUrl && <Image src={file.imageUrl} alt={file.name} width={375} height={375} />}
+                {file && file.imageUrl &&
+                    <Image src={file.imageUrl} alt={file.name} width={375} height={375}
+                        placeholder="blur"
+                        blurDataURL={file.imageUrl}
+                    />
+                }
             </div>
             <p>{file.content.slice(0, 75)}...</p>
             <div className="flexrow">

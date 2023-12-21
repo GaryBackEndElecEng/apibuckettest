@@ -86,7 +86,10 @@ export default function SubNav() {
 
     return (
         <main className={`${styles.navMain}`} onMouseLeave={(e) => handleMouse(e)}>
-            <Image src={logo} width={50} height={50} alt="www.ablogroom.com" onClick={(e) => handleShow(e)} priority />
+            <Image src={logo} width={50} height={50} alt="www.ablogroom.com" onClick={(e) => handleShow(e)} priority
+                placeholder="blur"
+                blurDataURL={logo}
+            />
             <MediaLinks />
             <div className={styles.subNav}>
 

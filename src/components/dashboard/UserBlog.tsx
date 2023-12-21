@@ -25,9 +25,15 @@ export default function UserBlog({ blog, user }: { blog: fileType, user: userTyp
             <Link href={`/blogs/${blog.id}`} className="blogsLink flexcol">
                 <h3 className="text-center text-2xl mb-3">{blog.title.toUpperCase()}</h3>
                 {blog.imageUrl ?
-                    <Image src={blog.imageUrl} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }} priority />
+                    <Image src={blog.imageUrl} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }} priority
+                        placeholder="blur"
+                        blurDataURL={blog.imageUrl}
+                    />
                     :
-                    <Image src={logo} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }} priority />
+                    <Image src={logo} width={350} height={200} alt="www.ablogroom.com" style={{ width: "auto" }} priority
+                        placeholder="blur"
+                        blurDataURL={logo}
+                    />
                 }
                 <p className="TWO">
                     {blog.content.slice(0, 75)},,,see detail

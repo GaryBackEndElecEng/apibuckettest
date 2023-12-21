@@ -24,6 +24,8 @@ export default function GBImage() {
                 alt={"www.garymasterconnect.com"}
                 width={widthHeight}
                 height={widthHeight}
+                placeholder="blur"
+                blurDataURL={GB}
             />
         </div>
     )

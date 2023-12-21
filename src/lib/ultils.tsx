@@ -4,6 +4,8 @@ import React from "react";
 import { useGeneralContext } from "@/components/context/GeneralContextProvider";
 import { getErrorMessage } from "./errorBoundaries";
 import toast from "react-hot-toast";
+import Image from "next/image";
+import styles from "@dashboard/dashboard.module.css";
 
 
 
@@ -73,7 +75,7 @@ export function calcfileHits(pageHits: pageHitType[], file: fileType): number {
 export function ConvertToList({ para }: { para: string }) {
     // searchList
 
-    const numLis: RegExp = /[0-9]+./gm; //This matches 1.),2.),,etc
+    const numLis: RegExp = /([0-9]+.)\)/gm; //This matches 1.),2.),,etc
     const hyphen: RegExp = /-/gm; //matches "-"
     const endHyphen: RegExp = /;/gm; //matches ";"
     const colon: RegExp = /:/gm;
@@ -81,10 +83,9 @@ export function ConvertToList({ para }: { para: string }) {
     const nextLine: RegExp = /\n/gm; //matches "return"
     const searchList = [
         { name: "hyphen", match: hyphen, repl: `<li>` },
-        { name: "num", match: numLis, repl: `<li> ` },
         { name: "endHyphen", match: endHyphen, repl: "</li>" },
         { name: "endHyphen", match: nextLine, repl: "</li>" },
-        // { name: "end", match: end, repl: "</li>" },
+        { name: "numList", match: numLis, repl: `<li>$&` },
         { name: "colon", match: colon, repl: `<span style="color:red">: </span> </br>` },
     ]
     let para2: string = "";
@@ -110,6 +111,37 @@ export function SeparatePara({ para, class_ }: { para: string, class_: string })
             return (
                 <p className={`paraCreator ${class_}`} key={index}>{pg}</p>
             )
+        });
+    }
+    return retArr
+}
+export function SeparateParaBio({ para, class_, image, classImg }: { para: string, class_: string, image: string, classImg: string }) {
+    const logo = "/images/gb_logo.png";
+    const img = image ? image : logo;
+    const arr = para.split("\n");
+    var retArr: React.JSX.Element[] = []
+    if (arr) {
+        retArr = arr.map((pg: string, index) => {
+            if (index === 0) {
+                return (
+                    <p className={`${class_}`} key={index}>
+                        <Image
+                            src={img}
+                            placeholder={"blur"}
+                            alt={`${img}`}
+                            blurDataURL={img}
+                            width={125}
+                            height={125}
+                            className={classImg}
+                        />
+                        {pg}
+                    </p>
+                )
+            } else {
+                return (
+                    <p className={`${class_}`} key={index}>{pg}</p>
+                )
+            }
         });
     }
     return retArr
@@ -362,32 +394,39 @@ export function usePostLikes(posts: postType[]): likeIcon[] {
     }, [posts]);
     return iconLikes
 }
-export function useOnScroll() {
-    const [isScroll, setIsScroll] = React.useState<boolean>(false);
+export function useOnScroll(maxNum: number) {
 
-    React.useEffect(() => {
-        let lastKnownScrollPosition = 0;
+    const [isScrolling, setIsScrolling] = React.useState<boolean>(false);
+    const [count, setCount] = React.useState<number>(0);
+    let lastKnown: number = 0;
+    const scrolling = React.useCallback((lastKnown: number): boolean => {
+
         let ticking = false;
+        let retBool: boolean = false;
         if (window) {
             window.addEventListener("scroll", () => {
-                lastKnownScrollPosition = window.scrollY;
+                lastKnown = window.scrollY;
                 if (!ticking) {
+                    // console.log("outside", lastKnown)
                     window.requestAnimationFrame(() => {
-                        if (lastKnownScrollPosition > 0) {
-                            setIsScroll(true);
-                            ticking = false;
-
+                        if (lastKnown > maxNum) {
+                            retBool = true;
                         }
                     });
-                    setIsScroll(false);
-                    ticking = true;
-                }
-            });
-            return () => window.removeEventListener("scroll", () => { });
-        }
 
-    }, [isScroll]);
-    return isScroll
+                    ticking = true;
+
+                }
+
+            });
+        }
+        return retBool
+
+    }, []);
+
+
+
+    return scrolling(lastKnown);
 }
 
 export function ConvertToFormula({ para }: { para: string }) {

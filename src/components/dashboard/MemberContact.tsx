@@ -6,6 +6,7 @@ import styles from "./dashboard.module.css"
 import { useGeneralContext } from '../context/GeneralContextProvider';
 import toast from 'react-hot-toast';
 
+
 type fetchContactType = {
     contact: contactType,
     message: string

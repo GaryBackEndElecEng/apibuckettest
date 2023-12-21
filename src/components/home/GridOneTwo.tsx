@@ -36,6 +36,9 @@ export default function GridOneTwo() {
                     <div className={styles.insideGridOneImg}
                     >
                         <Image src={logo} width={300} height={300} alt="www.ablogroom.com"
+                            placeholder="blur"
+                            blurDataURL={logo}
+                            style={{ height: "auto" }}
                         />
                         <h1 className="text-2xl text-center">{grid.grid1}</h1>
                     </div>
