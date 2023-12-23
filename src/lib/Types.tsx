@@ -192,6 +192,7 @@ export const inputNames: inputType[] = [
     { type: "conclusion", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "reply", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "code", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
+    { type: "styleList", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
 ]
 export type targetType = {
     loaded: boolean,
@@ -206,4 +207,9 @@ export type termsofServiceType = {
             { point: string; }
         ]
     }
+}
+export type contentStyle = {
+    content: string,
+    name: string,
+    style: string
 }

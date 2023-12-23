@@ -1,9 +1,9 @@
 "use client";
-import { contactType, inputType, targetType } from '@/lib/Types';
+import { contentStyle, inputType, targetType } from '@/lib/Types';
 import React from 'react';
 import "@pages/globalsTwo.css"
 import Image from 'next/image';
-import { ConvertToFormula, ConvertToList, SeparatePara } from "@lib/ultils";
+import { ConvertToFormula, ConvertToList, SeparatePara, parseStyle, getEmoj, emojArr } from "@lib/ultils";
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { useBlogContext } from '@/components/context/BlogContextProvider';
 import styles from "@dashboard/createblog/createablog.module.css";
@@ -33,6 +33,19 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
     const type: string | null = checkInput && checkInput.type;
     const s3Key: string | null = input.s3Key ? input.s3Key : null;
     const check: boolean = (type && type === "image" && s3Key && !input.url) ? true : false;
+    const [contentArray, setContentArray] = React.useState<contentStyle[]>([]);
+    const isStyleList = input && input.type === "styleList" ? true : false;
+
+    React.useEffect(() => {
+
+        if (input && input.content && isStyleList) {
+            const check: boolean = input.content.includes("[") ? true : false;
+            if (check) {
+                const temp = JSON.parse(input.content) as contentStyle[];
+                setContentArray(temp);
+            }
+        }
+    }, [input]);
 
     React.useEffect(() => {
         if (check) {
@@ -174,6 +187,23 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                     }
                 </React.Fragment>
 
+            )
+        case "styleList":
+            const ret = contentArray && contentArray.map((content, index) => {
+                const emoj = getEmoj(content.name)
+                const style = content
+                return (
+                    <React.Fragment key={index}>
+                        <li
+                            style={parseStyle(content.style)}
+                        >{emoj}{content.content} </li>
+                    </React.Fragment>
+                )
+            })
+            return (
+                <ul className={styles.formStyleDisplayMain}>
+                    {ret}
+                </ul>
             )
         case "conclusion":
             return (

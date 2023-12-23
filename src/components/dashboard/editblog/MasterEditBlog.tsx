@@ -7,6 +7,7 @@ import { useBlogContext } from '@/components/context/BlogContextProvider';
 import { useSearchParams } from "next/navigation";
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { fileType, userType } from '@/lib/Types';
+import toast from 'react-hot-toast';
 
 type mastertype = {
     user: userType,
@@ -27,9 +28,9 @@ export default function MasterEditBlog({ user, file }: mastertype) {
     React.useEffect(() => {
         if (file) {
             setFile_(file);
-            setBlogMsg({ loaded: true, msg: "recieved file" })
+            toast.success("recieved file")
         } else {
-            setBlogMsg({ loaded: false, msg: "No file" })
+            toast.error("no file recieved")
         }
         setUser(user);
 

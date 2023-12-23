@@ -6,7 +6,7 @@ import { inputType, userType } from '@/lib/Types';
 import { useBlogContext } from '@/components/context/BlogContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { v4 as uuidv4 } from "uuid";
-import { SecPlusForm, HeaderPlusForm, ImgForm, LinkForm, ReplyForm, ListForm, CodeForm } from "@component/compForms/formInputs";
+import { SecPlusForm, HeaderPlusForm, ImgForm, LinkForm, ReplyForm, ListForm, CodeForm, FormStyleList } from "@component/compForms/formInputs";
 import toast from 'react-hot-toast';
 
 type fetchType = {
@@ -119,6 +119,7 @@ export function GenForm({ setInput, input, setImgLoaded, user, inputsLen }: GenF
                 <ListForm input={input} setInput={setInput} inputsLen={inputsLen} />
                 <CodeForm input={input} setInput={setInput} inputsLen={inputsLen} />
                 <ReplyForm input={input} setInput={setInput} inputsLen={inputsLen} />
+                <FormStyleList input={input} setInput={setInput} inputsLen={inputsLen} />
             </>
         )
     }

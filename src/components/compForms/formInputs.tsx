@@ -1,13 +1,14 @@
-import { inputType, inputNames, userType, msgType, contactType } from '@/lib/Types'
+import { inputType, inputNames, userType, msgType, contentStyle } from '@/lib/Types'
 import { getErrorMessage } from '@/lib/errorBoundaries';
-import { ConvertToFormula, ConvertToList, insertOrder, joinName, sortInput } from '@/lib/ultils';
-import { TextField } from '@mui/material';
+import { ConvertToFormula, ConvertToList, insertOrder, joinName, getEmoj, emojArr, parseStyle } from '@/lib/ultils';
+import { IconButton, TextField } from '@mui/material';
 import React from 'react';
 import styles from "./form.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { searchList, ConvertRes } from '../context/arrayList';
 import toast from 'react-hot-toast';
 import { useBlogContext } from '../context/BlogContextProvider';
+import { FiEdit3 } from "react-icons/fi";
 const url = "https://garyposttestupload.s3.amazonaws.com"
 
 type GenFormType = {
@@ -626,3 +627,255 @@ export function CodeForm({ input, setInput, inputsLen }: GenFormType) {
         return (<></>)
     }
 }
+type displayStyleType = {
+    setInput: React.Dispatch<React.SetStateAction<inputType | undefined>>,
+    input: inputType | undefined,
+}
+export function DisplayStyleList({ input, setInput, inputsLen }: GenFormType) {
+    const [contentArray, setContentArray] = React.useState<contentStyle[]>([]);
+    const [editLi, setEditLi] = React.useState<contentStyle | null>(null);
+    const [editIndex, setEditIndex] = React.useState<number | null>(null);
+    const isStyleList = input && input.type === "styleList" ? true : false;
+
+    React.useEffect(() => {
+        if (input && input.content && isStyleList) {
+            const check: boolean = input.content.includes("[") ? true : false;
+            if (check) {
+                const temp = JSON.parse(input.content) as contentStyle[];
+                setContentArray(temp);
+            }
+        }
+    }, [input]);
+
+    const handleEditLi = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
+        e.preventDefault();
+        const getContentSingle = contentArray[index];
+        setEditLi(getContentSingle);
+        setEditIndex(index);
+    }
+
+
+    const ret = isStyleList && contentArray && contentArray.map((content, index) => {
+        const emoj = getEmoj(content.name)
+        const style = content
+        return (
+            <React.Fragment key={index}>
+                <li className={` ml-[5px]`}
+                    style={parseStyle(content.style)}
+                >
+                    {emoj}{content.content}
+                    <IconButton onClick={(e) => handleEditLi(e, index)}>
+                        <FiEdit3 className={styles.editStyleLi} />
+                    </IconButton>
+                </li>
+
+            </React.Fragment>
+        )
+    })
+    return (
+        <ul className={styles.formStyleDisplayMain}>
+            {ret}
+            {isStyleList && <EditLiItem
+                setContentArray={setContentArray}
+                contentArray={contentArray}
+                setEditLi={setEditLi}
+                editLi={editLi}
+                editIndex={editIndex}
+            />}
+        </ul>
+
+
+    )
+}
+type editLiType = {
+    setContentArray: React.Dispatch<React.SetStateAction<contentStyle[]>>,
+    contentArray: contentStyle[],
+    setEditLi: React.Dispatch<React.SetStateAction<contentStyle | null>>,
+    editLi: contentStyle | null
+    editIndex: number | null
+
+
+}
+export function EditLiItem({ setContentArray, contentArray, setEditLi, editLi, editIndex }: editLiType) {
+
+    const handleEditLiSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (editLi && editIndex) {
+            const reduc = contentArray.filter((cont, index) => (index !== editIndex));
+            if (reduc.length > 1) {
+                setContentArray([...reduc, editLi])
+
+            } else {
+                setContentArray([...contentArray, editLi])
+            }
+            setEditLi(null);
+        }
+    }
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        e.preventDefault();
+        if (editLi) {
+            setEditLi({
+                ...editLi,
+                [e.currentTarget.name]: e.currentTarget.value,
+            });
+        }
+
+    }
+
+    return (
+        <React.Fragment >
+            {editLi &&
+                <form className={styles.formEditStyleList} onSubmit={(e) => handleEditLiSubmit(e)}>
+
+                    <label htmlFor="style">LI-style</label>
+                    <input
+                        id="style"
+                        name="style"
+                        value={editLi.style ? editLi.style : " "}
+                        onChange={(e) => handleOnChange(e)}
+                    />
+                    <label htmlFor="content">listItem</label>
+                    <input
+                        id="content"
+                        name="content"
+                        value={editLi.content ? editLi.content : " "}
+                        onChange={(e) => handleOnChange(e)}
+                    />
+                    <label htmlFor="name">list type</label>
+                    <select
+                        id="name"
+                        name="name"
+                        value={editLi.name ? editLi.name : " "}
+                        onChange={(e) => handleOnChange(e)}
+                    >
+                        {emojArr && emojArr.map((emoj, index) => (
+                            <option key={index} value={emoj.name}>{emoj.name}</option>
+                        ))
+
+                        }
+
+                    </select>
+                    <button type="submit">submit</button>
+                </form>
+            }
+        </React.Fragment>
+
+    )
+}
+
+
+export function FormStyleList({ input, setInput, inputsLen }: GenFormType) {
+    const { input_s, setInput_s, setIsOrdered } = useBlogContext();
+    const checkInit = input && input.type === "styleList" ? input : null;
+    const [name, setName] = React.useState<string>(" ");
+    const [listContent, setListContent] = React.useState<contentStyle>({} as contentStyle);
+    const [array, setArray] = React.useState<contentStyle[]>([]);
+
+
+
+    React.useEffect(() => {
+        if (checkInit) {
+            setInput(checkInit)
+        }
+    }, []);
+
+
+    const handleOrderChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        e.preventDefault()
+        if (e.target.value && input_s && input && checkInit) {
+            const order = parseInt(e.target.value);
+            const newInputs = await insertOrder(input_s, input, order)
+            setInput_s(newInputs);
+            setIsOrdered(true);
+        }
+    }
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        e.preventDefault();
+        setListContent({
+            ...listContent,
+            [e.currentTarget.name]: e.currentTarget.value,
+        });
+
+    }
+
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (checkInit) {
+            const temp: contentStyle[] = [...array, listContent]
+            setArray(temp);
+            const convContent: string = JSON.stringify(temp)
+            setInput({ ...input as inputType, content: convContent as string });
+        }
+    };
+
+    return (
+        <React.Fragment>
+            {checkInit &&
+                <div className={styles.mainFormStyle}>
+                    <form onSubmit={(e) => handleOnSubmit(e)} className={styles.formStyleList}>
+                        <h3>order: {input && input.order}</h3>
+                        <label htmlFor="order">select order</label>
+                        <select
+                            id="order"
+                            name="order"
+                            onChange={(e) => handleOrderChange(e)}
+                        >
+                            {inputsLen.map((a, index) => (
+                                <option value={a} key={index}>{a}</option>
+                            ))}
+                        </select>
+
+                        <React.Fragment >
+                            <h3 className="my-2 mb-4 text-center">{array.length + 1}</h3>
+                            <label htmlFor="style">style</label>
+                            <input
+                                id="style"
+                                name="style"
+                                value={listContent.style ? listContent.style : " "}
+                                onChange={(e) => handleOnChange(e)}
+                            />
+                            <label htmlFor="content">listItem</label>
+                            <input
+                                id="content"
+                                name="content"
+                                value={listContent.content ? listContent.content : " "}
+                                onChange={(e) => handleOnChange(e)}
+                            />
+                            <label htmlFor="name">list type</label>
+                            <select
+                                id="name"
+                                name="name"
+                                value={listContent.name ? listContent.name : " "}
+                                onChange={(e) => handleOnChange(e)}
+                            >
+                                {emojArr && emojArr.map((emoj, index) => (
+                                    <option key={index} value={emoj.name}>{emoj.name}</option>
+                                ))
+
+                                }
+
+                            </select>
+                        </React.Fragment>
+
+
+
+                        <button type="submit">submit</button>
+                    </form>
+                    <h2>{array.length}</h2>
+                    <h2>{input?.name}</h2>
+                    <DisplayStyleList
+                        input={input}
+                        setInput={setInput}
+                        inputsLen={inputsLen}
+                    />
+                </div>
+            }
+        </React.Fragment>
+
+    )
+}
+
+

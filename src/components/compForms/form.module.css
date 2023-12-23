@@ -66,6 +66,97 @@
   gap: 0.5rem;
   padding-inline: 1rem;
 }
+
+/*---- FormStyleList-------------------------*/
+
+.mainFormStyle {
+  width: 80%;
+  box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 20px 20px 20px 20px;
+}
+.formStyleList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  border-radius: inherit;
+  background: rgba(19, 128, 124, 0.7);
+}
+.formStyleList > h3 {
+  text-align: center;
+}
+.formStyleList > input,
+.formStyleList > select {
+  margin: auto;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  color: black;
+  background: white;
+  border-radius: inherit;
+  width: 100%;
+  padding-inline: 10px;
+}
+.formStyleList > select {
+  width: 50%;
+}
+.formStyleList > button {
+  padding-inline: 3rem;
+  padding-block: 1rem;
+  background: black;
+  color: white;
+  box-shadow: 1px 1px 7px 1px black;
+  border-radius: inherit;
+  margin-block: 3rem;
+  margin-inline: auto;
+}
+.formStyleList > label {
+  margin: auto;
+  text-align: center;
+}
+.formStyleList > select {
+  margin: auto;
+}
+.formStyleDisplayMain {
+  width: 50%;
+  margin-inline: auto;
+  margin-block: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+/* ----edit-formInputs display----*/
+.formEditStyleList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  border-radius: inherit;
+  background: rgba(19, 128, 124, 0.7);
+}
+.formEditStyleList > button {
+  margin-block: 2rem;
+  margin-inline: auto;
+  padding-inline: 2rem;
+  padding-block: 0.25rem;
+  background: black;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 1px 2px 12px 2px black;
+  color: white;
+}
+.editStyleLi {
+  background: red;
+  color: white;
+  font-size: 120%;
+  border-radius: 50%;
+}
+/* ----edit-formInputs display----*/
+
+/*---- FormStyleList-------------------------*/
 @media screen and (max-width: 980px) {
   .listFormGrid {
     grid-template-columns: repeat(1, minmax(300px, 1fr));
@@ -79,6 +170,17 @@
 
     padding-inline: 1rem;
   }
+  .formStyleList > input {
+    width: 75%;
+    padding-inline: 1rem;
+  }
+  .mainFormStyle {
+    width: 80%;
+    padding: 1rem;
+  }
+  .formStyleDisplayMain {
+    width: 80%;
+  }
 }
 @media screen and (max-width: 480px) {
   .formGrid {
@@ -89,5 +191,19 @@
   }
   .formList {
     padding-inline: 0.5rem;
+  }
+  .mainFormStyle {
+    width: 100vw;
+    padding: 1rem;
+  }
+  .formStyleList > input {
+    width: 100%;
+  }
+  .formStyleList > select {
+    width: 75%;
+  }
+  .formStyleDisplayMain {
+    width: 100%;
+    padding-inline: 20px;
   }
 }

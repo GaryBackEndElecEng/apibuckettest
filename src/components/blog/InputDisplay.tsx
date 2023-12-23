@@ -1,5 +1,5 @@
 "use client";
-import { contactType, inputType } from '@/lib/Types';
+import { contactType, inputType, contentStyle } from '@/lib/Types';
 import React from 'react';
 // import "@pages/globalsTwo.css"
 import Image from 'next/image';
@@ -12,6 +12,7 @@ import { IoMdHappy } from "react-icons/io";
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 import { FaArrowRightLong } from "react-icons/fa6";
+import { getEmoj, emojArr, parseStyle } from "@component/compForms/formList/DisplayList"
 
 type contactFetchType = {
     contact: contactType,
@@ -34,6 +35,18 @@ function GenInput({ input }: { input: inputType }) {
     const [reply, setReply] = React.useState<contactType>({} as contactType);
     const [didReply, setDidReply] = React.useState<boolean>(false);
     const [wantToReply, setWantToReply] = React.useState<boolean>(false);
+    const [contentArray, setContentArray] = React.useState<contentStyle[]>([]);
+    const isStyleList = input && input.type === "styleList" ? true : false;
+
+    React.useEffect(() => {
+        if (input && input.content && isStyleList) {
+            const temp = JSON.parse(input.content) as contentStyle[];
+            setContentArray(temp);
+
+        }
+    }, [input, setContentArray, isStyleList]);
+
+
 
     React.useEffect(() => {
         if (user && type && type === "reply" && reply && !reply.userId) {
@@ -77,7 +90,7 @@ function GenInput({ input }: { input: inputType }) {
                     </h3>
                 </div>
             )
-        case "subHeading":
+        case "subheading":
             return (
                 <div className="subHeading">
                     {input.name && <h3>
@@ -120,6 +133,27 @@ function GenInput({ input }: { input: inputType }) {
                     </section>
                 </>
             )
+        case "stylelist":
+
+            const ret = contentArray && contentArray.map((content, index) => {
+                const emoj = getEmoj(content.name)
+                const style = content
+                return (
+                    <ul className={styles.formStyleDisplayMain} key={index}>
+                        <li className={` ml-[5px]`}
+                            style={parseStyle(content.style)}
+                        >{emoj}{content.content} </li>
+                    </ul>
+                )
+            })
+            return (
+                <ul className="w-full sm:w-[70%] lg:w-[50%] my-2 mx-auto flex flex-col items-start justify-start pl-[10px]">
+                    {ret}
+                </ul>
+
+
+            )
+
         case "article":
             return (
                 <article className="article">

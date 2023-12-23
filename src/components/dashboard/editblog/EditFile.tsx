@@ -148,19 +148,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
                             }}
                         />}
 
-                        {blogMsg && blogMsg.msg &&
-                            <div className="relative h-[10vh] flex flex-col items-center justify-center">
-                                {blogMsg.loaded ?
-                                    <div className=" absolute inset-0 flex flex-col text-blue-900 text-xl">
-                                        {blogMsg && blogMsg.msg}
-                                    </div>
-                                    :
-                                    <div className=" absolute inset-0 flex flex-col text-orange-900 text-xl">
-                                        {blogMsg && blogMsg.msg}
-                                    </div>
-                                }
-                            </div>
-                        }
+
                     </div>
                     <div className={styles.displayFile}>
 

@@ -342,6 +342,15 @@
   transform: scale(0.2);
   transition: all 0.75s ease-in-out;
 }
+.formStyleDisplayMain {
+  width: 50%;
+  margin-inline: auto;
+  margin-block: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
 
 @media screen and (max-width: 980px) {
   .blogsLayoutContainer {
@@ -370,6 +379,9 @@
   }
   .userCard {
     margin-inline: 1.5rem;
+  }
+  .formStyleDisplayMain {
+    width: 80%;
   }
 }
 @media screen and (max-width: 920px) {
@@ -439,5 +451,9 @@
     width: 100%;
     padding-inline: 1px;
     position: relative;
+  }
+  .formStyleDisplayMain {
+    width: 100%;
+    padding-inline: 20px;
   }
 }

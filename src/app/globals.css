@@ -176,7 +176,8 @@ section.section,
 section.conclusion,
 article.article {
   margin-block: 1rem;
-  padding: 1rem;
+  padding-block: 1rem;
+  padding-inline: 0.15rem;
   background: rgba(0, 0, 0, 1);
   color: white;
   border-radius: 15px 15px 15px 15px;
@@ -252,18 +253,21 @@ table.listTable {
   align-items: stretch;
   gap: 0.5rem;
 }
-.list {
+section.list {
   padding: 0.75rem;
   font-size: 120%;
   display: flex;
   direction: column;
   justify-content: center;
   align-items: flex-start;
+  background: black;
+  color: white;
+  border-radius: 10px 10px 10px 10px;
 }
-.list ul {
+section.list ul {
   margin-left: 0.5rem;
 }
-.list ul li {
+section.list ul li {
   margin-left: 0.5rem;
   margin-top: 0.75rem;
   text-indent: 10px;
