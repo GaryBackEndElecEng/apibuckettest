@@ -183,10 +183,12 @@ article.article {
   border-radius: 15px 15px 15px 15px;
 }
 section.section > h4,
-.section.conclusion > h4 {
+section.conclusion > h4 {
   font-weight: bold;
-  font-size: 130%;
+  font-size: 110%;
+  padding-left: 20px;
 }
+
 .article.article > h3 {
   font-weight: bold;
   font-size: 120%;

@@ -79,7 +79,7 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                         <div className={styles.genInputImg}
                             style={{ position: "relative", width: "100%" }}
                         >
-
+                            <small>order: {input.order}</small>
                             <h4>{input.name}</h4>
                             <div className="flexcol">
                                 <Image src={input.url} width={900} height={600} alt={input.name}
@@ -97,9 +97,14 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
         case "heading":
             return (
                 <div className="inputHeading" style={{ position: "relative", width: "100%" }}>
-                    {input.name && <h2 className="inputBold">
-                        {input.name}
-                    </h2>}
+                    {input.name &&
+                        <React.Fragment>
+                            <small>order: {input.order}</small>
+                            <h2 className="inputBold">
+                                {input.name}
+                            </h2>
+                        </React.Fragment>
+                    }
                     <h3>
                         {input.content}
                     </h3>
@@ -108,9 +113,14 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
         case "subHeading":
             return (
                 <div className="inputSubHeading" style={{ position: "relative", width: "100%" }}>
-                    {input.name && <h3>
-                        {input.name}
-                    </h3>}
+                    {input.name &&
+                        <React.Fragment>
+                            <small>order: {input.order}</small>
+                            <h3>
+                                {input.name}
+                            </h3>
+                        </React.Fragment>
+                    }
                     <h4>
                         {input.content}
                     </h4>
@@ -119,9 +129,14 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
         case "link":
             return (
                 <div className="link" style={{ position: "relative", width: "100%" }}>
-                    {input.name && <h3>
-                        {input.name}
-                    </h3>}
+                    {input.name &&
+                        <React.Fragment>
+                            <small>order: {input.order}</small>
+                            <h3>
+                                {input.name}
+                            </h3>
+                        </React.Fragment>
+                    }
                     <Link href={input.content}>
                         {input.content}
                     </Link>
@@ -129,51 +144,67 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
             )
         case "section":
             return (
-                <section className="section" style={{ position: "relative", width: "100%" }}>
-                    {input.name && <h4>
-                        {input.name}
-                    </h4>}
-                    <div>
-                        <SeparatePara para={input.content} class_={"pSection"} />
-                    </div>
-                </section>
+                <React.Fragment>
+                    <small>order: {input.order}</small>
+                    <section className="section" style={{ position: "relative", width: "100%" }}>
+                        {input.name &&
+                            <React.Fragment>
+
+                                <h4>
+                                    {input.name}
+                                </h4>
+                            </React.Fragment>
+                        }
+                        <div>
+                            <SeparatePara para={input.content} class_={"pSection"} />
+                        </div>
+                    </section>
+                </React.Fragment>
             )
         case "list":
             return (
-
-                <section className="list">
-                    <ul>{input.name && input.name}
-                        <ConvertToList para={input.content} />
-                    </ul>
-                </section>
+                <React.Fragment>
+                    <small>order: {input.order}</small>
+                    <section className="list">
+                        <ul>{input.name && input.name}
+                            <ConvertToList para={input.content} />
+                        </ul>
+                    </section>
+                </React.Fragment>
 
             )
         case "code":
             return (
-
-                <section className="code" style={{ position: "relative", width: "100%" }}>
-                    <h3 className="text-center text-xl underline underline-offest-8 my-2">{input.name && input.name}</h3>
-                    <div>
-                        <ConvertToFormula para={input.content} />
-                    </div>
-                </section>
+                <React.Fragment>
+                    <small>order: {input.order}</small>
+                    <section className="code" style={{ position: "relative", width: "100%" }}>
+                        <h3 className="text-center text-xl underline underline-offest-8 my-2">{input.name && input.name}</h3>
+                        <div>
+                            <ConvertToFormula para={input.content} />
+                        </div>
+                    </section>
+                </React.Fragment>
 
             )
         case "article":
             return (
-                <article className="article" style={{ position: "relative", width: "100%" }}>
-                    {input.name && <h3>
-                        {input.name}
-                    </h3>}
-                    <section>
-                        <SeparatePara para={input.content} class_={"pSection"} />
-                    </section>
-                </article>
+                <React.Fragment>
+                    <small>order: {input.order}</small>
+                    <article className="article" style={{ position: "relative", width: "100%" }}>
+                        {input.name && <h3>
+                            {input.name}
+                        </h3>}
+                        <section>
+                            <SeparatePara para={input.content} class_={"pSection"} />
+                        </section>
+                    </article>
+                </React.Fragment>
             )
         case "reply":
 
             return (
                 <React.Fragment>
+                    <small>order: {input.order}</small>
                     {checkInput && checkInput.type === "reply" &&
 
                         <section className="replyForm" style={{ position: "relative", width: "100%" }}>
@@ -194,6 +225,7 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                 const style = content
                 return (
                     <React.Fragment key={index}>
+
                         <li
                             style={parseStyle(content.style)}
                         >{emoj}{content.content} </li>
@@ -201,18 +233,29 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                 )
             })
             return (
-                <ul className={styles.formStyleDisplayMain}>
-                    {ret}
-                </ul>
+                <React.Fragment>
+                    <small>order: {input.order}</small>
+                    <ul className={styles.formStyleDisplayMain}>
+                        {ret}
+                    </ul>
+                </React.Fragment>
             )
         case "conclusion":
             return (
-                <section className="conclusion" style={{ position: "relative", width: "100%" }}>
-                    {input.name && <h4>
-                        {input.name}
-                    </h4>}
-                    <SeparatePara para={input.content} class_={"pSection"} />
-                </section>
+                <React.Fragment>
+                    <small>order: {input.order}</small>
+                    <section className="conclusion" style={{ position: "relative", width: "100%" }}>
+                        {input.name &&
+                            <React.Fragment>
+
+                                <h4>
+                                    {input.name}
+                                </h4>
+                            </React.Fragment>
+                        }
+                        <SeparatePara para={input.content} class_={"pSection"} />
+                    </section>
+                </React.Fragment>
 
             )
         default:

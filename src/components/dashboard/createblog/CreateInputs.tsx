@@ -44,7 +44,7 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
                 if (res.ok) {
                     const sortInputs = sortInput(body.inputs)
                     setInput_s(sortInputs);
-                    setBlogMsg({ loaded: true, msg: body.message })
+
                     toast.success(`extensions: ${body.message}`)
                 } else if (res.status > 200 && res.status < 500) {
                     setBlogMsg({ loaded: false, msg: body.message })

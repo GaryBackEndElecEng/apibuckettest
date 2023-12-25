@@ -1,6 +1,6 @@
 .blogsLayoutContainer {
   margin-inline: 0;
-  width: 80%;
+  width: 70%;
   display: grid;
   place-content: center;
   place-items: center;
@@ -172,6 +172,7 @@
   padding-block: 1rem;
   line-height: 2rem;
   font-size: 110%;
+  border-radius: 20px 20px 20px 20px;
 }
 .fileImage {
   aspect-ratio: 16 / 9;
@@ -329,6 +330,14 @@
 .notFoundContainer > div h2 {
   padding-inline: 1rem;
 }
+.preReply {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  margin-block: 1rem;
+  font-weight: bold;
+}
 /* reply selected*********/
 .showReply {
   min-height: 20vh;
@@ -391,9 +400,7 @@
     padding-inline: 0.5rem;
     position: relative;
   }
-  .paraCreator {
-    padding-inline: 0.15rem;
-  }
+
   .blogCard {
     align-self: stretch;
   }
@@ -455,5 +462,8 @@
   .formStyleDisplayMain {
     width: 100%;
     padding-inline: 20px;
+  }
+  .paraCreator {
+    padding-inline: 0.5rem;
   }
 }

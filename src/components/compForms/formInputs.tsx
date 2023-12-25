@@ -40,6 +40,7 @@ export function SecPlusForm({ input, setInput, inputsLen }: GenFormType) {
             const order = parseInt(e.target.value);
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
+            setInput(undefined);
             setIsOrdered(true);
             console.log("Ln:43@formInputs", newInputs)
         }
@@ -118,6 +119,7 @@ export function HeaderPlusForm({ input, setInput, inputsLen }: GenFormType) {
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
             setIsOrdered(true);
+            setInput(undefined);
         }
     }
     if (input && input.type) {
@@ -240,6 +242,7 @@ export function ImgAddForm({ input, setInput, inputsLen }: GenFormType) {
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
             setIsOrdered(true);
+            setInput(undefined);
 
         }
     }
@@ -309,6 +312,7 @@ export function LinkForm({ input, setInput, inputsLen }: GenFormType) {
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
             setIsOrdered(true);
+            setInput(undefined);
         }
     }
 
@@ -376,6 +380,7 @@ export function ReplyForm({ input, setInput, inputsLen }: GenFormType) {
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
             setIsOrdered(true);
+            setInput(undefined);
         }
     }
 
@@ -442,7 +447,7 @@ export function ListForm({ input, setInput, inputsLen }: GenFormType) {
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
             setIsOrdered(true);
-            console.log("Ln:443@formInputs", newInputs)
+            setInput(undefined);
         }
     }
 
@@ -541,6 +546,7 @@ export function CodeForm({ input, setInput, inputsLen }: GenFormType) {
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
             setIsOrdered(true);
+            setInput(undefined);
         }
     }
 
@@ -788,6 +794,7 @@ export function FormStyleList({ input, setInput, inputsLen }: GenFormType) {
             const newInputs = await insertOrder(input_s, input, order)
             setInput_s(newInputs);
             setIsOrdered(true);
+            setInput(undefined);
         }
     }
 

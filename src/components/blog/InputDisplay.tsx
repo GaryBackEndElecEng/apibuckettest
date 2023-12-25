@@ -220,6 +220,14 @@ function GenInput({ input }: { input: inputType }) {
             return (
                 <React.Fragment>
 
+                    {!wantToReply && input.name &&
+                        <div className={styles.preReply}>
+                            <h4>
+                                {input.name}
+                            </h4>
+                            <p>{input.content}</p>
+                        </div>
+                    }
                     {!didReply && checkInput && checkInput.type === "reply" &&
                         <React.Fragment>
                             {!wantToReply ?

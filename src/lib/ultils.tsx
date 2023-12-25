@@ -523,42 +523,44 @@ export function sortInput(inputs: inputType[]) {
     });
     return retInputs
 }
-export async function insertOrder(inputs: inputType[], input: inputType, reqorder: number) {
-    const checkInput = inputs.find(inp => (inp.order === reqorder));
-    let tempOrder: number = 0;
-    let arr: inputType[] = [];
-    if (checkInput) {
-        const retInputs = inputs.map((inp, index) => {
-            let inputToChange = inputs.find(in_ => in_.order === input.order);//presently on
-            if (inp.order === reqorder && tempOrder === 0 && inputToChange) {
-                tempOrder = inp.order as number;//15
-                inp.order = input.order //16
-                inputToChange.order = reqorder
-                arr.push(inp)
-                arr.push(inputToChange)
-            }
-
-
-
-            return inp
-        });
-        if (arr && arr.length > 0) {
-
-            const message: string[] | undefined = await Promise.all(
-                arr.map(async (inp) => {
-                    return await storeInput(inp)
-
-                })
-            );
-            if (message) { toast.success(`order ${message[0]}-${message[1]}`) }
-
+export async function insertOrder(inputs: inputType[], targetInput: inputType, target: number) {
+    const insertOrder = { ...targetInput, order: target }
+    let tempArr: inputType[] = [];
+    let cleanArr: inputType[] = [];
+    inputs.map((input, index) => {
+        if (input.order === target) {
+            tempArr.push({ ...targetInput, order: target });
+            tempArr.push({ ...input, order: target + 1 });
+        } else if (input && input.order && input.order > target) {
+            tempArr.push({ ...input, order: input.order + 1 })
+        } else {
+            tempArr.push(input)
         }
-        return sortInput(retInputs)
-    } else {
-        toast.success("no order performed")
-        return inputs
-    }
-
+    });
+    tempArr.map((input, index) => {
+        if (input.id === targetInput.id) {
+            if (input.order === target) {
+                cleanArr.push(input)
+            }
+        } else {
+            cleanArr.push(input)
+        }
+    })
+    let num: number = 0;
+    const retInputs = await Promise.all(
+        cleanArr.map(async (input, index) => {
+            const res = await fetch("/api/input", { method: "PUT", body: JSON.stringify(input) });
+            if (res.ok) {
+                num++;
+                const body: { input: inputType, message: string } = await res.json();
+                return body.input
+            } else {
+                return input
+            }
+        })
+    );
+    toast.success(`all ${num} updated`);
+    return retInputs
 }
 
 export async function storeInput(input: inputType) {
