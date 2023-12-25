@@ -13,6 +13,8 @@ export default function GridOneTwo() {
     const [grid, setGrid] = React.useState<gridArrType>();
     const [close, setClose] = React.useState<boolean>(false);
     const [show, setShow] = React.useState<boolean>(false);
+    const [open, setOpen] = React.useState<boolean>(false);
+    const [remove, setRemove] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         if (count <= gridOneTwoArr.length - 1) {
@@ -24,6 +26,8 @@ export default function GridOneTwo() {
             }, 4000);
         } else {
             setClose(true);
+            setTimeout(() => { setOpen(true) }, 2000);
+            setTimeout(() => { setRemove(true) }, 1500);
         }
     }, [count]);
 
@@ -31,9 +35,10 @@ export default function GridOneTwo() {
         <div
             className={styles.insideGridOne}
         >
-            {grid && !close ?
+            {grid && !remove &&
                 <React.Fragment>
-                    <div className={styles.insideGridOneImg}
+                    <small>first</small>
+                    <div className={!close ? styles.insideGridOneImg : styles.insideGridOneImgSlideOut}
                     >
                         <Image src={logo} width={300} height={300} alt="www.ablogroom.com"
                             placeholder="blur"
@@ -42,27 +47,28 @@ export default function GridOneTwo() {
                         />
                         <h1 className="text-2xl text-center">{grid.grid1}</h1>
                     </div>
+
                     <div >
-                        <p className={show ? grid.class : styles.remove}>{grid.grid2}</p>
+                        <p className={show && !close ? grid.class : styles.remove}>{grid.grid2}</p>
                     </div>
                 </React.Fragment>
-                :
-                <div className={styles.gridOneLogin}>
-                    <div className="flex flex-row py-1 items-center justify-center">
-
-                        <Image
-                            src={logo}
-                            width={200}
-                            height={200}
-                            alt="www.ablogroom.com"
-
-                        />
-                        <h1 className="text-white">TRY US</h1>
-                    </div>
-                    <h3 className="text-white">Its free</h3>
-                    <Login />
-                </div>
             }
+
+            <div className={open ? styles.gridOneLogin : styles.hide}>
+                <div className="flex flex-row py-1 items-center justify-center">
+
+                    <Image
+                        src={logo}
+                        width={200}
+                        height={200}
+                        alt="www.ablogroom.com"
+                        style={{ width: "auto" }}
+                    />
+                    <h1 className="text-white">TRY US</h1>
+                </div>
+                <h3 className="text-white">Its free</h3>
+                <Login />
+            </div>
         </div>
     )
 }
