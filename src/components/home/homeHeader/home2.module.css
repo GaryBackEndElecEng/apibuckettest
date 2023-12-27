@@ -1,0 +1,187 @@
+.mainHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  margin-block: 1rem;
+  margin-inline: auto;
+  color: black;
+}
+.hideHeader {
+  display: none;
+}
+.mainHeader > h1 {
+  background-position: 50% 50%;
+  background-size: 200% 200%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: repeatAlways 20s infinite;
+  font-size: 120%;
+  text-decoration: underline;
+  text-underline-offset: 1.25rem;
+}
+.mainHeader > h3 {
+  margin-bottom: 1.5rem;
+}
+@keyframes repeatAlways {
+  from {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  to {
+    background-position: 0% 0%;
+  }
+}
+.mainHeaderGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(400px, 1fr));
+  grid-template-rows: max-content;
+  place-items: center;
+  gap: 1rem;
+}
+.childGrid {
+  margin: auto;
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 1rem;
+  box-shadow: 1px 1px 20px 2px white;
+  background: white;
+}
+
+.wrdSalad {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-block: 3rem;
+  padding-inline: 5rem;
+}
+.wrdSalad > p.spanStart,
+.wrdSalad > p.spanEnd {
+  opacity: 1;
+  margin: auto;
+  border-radius: inherit;
+  animation: growIn 3s ease-in-out;
+}
+.wrdSalad > p.spanMiddle {
+  opacity: 1;
+  margin: auto;
+  border-radius: inherit;
+  font-size: 180%;
+  font-weight: bold;
+  animation: growIn2 forwards 5s;
+}
+@keyframes growIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes growIn2 {
+  from {
+    opacity: 0;
+    transform: translateY(-500%) scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%) scale(1);
+  }
+}
+.spanStart,
+.spanEnd {
+  font-size: 130%;
+  color: black;
+}
+.spanStart::first-letter {
+  color: rgb(142, 44, 3);
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+.showTools {
+  opacity: 1;
+  transform: translateY(0%);
+  transition: all 3s ease-in-out;
+}
+.hideTools {
+  opacity: 0;
+  transform: translateY(-200%);
+  transition: all 3s ease-in-out;
+}
+.login {
+  background: black;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  padding-inline: 2rem;
+  padding-block: 1.25rem;
+}
+@media screen and (max-width: 920px) {
+  .mainHeader {
+    width: 100%;
+  }
+  .spanStart,
+  .spanEnd {
+    font-size: 115%;
+  }
+  .wrdSalad > p.spanMiddle {
+    font-size: 140%;
+  }
+  .mainHeaderGrid {
+    display: grid;
+    grid-template-columns: minmax(400px, 600px);
+    grid-template-rows: minmax(400px, 600px);
+  }
+  .wrdSalad {
+    padding-block: 3rem;
+    padding-inline: 5rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .mainHeaderGrid {
+    display: grid;
+    grid-template-columns: minmax(350px, 470px);
+    grid-template-rows: max-content;
+  }
+  .wrdSalad {
+    padding: 2rem;
+    padding-block: 4rem;
+  }
+  .spanStart,
+  .spanEnd {
+    font-size: 100%;
+  }
+  .wrdSalad > p.spanMiddle {
+    font-size: 130%;
+  }
+}
+@media screen and (max-width: 420px) {
+  .mainHeaderGrid {
+    display: grid;
+    grid-template-columns: minmax(350px, 410px);
+    grid-template-rows: max-content;
+  }
+  .wrdSalad {
+    padding: 2rem;
+    padding-block: 5rem;
+  }
+}

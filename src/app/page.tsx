@@ -11,11 +11,12 @@ import Redirect from "@component/comp/Redirect";
 import { userType } from "@/lib/Types";
 import UserCard from "@component/home/UserCard";
 import { notFound } from "next/navigation";
-import HomeHeader from "@component/home/HomeHeader";
+import HomeHeader from "@component/home/homeHeader/HomeHeader";
 import authOptions from "@lib/authOptions";
 import { getServerSession } from "next-auth";
 import { Metadata, ResolvingMetadata } from "next";
 import { joinName } from "@lib/ultils";
+
 
 const url = process.env.BUCKET_URL as string;
 const Bucket = process.env.BUCKET_NAME as string;
