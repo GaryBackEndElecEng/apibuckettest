@@ -69,7 +69,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.25rem;
   padding-block: 3rem;
   padding-inline: 5rem;
 }
@@ -154,6 +154,7 @@
   .wrdSalad {
     padding-block: 3rem;
     padding-inline: 5rem;
+    gap: 0;
   }
 }
 @media screen and (max-width: 480px) {
@@ -166,8 +167,8 @@
     padding: 2rem;
     padding-block: 4rem;
   }
-  .spanStart,
-  .spanEnd {
+  .wrdSalad > p.spanStart,
+  .wrdSalad > p.spanEnd {
     font-size: 100%;
   }
   .wrdSalad > p.spanMiddle {

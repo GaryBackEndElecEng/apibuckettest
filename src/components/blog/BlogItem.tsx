@@ -4,7 +4,7 @@ import React from 'react'
 import styles from "@component/blog/blog.module.css";
 import Image from 'next/image';
 import getFormattedDate from "@lib/getFormattedDate";
-import { calcAvg, calcLikes, calcHits, sortInput } from "@lib/ultils";
+import { calcAvg, calcLikes, calcHits, sortInput, SeparatePara } from "@lib/ultils";
 import InputDisplay from "@component/blog/InputDisplay";
 import UserCard from "@component/blog/UserCard";
 import { getPageHits } from '@/lib/fetchTypes';
@@ -39,7 +39,7 @@ export default function BlogItem({ file, getuser }: MainItemType) {
         <div className={styles.card}>
             <h2 className={styles.textStyle}>{file && file.title.toUpperCase()}</h2>
             {file && file.imageUrl && <Image src={file.imageUrl} width={600} height={400} alt="www.ablogroom.com" className={styles.fileImage} />}
-            <p className={styles.paraCreator}>{file.content}</p>
+            <SeparatePara para={file.content} class_={"pSection"} />
             <div className="flexcol">
                 {input_s &&
                     input_s.map((input, index) => {

@@ -124,13 +124,7 @@ section.code > div {
   align-items: center;
   gap: 2rem;
 }
-.flexcol {
-  display: flex;
-  direction: column;
-  justify-content: space-evenly;
-  align-items: stretch;
-  gap: 2rem;
-}
+
 .summary {
   /* font-size: 110%; */
   /* margin-bottom: 2rem; */
@@ -228,10 +222,10 @@ section.replyForm p {
   padding-inline: 0.5rem;
 }
 section p.paraCreator::first-letter,
-article p.paraCreator::first-letter {
-  /* font-weight: bold; */
-  color: white;
-  /* font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; */
+article p.paraCreator::first-letter,
+p.paraCreator::first-letter {
+  font-weight: bold;
+  color: inherit;
   margin-right: 0.25rem;
   margin-left: 0.5rem;
   margin-bottom: 0.5rem;
@@ -240,10 +234,13 @@ article p.paraCreator::first-letter {
 }
 
 .paraCreator {
-  color: auto;
+  color: white;
   padding-inline: 1.5rem;
   padding-block: 1rem;
   line-height: 2rem;
+  font-size: 110%;
+  background: black;
+  border-radius: 20px 20px 20px 20px;
 }
 div.listContainer {
 }
@@ -385,20 +382,18 @@ blockquote.reply::before {
 }
 
 .conclusion > p::first-letter {
-  color: rgba(229, 241, 234, 0.9);
+  color: white;
   font-weight: bold;
   margin-right: 0.57rem;
   -webkit-initial-letter: 1.25;
   initial-letter: 1.35;
 }
+div > p.paraCreator::first-letter,
 .summary > p::first-letter,
-.summary::first-letter,
 .section > p::first-letter,
-.FileSummary p::first-letter,
-p.paraCreator2::first-letter {
-  color: rgba(255, 190, 150, 0.9);
+.FileSummary p::first-letter {
+  color: white;
   font-weight: bold;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   margin-right: 0.55rem;
   margin-bottom: 0.5rem;
   -webkit-initial-letter: 1.25;
@@ -621,15 +616,7 @@ p.style {
   border: 1px solid rgb(1, 34, 31);
   box-shadow: 1px 1px 5px 2px rgba(250, 170, 50, 0.596);
 }
-.flexcol {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  direction: column;
-  padding-inline: 0.75rem;
-  margin-block: 2rem;
-  gap: 0.25rem;
-}
+
 .flexcol {
   display: flex;
   justify-content: space-evenly;
@@ -638,7 +625,7 @@ p.style {
   padding-inline: 0.75rem;
   margin-block: 2rem;
   gap: 0.25rem;
-  width: 80%;
+  min-width: 100%;
   margin-inline: auto;
 }
 .flexcollg {
