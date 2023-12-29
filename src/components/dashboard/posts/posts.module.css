@@ -73,13 +73,15 @@
 }
 .postDeleteBtn {
   position: absolute;
-  top: 0.25rem;
+  top: -5%;
   left: 0.25rem;
   font-size: 120%;
   color: rgba(243, 67, 67, 0.7);
   background: white;
+  border: 1px solid red;
   border-radius: 50%;
   padding: 0.5rem;
+  z-index: 1;
 }
 .postItemSub > h2 {
   position: relative;

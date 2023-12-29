@@ -51,7 +51,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
         if (complete) {
             try {
                 const res = await fetch("/api/post", {
-                    method: "POST",
+                    method: "PUT",
                     body: JSON.stringify(post)
                 });
                 if (res.ok) {

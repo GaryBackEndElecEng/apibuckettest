@@ -29,9 +29,13 @@ export async function compToHash(pswd: string, hash: string) {
 
 export function calcAvg(rates: rateType[]): number {
     const len: number = rates.length ? rates.length : 1;
-    const retAvg: number = rates.reduce((a, b) => (a + b.rate), 0) / len;
-    const round = Math.round(retAvg);
-    return round
+    if (rates && rates.length > 0) {
+        const retAvg: number = rates.reduce((a, b) => (a + b.rate), 0) / len;
+        const round = Math.round(retAvg);
+        return round
+    } else {
+        return 1
+    }
 }
 export function calcLikes(likes: likeType[]): likeIcon[] {
     let arr: likeIcon[] = []
@@ -317,6 +321,7 @@ export function ArrRateFileResult(files: fileType[]) {
 export function ArrRatePostResult(posts: postType[]) {
     let arr: nameRateType[] = []
     posts.map((post, index) => {
+        if (!post.rates) return
         const len = post.rates && post.rates.length > 0 ? post.rates.length : 1;
         const calcAv = post.rates.reduce((a, b) => (a + b.rate), 0);
         const rateAv = Math.round(calcAv / len)
@@ -384,6 +389,7 @@ export function usePostLikes(posts: postType[]): likeIcon[] {
         if (posts) {
             posts.map(post => {
                 likeArr.map(iconName => {
+                    if (!post.likes) return
                     const likeNames = post.likes.filter(like => (like.name === iconName.name));
                     concatArr.push({ name: iconName.name, count: likeNames.length, icon: iconName.icon })
                 });
