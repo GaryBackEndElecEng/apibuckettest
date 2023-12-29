@@ -206,8 +206,8 @@
     transform: translateY(-390%);
   }
   .masterFooterHeader {
-    background-position: 10% 10%;
-    background-size: 150% 100%;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
   }
   .three {
     flex-direction: column;

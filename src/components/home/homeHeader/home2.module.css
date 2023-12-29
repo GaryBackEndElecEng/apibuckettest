@@ -3,12 +3,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   margin-block: 1rem;
-  margin-inline: auto;
-  color: black;
 }
-.hideHeader {
+.hide {
   display: none;
 }
 .mainHeader > h1 {
@@ -38,10 +36,10 @@
 }
 .mainHeaderGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(400px, 1fr));
+  grid-template-columns: minmax(600px, 900px);
   grid-template-rows: max-content;
   place-items: center;
-  gap: 1rem;
+  padding: 3rem;
 }
 .childGrid {
   margin: auto;
@@ -55,7 +53,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  padding: 1rem;
+  padding: 3rem;
   box-shadow: 1px 1px 20px 2px white;
   background: white;
 }
@@ -67,9 +65,9 @@
   border-radius: inherit;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: 3px;
   padding-block: 3rem;
   padding-inline: 5rem;
 }
@@ -78,15 +76,38 @@
   opacity: 1;
   margin: auto;
   border-radius: inherit;
-  animation: growIn 3s ease-in-out;
+  font-size: 180%;
+  font-weight: bold;
+  line-height: auto;
+  padding-inline: 0;
+  animation: growIn2 forwards 5s;
+}
+.wrdSalad > p.spanStart,
+.wrdSalad > p.spanEnd,
+.wrdSalad > p.spanMiddle {
+  line-height: 1.25rem;
 }
 .wrdSalad > p.spanMiddle {
   opacity: 1;
   margin: auto;
   border-radius: inherit;
-  font-size: 180%;
-  font-weight: bold;
-  animation: growIn2 forwards 5s;
+  animation: growIn 3s ease-in-out;
+  font-size: 110%;
+  color: black;
+}
+.logoImage {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 1s ease-in-out;
+  border-radius: 50%;
+  border: 1px solid hsla(19, 100%, 50%, 0.5);
+}
+.logoHide {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1s ease-in-out;
+  border-radius: 50%;
+  box-shadow: none;
 }
 @keyframes growIn {
   from {
@@ -108,18 +129,16 @@
     transform: translateY(0%) scale(1);
   }
 }
-.spanStart,
-.spanEnd {
-  font-size: 130%;
-  color: black;
-}
-.spanStart::first-letter {
+.showTools::first-letter,
+.spanStart::first-letter,
+.spanEnd::first-letter {
   color: rgb(142, 44, 3);
   font-weight: bold;
-  font-size: 1.75rem;
+  font-size: 105%;
 }
 .showTools {
   opacity: 1;
+  font-size: 130%;
   transform: translateY(0%);
   transition: all 3s ease-in-out;
 }
@@ -128,33 +147,25 @@
   transform: translateY(-200%);
   transition: all 3s ease-in-out;
 }
-.login {
-  background: black;
-  color: white;
-  border-radius: 20px 20px 20px 20px;
-  padding-inline: 2rem;
-  padding-block: 1.25rem;
-}
+
 @media screen and (max-width: 920px) {
-  .mainHeader {
-    width: 100%;
-  }
-  .spanStart,
-  .spanEnd {
-    font-size: 115%;
-  }
-  .wrdSalad > p.spanMiddle {
-    font-size: 140%;
-  }
   .mainHeaderGrid {
     display: grid;
-    grid-template-columns: minmax(400px, 600px);
-    grid-template-rows: minmax(400px, 600px);
+    grid-template-columns: minmax(400px, 920px);
+    grid-template-rows: max-content;
   }
   .wrdSalad {
-    padding-block: 3rem;
-    padding-inline: 5rem;
-    gap: 0;
+    padding-block: 2rem;
+    padding-inline: 4rem;
+    shape-outside: circle();
+  }
+  .childGrid {
+    padding: 1rem;
+  }
+  .wrdSalad > p.spanStart,
+  .wrdSalad > p.spanEnd,
+  .wrdSalad > p.spanMiddle {
+    line-height: 1.25rem;
   }
 }
 @media screen and (max-width: 480px) {
@@ -165,24 +176,24 @@
   }
   .wrdSalad {
     padding: 2rem;
-    padding-block: 4rem;
+    padding-block: 3rem;
   }
   .wrdSalad > p.spanStart,
   .wrdSalad > p.spanEnd {
-    font-size: 100%;
+    font-size: 130%;
   }
   .wrdSalad > p.spanMiddle {
-    font-size: 130%;
+    font-size: 100%;
   }
 }
 @media screen and (max-width: 420px) {
+  .showTools {
+    font-size: 100%;
+    text-align: center;
+  }
   .mainHeaderGrid {
     display: grid;
     grid-template-columns: minmax(350px, 410px);
     grid-template-rows: max-content;
-  }
-  .wrdSalad {
-    padding: 2rem;
-    padding-block: 5rem;
   }
 }
