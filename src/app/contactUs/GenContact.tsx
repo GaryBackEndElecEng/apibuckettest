@@ -38,6 +38,7 @@ export default function GenContact() {
                 });
                 const body: fetchContactType = await res.json();
                 setMsg({ loaded: true, msg: body.message });
+                toast.success("recieved")
 
                 toast.success(`sent:${body.message}`);
             } catch (error) {
@@ -68,7 +69,7 @@ export default function GenContact() {
                     type="text"
                     value={genContact.subject ? genContact.subject : ""}
                     onChange={(e) => handleOnChange(e)}
-                    style={{ fontFamily: "bold" }}
+                    style={{ fontFamily: "bold", background: "white", color: "black" }}
                 />
                 <TextField
                     fullWidth={true}
@@ -83,7 +84,7 @@ export default function GenContact() {
                     type="email"
                     value={genContact.email ? genContact.email : ""}
                     onChange={(e) => handleOnChange(e)}
-                    style={{ fontFamily: "bold" }}
+                    style={{ fontFamily: "bold", background: "white", color: "black" }}
                 />
                 <TextField
                     fullWidth={true}
@@ -99,7 +100,7 @@ export default function GenContact() {
                     type="text"
                     value={genContact.content ? genContact.content : ""}
                     onChange={(e) => handleOnChange(e)}
-                    style={{ fontFamily: "bold" }}
+                    style={{ fontFamily: "bold", background: "white", color: "black" }}
                 />
                 <div className="flex flex-row justify-center items-center gap-2 my-3">
                     <button className={button} onClick={(e) => handleSend(e)}>send</button>

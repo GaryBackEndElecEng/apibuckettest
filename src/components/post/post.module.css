@@ -436,6 +436,9 @@
   }
 }
 @media screen and (max-width: 480px) {
+  .userProfileTwo {
+    padding-inline: 5px;
+  }
   .layoutPostsContainer {
     width: 100%;
     padding-inline: 0.25rem;

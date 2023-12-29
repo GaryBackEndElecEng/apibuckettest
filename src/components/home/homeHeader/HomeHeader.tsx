@@ -5,6 +5,7 @@ import styles from "./home2.module.css"
 import { FaExclamation } from "react-icons/fa";
 import GiveTools from "./GiveTools";
 import LogoImage from "./LogoImage";
+import Login from "@component/comp/Login";
 
 export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
     const colorWld = "/images/colorWorld.png";
@@ -39,6 +40,9 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
 
             </div>
             <GiveTools phr={phr} />
+            <div className={styles.Login}>
+                <Login />
+            </div>
         </div>
     )
 }

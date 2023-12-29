@@ -540,6 +540,9 @@ div.allBlog_container {
     padding-inline: 0;
   }
 }
+.paraCreator {
+  padding-inline: 3px;
+}
 .learningIsLiving {
   position: relative;
   display: flex;
