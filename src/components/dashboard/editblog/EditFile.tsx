@@ -12,7 +12,7 @@ import styles from "@dashboard/editblog/editblog.module.css";
 import "@pages/globalsTwo.css"
 import { SeparatePara } from "@lib/ultils";
 import Link from 'next/link';
-import toast from 'react-hot-toast';
+import toast, { ToastBar } from 'react-hot-toast';
 
 
 type fetchType = {
@@ -44,6 +44,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
                 setFile_(body.file);
                 setBlogMsg({ loaded: true, msg: body.message });
                 setLoaded(true);
+                toast.success(" saved")
             }
         } catch (error) {
             const message = getErrorMessage(error);
@@ -68,6 +69,8 @@ export default function EditFile({ user, file }: mainCreateFileType) {
                 setFile_({ ...file, imageKey: Key, imageUrl: `${url}/${Key}` });
                 // setMessage({ loaded: true, msg: "saved" })
                 toast.success("pic saved")
+            } else if (data.status > 200 && data.status < 420) {
+                toast.error("pic is too large, resize please")
             } else {
                 // setMessage({ loaded: false, msg: "not saved" })
                 toast.error(" pic not saved- something went wrong")

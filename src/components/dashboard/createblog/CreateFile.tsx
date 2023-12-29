@@ -52,6 +52,7 @@ export default function CreateFile({ user, file }: mainCreateFileType) {
                 setLoaded(true);
                 toast.success(`blog saved: ${body.message}`)
             }
+
         } catch (error) {
             const message = getErrorMessage(error);
             console.error(`${message}@file`)

@@ -15,7 +15,7 @@ export default function UserProfile({ user }: { user: userType | undefined }) {
     return (
         <React.Fragment>
             {user && <div className={`${styles.user}`}>
-                <h3 className="text-center text-xl mb-1">{user.name && NameSep(user.name)}</h3>
+                <h3 className="text-center text-xl mb-1">{user.name && user.name}</h3>
                 {user.image ?
                     <Image src={user.image} width={75} height={75} alt="www.ablogroom.com" priority
                         placeholder="blur"

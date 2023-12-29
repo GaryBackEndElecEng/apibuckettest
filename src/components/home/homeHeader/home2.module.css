@@ -91,6 +91,7 @@
 .wrdSalad > p.spanMiddle {
   opacity: 1;
   margin: auto;
+
   border-radius: inherit;
   animation: growIn 3s ease-in-out;
   font-size: 110%;
@@ -190,7 +191,6 @@
     grid-template-rows: max-content;
   }
   .wrdSalad {
-    padding: 2rem;
     padding-block: 3rem;
   }
   .wrdSalad > p.spanStart,

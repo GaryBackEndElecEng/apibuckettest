@@ -225,7 +225,7 @@ section p.paraCreator::first-letter,
 article p.paraCreator::first-letter,
 p.paraCreator::first-letter {
   font-weight: bold;
-  color: inherit;
+  color: white;
   margin-right: 0.25rem;
   margin-left: 0.5rem;
   margin-bottom: 0.5rem;
