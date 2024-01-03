@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import PostRatesLikes from '@component/post/PostRatesLikes';
 import styles from "@component/post/post.module.css";
 import Link from 'next/link';
+import { SeparatePara } from '@/lib/ultils';
 
 
 
@@ -15,8 +16,10 @@ export default function PostItem({ post, user }: { post: postType, user: userTyp
     const router = useRouter();
     const handleLink = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
-        if (post.bloglink) {
+        if (post.bloglink && post.bloglink.startsWith("/blogs")) {
             router.push(post.bloglink)
+        } else if (post.bloglink && post.bloglink.startsWith("http")) {
+            window.open(post.bloglink, "blank");
         }
     }
 
@@ -36,8 +39,8 @@ export default function PostItem({ post, user }: { post: postType, user: userTyp
                     />
 
                 }
-
-                <p className="paraCreator">{post.content}</p>
+                <h2> tap to view link</h2>
+                <SeparatePara para={post.content} class_={"paraPost"} />
                 <div className="line-break-sm" />
                 <UserProfileTwo user={user} />
                 <div className="line-break-sm" />

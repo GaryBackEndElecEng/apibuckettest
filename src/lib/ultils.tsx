@@ -112,9 +112,13 @@ export function SeparatePara({ para, class_ }: { para: string, class_: string })
     var retArr: React.JSX.Element[] = []
     if (arr) {
         retArr = arr.map((pg: string, index) => {
-            return (
-                <p className={`paraCreatorNew ${class_}`} key={index}>{pg}</p>
-            )
+            if (pg) {
+                return (
+                    <p className={`paraCreatorNew ${class_}`} key={index}>{pg}</p>
+                )
+            } else {
+                return (<></>)
+            }
         });
     }
     return retArr

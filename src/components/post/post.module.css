@@ -104,6 +104,12 @@
   margin-inline: auto;
   cursor: pointer;
 }
+.handlelink > h2 {
+  margin: auto;
+  padding-block: 2rem;
+  font-weight: bold;
+  padding-inline: auto;
+}
 .card {
   margin: auto;
   position: relative;

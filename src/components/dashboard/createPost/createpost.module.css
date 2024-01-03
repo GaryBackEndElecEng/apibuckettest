@@ -58,6 +58,7 @@
   margin-block: 1rem;
   margin-inline: 10rem;
   width: 100%;
+  position: relative;
 }
 .displayContent > h1 {
   margin: auto;
@@ -72,7 +73,6 @@
   border-radius: 15px 15px 15px 15px;
   filter: drop-shadow(1px 1px 7px white);
   border: 1px solid black;
-  aspect-ratio: 16 / 9;
   width: auto;
 }
 .displayContent > p {

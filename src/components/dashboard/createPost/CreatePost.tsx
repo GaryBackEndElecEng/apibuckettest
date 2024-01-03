@@ -30,7 +30,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
     const { setPost, setPosts, posts, setPostMsg, postMsg } = usePostContext()
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
-
+    const [isBlogLink, setIsBlogLink] = React.useState<boolean>(false);
     const [temImage, setTemImage] = React.useState<string | undefined>();
 
 
@@ -72,7 +72,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
 
     }
 
-    const postOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const postOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         e.preventDefault();
         setPost({
             ...post as postType,
@@ -156,24 +156,51 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
                             onChange={postOnChange}
                             style={{ width: "100%" }}
                         />
-                        {userBlogs &&
-                            <React.Fragment>
+                        <label htmlFor="isBlogLink">attach a blog?</label>
+                        <input
+                            id="isBlogLink"
+                            type="checkbox"
+                            checked={isBlogLink}
+                            onChange={(e) => setIsBlogLink(e.target.checked)}
+                        />
+                        {userBlogs && isBlogLink ?
+                            (<React.Fragment>
                                 <label htmlFor="bloglink">attach a blog?</label>
                                 <select
                                     id="bloglink"
                                     name="bloglink"
-                                    onChange={(e) => setPost({ ...post as postType, [e.target.name]: e.target.value })}
+                                    onChange={postOnChange}
                                 >
                                     {userBlogs.map((file, index) => {
-                                        if (file.id) {
+                                        if (file.id && index > 0) {
                                             const postU = `/blogs/${file.id}`
                                             return (
                                                 <option key={index} value={postU}>{file.title}</option>
                                             )
+                                        } else {
+                                            return (
+                                                <option key={index} disabled={true}>select</option>
+                                            )
                                         }
                                     })}
                                 </select>
-                            </React.Fragment>
+                            </React.Fragment>)
+                            :
+                            (
+                                <TextField
+                                    fullWidth={false}
+                                    helperText={"Add a link"}
+                                    id={"link"}
+                                    label={"add a link"}
+                                    multiline={false}
+                                    name={"bloglink"}
+                                    placeholder="add a link"
+                                    size={"medium"}
+                                    type="text"
+                                    value={post?.bloglink}
+                                    onChange={postOnChange}
+                                />
+                            )
                         }
 
                         {complete &&
@@ -205,7 +232,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
                     <h1 >{post.name}</h1>
                     {post.imageUrl &&
                         <Image src={post.imageUrl} width={600} height={400} alt="www"
-                            className="aspect-video"
+
                         />
                     }
                     <p>{post.content}</p>
@@ -219,7 +246,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
 
                     {temImage &&
                         <Image src={temImage} width={600} height={400} alt="www"
-                            className="aspect-video"
+
                         />
                     }
                     <p>{post.content}</p>
