@@ -28,7 +28,7 @@ export default function ContactResponses({ user }: { user: userType | null }) {
     }, [user])
     return (
         <React.Fragment>
-            <h3 className="text-center font-bold">contacts</h3>
+            <h3 className="text-center font-bold">contact responses</h3>
             <div className="flex flex-col w-full px-1 mx-auto h-[15vh] overflow-y-scroll">
                 {
                     getContacts && getContacts.map((contact, index) => (

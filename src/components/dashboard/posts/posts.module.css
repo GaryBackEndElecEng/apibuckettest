@@ -93,11 +93,11 @@
 }
 .postItemSub > img {
   margin: auto;
-  aspect-ratio: 16 / 9;
   border-radius: 20px 20px 20px 20px;
   filter: drop-shadow(1px 1px 6px white);
   border: 1px solid black;
   width: auto;
+  height: auto;
 }
 .postItemSub > p {
   margin: auto;

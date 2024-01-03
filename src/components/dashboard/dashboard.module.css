@@ -71,7 +71,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
   position: relative;
 }
@@ -297,107 +297,7 @@
   padding-inline: 1rem;
 }
 /*--ShowRates--- */
-@media screen and (max-width: 980px) {
-  .masterGrid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .grid_One,
-  .grid_Two,
-  .grid_Three {
-    grid-column: 1;
-  }
-}
-@media screen and (max-width: 940px) {
-  .dashboardLayout {
-    margin: auto;
-    width: 100%;
-    padding-inline: 1rem;
-  }
-  .openUpdateUser {
-    height: 80vh;
-  }
-  @keyframes bringDown {
-    from {
-      transform: translateX(0%) scale(1);
-      opacity: 0.3;
-      height: 80vh;
-    }
-    to {
-      transform: translateX(-100%) scale(0.4);
-      opacity: 0;
-      z-index: -1;
-      height: 0;
-    }
-  }
-  @keyframes bringIn {
-    from {
-      transform: translateX(-50%) scale(0.4);
-      opacity: 0.3;
-      z-index: 1;
-      height: 0;
-    }
 
-    to {
-      transform: translateX(0%) scale(1);
-      opacity: 1;
-      height: 80vh;
-    }
-  }
-}
-@media screen and (max-width: 440px) {
-  .dashboardLayout {
-    padding-inline: 10px;
-  }
-  .openUpdateUser {
-    height: 150vh;
-  }
-  @keyframes bringDown {
-    from {
-      transform: translateX(0%) scale(1);
-      opacity: 0.3;
-      height: 110vh;
-    }
-    to {
-      transform: translateX(-100%) scale(0.4);
-      opacity: 0;
-      z-index: -1;
-      height: 0;
-    }
-  }
-  @keyframes bringIn {
-    from {
-      transform: translateX(-50%) scale(0.4);
-      opacity: 0.3;
-      z-index: 1;
-      height: 0;
-    }
-
-    to {
-      transform: translateX(0%) scale(1);
-      opacity: 1;
-      height: 110vh;
-    }
-  }
-}
-
-/*---Dash Signup---------- */
-.signupMain {
-  display: grid;
-  margin-top: 2rem;
-  place-items: center;
-  padding: 20rem;
-  background: black;
-  margin-block: 10rem;
-  border-radius: 15px 15px 15px 15px;
-  filter: drop-shadow(2px 2px 10px white);
-}
-.signupMain > div {
-  margin: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-}
-/*---Dash Signup---------- */
 /*---userUpdate ---------- */
 .userUpDatemain {
   position: relative;
@@ -455,6 +355,146 @@
   margin-block: 1rem;
 }
 /*---userUpdate ---------- */
+
+@media screen and (max-width: 1200px) {
+  .openUpdateUser {
+    min-height: 110vh;
+  }
+
+  @keyframes bringDown {
+    from {
+      transform: translateX(0%) scale(1);
+      opacity: 1;
+      height: 110vh;
+    }
+    to {
+      transform: translateX(-100%) scale(0.4);
+      opacity: 0;
+      z-index: -1;
+      height: 0;
+    }
+  }
+  @keyframes bringIn {
+    from {
+      transform: translateX(-50%) scale(0.4);
+      opacity: 0.3;
+      z-index: 1;
+      height: 0;
+    }
+
+    to {
+      transform: translateX(0%) scale(1);
+      opacity: 1;
+      height: 110vh;
+    }
+  }
+}
+@media screen and (max-width: 980px) {
+  .masterGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .grid_One,
+  .grid_Two,
+  .grid_Three {
+    grid-column: 1;
+  }
+}
+@media screen and (max-width: 980px) {
+  .dashboardLayout {
+    margin: auto;
+    width: 100%;
+    padding-inline: 1rem;
+  }
+  .openUpdateUser {
+    min-height: 105vh;
+  }
+  @keyframes bringDown {
+    from {
+      transform: translateX(0%) scale(1);
+      opacity: 1;
+      height: 105vh;
+    }
+    to {
+      transform: translateX(-100%) scale(0.4);
+      opacity: 0;
+      z-index: -1;
+      height: 0;
+    }
+  }
+  @keyframes bringIn {
+    from {
+      transform: translateX(-50%) scale(0.4);
+      opacity: 0.3;
+      z-index: 1;
+      height: 0;
+    }
+
+    to {
+      transform: translateX(0%) scale(1);
+      opacity: 1;
+      height: 105vh;
+    }
+  }
+  .gridTwo {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: max-content;
+  }
+}
+@media screen and (max-width: 440px) {
+  .dashboardLayout {
+    padding-inline: 10px;
+  }
+  .openUpdateUser {
+    height: 160vh;
+  }
+  @keyframes bringDown {
+    from {
+      transform: translateX(0%) scale(1);
+      opacity: 0.3;
+      height: 160vh;
+    }
+    to {
+      transform: translateX(-100%) scale(0.4);
+      opacity: 0;
+      z-index: -1;
+      height: 0;
+    }
+  }
+  @keyframes bringIn {
+    from {
+      transform: translateX(-50%) scale(0.4);
+      opacity: 0.3;
+      z-index: 1;
+      height: 0;
+    }
+
+    to {
+      transform: translateX(0%) scale(1);
+      opacity: 1;
+      height: 160vh;
+    }
+  }
+}
+
+/*---Dash Signup---------- */
+.signupMain {
+  display: grid;
+  margin-top: 2rem;
+  place-items: center;
+  padding: 20rem;
+  background: black;
+  margin-block: 10rem;
+  border-radius: 15px 15px 15px 15px;
+  filter: drop-shadow(2px 2px 10px white);
+}
+.signupMain > div {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+/*---Dash Signup---------- */
+
 /*---UserBlogs------- ---------- */
 .mainUserBlogs {
   display: flex;
@@ -507,14 +547,16 @@
   .signupMain {
     padding: 10rem;
   }
+  .gridTwo {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: max-content;
+  }
 }
 @media screen and (max-width: 450px) {
   .masterGrid {
     margin-inline: 0.5rem;
   }
-  .gridTwo {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
+
   .signupMain {
     padding: 5rem;
   }

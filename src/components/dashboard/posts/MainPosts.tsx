@@ -8,6 +8,7 @@ import { getErrorMessage } from '@/lib/errorBoundaries';
 import { postType, userType } from '@/lib/Types';
 import PostsDashboard from "@component/dashboard/posts/PostsDashboard";
 import { Session } from 'next-auth';
+import toast from 'react-hot-toast';
 
 
 type postsfetchType = {
@@ -35,7 +36,7 @@ export default function MainPosts({ getuser, getposts }: mainPostsType) {
         setUser(getuser);
         if (!getposts) return
         setUserPosts(getposts);
-        setPostMsg({ loaded: true, msg: "recieved" })
+        toast.success("recieved posts")
     }, [getuser, getposts, setUser, setUserPosts, setPostMsg]);
 
 

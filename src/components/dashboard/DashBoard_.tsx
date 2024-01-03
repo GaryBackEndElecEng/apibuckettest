@@ -47,12 +47,13 @@ export default function DashBoard_({ getuser, getUserfiles, getUserPosts }: Dash
         setUserBlogs(getUserfiles);
         if (!getUserPosts) return
         setUserPosts(getUserPosts)
+        toast.success("recieved blogs");
     }, []);
 
     React.useEffect(() => {
         if (msg && msg.msg) {
             if (msg.loaded) {
-                toast.success(msg.msg)
+                // toast.success(msg.msg)
             } else {
                 toast.error(msg.msg)
             }
