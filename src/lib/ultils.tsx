@@ -113,7 +113,7 @@ export function SeparatePara({ para, class_ }: { para: string, class_: string })
     if (arr) {
         retArr = arr.map((pg: string, index) => {
             return (
-                <p className={`paraCreator ${class_}`} key={index}>{pg}</p>
+                <p className={`paraCreatorNew ${class_}`} key={index}>{pg}</p>
             )
         });
     }

@@ -94,6 +94,9 @@ div.link > h3 {
     padding-inline: 0.25rem;
     font-size: 110%;
   }
+  .paraCreatorNew {
+    padding-inline: 0.25rem;
+  }
 }
 @media screen and (max-width: 480px) {
   .mainHeaderTrue {
@@ -104,6 +107,9 @@ div.link > h3 {
   .mainHeaderFalse {
     background-position: 30% 50%;
     background-size: 150% 160%;
+  }
+  .paraCreatorNew {
+    padding-inline: 10px;
   }
 }
 section.code > div {
@@ -174,6 +180,7 @@ article.article {
   padding-inline: 0.15rem;
   background: rgba(0, 0, 0, 1);
   color: white;
+  width: 100%;
   border-radius: 15px 15px 15px 15px;
 }
 section.section > h4,
@@ -221,25 +228,14 @@ section.replyForm p {
   margin-inline: 0.5rem;
   padding-inline: 0.5rem;
 }
-section p.paraCreator::first-letter,
-article p.paraCreator::first-letter,
-p.paraCreator::first-letter {
-  font-weight: bold;
-  color: white;
-  margin-right: 0.15rem;
-  margin-left: 0.5rem;
-  margin-bottom: 0.5rem;
-  -webkit-initial-letter: 1.25;
-  initial-letter: 1.25;
-}
 
-.paraCreator {
-  color: white;
+.paraCreatorNew {
   padding-inline: 1.5rem;
   padding-block: 1rem;
   line-height: 2rem;
   font-size: 110%;
-  background: black;
+  /* width: auto; */
+  width: 100%;
   border-radius: 20px 20px 20px 20px;
 }
 div.listContainer {
@@ -377,28 +373,8 @@ blockquote.reply::before {
   height: 100%;
   border-radius: 50px 0px 0px 50px;
   background: hsla(36, 89%, 68%, 0.9);
-  /* box-shadow: 1px 1px 3px 1px hsl(187, 95%, 50%),
-    -1px 11px 3px 1px hsl(187, 95%, 30%); */
 }
 
-.conclusion > p::first-letter {
-  color: white;
-  font-weight: bold;
-  margin-right: 0.57rem;
-  -webkit-initial-letter: 1.25;
-  initial-letter: 1.35;
-}
-div > p.paraCreator::first-letter,
-.summary > p::first-letter,
-.section > p::first-letter,
-.FileSummary p::first-letter {
-  color: white;
-  font-weight: bold;
-  margin-right: 0.55rem;
-  margin-bottom: 0.5rem;
-  -webkit-initial-letter: 1.25;
-  initial-letter: 1.25;
-}
 .FileSummary {
   font-size: 150%;
 }
@@ -540,9 +516,10 @@ div.allBlog_container {
     padding-inline: 0;
   }
 }
-.paraCreator {
-  padding-inline: 3px;
+.paraCreatorNew {
+  padding-block: 10px;
 }
+
 .learningIsLiving {
   position: relative;
   display: flex;
@@ -722,13 +699,8 @@ p.style {
   gap: 1rem;
 }
 @media screen and (max-width: 940px) {
-  .paraCreator {
-    padding-inline: 1rem;
+  .paraCreatorNew {
+    padding-inline: auto;
     padding-block: 0.75rem;
-  }
-}
-@media screen and (max-width: 480px) {
-  .paraCreator {
-    padding-inline: 0.5rem;
   }
 }

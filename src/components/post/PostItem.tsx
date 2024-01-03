@@ -26,7 +26,7 @@ export default function PostItem({ post, user }: { post: postType, user: userTyp
             <div onClick={(e) => handleLink(e)} className={styles.handleLink}>
                 {post.imageUrl &&
 
-                    <Image src={post.imageUrl} width={900} height={600}
+                    <Image src={post.imageUrl} width={900} height={900}
                         alt={post.name}
                         className={styles.postImage}
                         priority

@@ -67,7 +67,7 @@ export default function CreateInputs({ fileId, user }: MainInputsType) {
         e.preventDefault();
         //INITIAL INPUT ADDED----------------//
         const inputSelect: inputType | undefined = inputNames.find(select => (select.type === selectType));
-        if (fileId && inputSelect && input_s) {
+        if (fileId && inputSelect && input_s && inputSelect.type !== "select") {
             const inputLen = input_s ? input_s.length + 1 : 1;
             const input_type = { ...inputSelect, fileId: fileId, order: inputLen }
 

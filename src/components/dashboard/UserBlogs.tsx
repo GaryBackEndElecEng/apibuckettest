@@ -20,6 +20,7 @@ type userBlogsType = {
 }
 export default function UserBlogs({ user, userBlogs }: userBlogsType) {
     const { setUserBlogs, setBlogMsg, blogMsg } = useBlogContext();
+    const [delFileID, setDelFileID] = React.useState<string | null>(null);
     const [showPopup, setShowPopup] = React.useState<{ loaded: boolean, id: string | undefined }>({ loaded: false, id: undefined })
 
 
@@ -44,7 +45,9 @@ export default function UserBlogs({ user, userBlogs }: userBlogsType) {
                                 <AiFillDelete style={{ color: "red", background: "black" }} />
                             </IconButton>
                             {showPopup.loaded && showPopup.id === blog.id &&
-                                <BlogPopup fileId={blog.id} setShowPopup={setShowPopup} />
+                                <BlogPopup fileId={blog.id} setShowPopup={setShowPopup}
+                                    setUserBlogs={setUserBlogs}
+                                    setDelFileID={setDelFileID} />
                             }
                             <UserBlog blog={blog} user={user} />
                             <Link href={`/dashboard/blogdetail/${blog.id}`} className="flexcol">

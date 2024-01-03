@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from "./dashboard.module.css"
 import { getErrorMessage } from '@/lib/errorBoundaries';
-import { fileType } from '@/lib/Types';
+import { fileType, postType } from '@/lib/Types';
 import { useBlogContext } from '../context/BlogContextProvider';
 import { toast } from 'react-hot-toast';
 
@@ -16,10 +16,11 @@ type popupType = {
         loaded: boolean;
         id: string | undefined;
     }>>,
-
+    setUserBlogs: React.Dispatch<React.SetStateAction<fileType[]>>,
+    setDelFileID: React.Dispatch<React.SetStateAction<string | null>>,
 }
-export default function BlogPopup({ fileId, setShowPopup }: popupType) {
-    const { setBlogMsg, setUserBlogs, userBlogs } = useBlogContext();
+export default function BlogPopup({ fileId, setShowPopup, setUserBlogs, setDelFileID }: popupType) {
+    const { setBlogMsg, userBlogs } = useBlogContext();
 
     const handleDelete = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -31,6 +32,7 @@ export default function BlogPopup({ fileId, setShowPopup }: popupType) {
                 const body: fetchDelType = await res.json();
                 const reduce_ = userBlogs.filter(file => file.id !== fileId);
                 setUserBlogs(reduce_);
+                setDelFileID(fileId as string);
                 toast.success(body.message)
 
 

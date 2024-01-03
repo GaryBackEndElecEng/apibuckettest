@@ -30,7 +30,7 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
     const checkInput = (input && input.type) ? input : null;
     const [image, setImage] = React.useState<string | null>(null);
     const { setBlogMsg, blogMsg, input_s, setInput_s } = useBlogContext();
-    const type: string | null = checkInput && checkInput.type;
+    const type: string | null = (checkInput && checkInput.name !== "fill") ? checkInput.type : null;
     const s3Key: string | null = input.s3Key ? input.s3Key : null;
     const check: boolean = (type && type === "image" && s3Key && !input.url) ? true : false;
     const [contentArray, setContentArray] = React.useState<contentStyle[]>([]);

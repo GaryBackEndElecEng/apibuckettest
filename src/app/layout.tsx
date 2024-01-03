@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google';
 import './globals.css';
-import "@pages/globalsTwo.css";
 import Nav from "@component/nav/Nav";
 import Providers from "./providers";
 import GeneralContextProvider from '@/components/context/GeneralContextProvider';

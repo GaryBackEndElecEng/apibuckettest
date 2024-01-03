@@ -182,6 +182,7 @@ export type GetServerSidePropsResult<P> =
     | { notFound: true }
 
 export const inputNames: inputType[] = [
+    { type: "select", name: "select", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "image", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "heading", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
     { type: "subHeading", name: "fill", order: 0, content: "fill", url: null, s3Key: null, fileId: "fill" },
