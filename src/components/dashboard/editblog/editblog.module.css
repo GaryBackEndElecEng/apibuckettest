@@ -73,7 +73,6 @@
 }
 .fileImg {
   margin: auto;
-  aspect-ratio: 16 / 9;
   align-self: center;
   filter: drop-shadow(1px 1px 5px black);
   border: 1px solid black;

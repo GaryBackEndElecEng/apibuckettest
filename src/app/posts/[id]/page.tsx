@@ -9,7 +9,6 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import styles from "@component/post/post.module.css";
 import PostHeader from "@component/post/PostHeader";
 import PostItem from "@component/post/PostItem";
-// import "../../globalsTwo.css"
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import { notFound } from 'next/navigation';
 

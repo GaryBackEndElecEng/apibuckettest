@@ -1,7 +1,6 @@
 "use client";
 import { contentStyle, inputType, targetType } from '@/lib/Types';
 import React from 'react';
-import "@pages/globalsTwo.css"
 import Image from 'next/image';
 import { ConvertToFormula, ConvertToList, SeparatePara, parseStyle, getEmoj, emojArr } from "@lib/ultils";
 import { getErrorMessage } from '@/lib/errorBoundaries';
@@ -253,7 +252,7 @@ export default function GenInput({ input, setInput, setIsSelected, setIsDeleted 
                                 </h4>
                             </React.Fragment>
                         }
-                        <SeparatePara para={input.content} class_={"pSection"} />
+                        <SeparatePara para={input.content} class_={""} />
                     </section>
                 </React.Fragment>
 

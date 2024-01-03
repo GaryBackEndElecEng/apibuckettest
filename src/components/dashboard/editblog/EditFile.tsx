@@ -9,7 +9,6 @@ import { useBlogContext } from '@/components/context/BlogContextProvider';
 import { getErrorMessage } from '@/lib/errorBoundaries';
 import CreateInputs from "@component/dashboard/createblog/CreateInputs";
 import styles from "@dashboard/editblog/editblog.module.css";
-import "@pages/globalsTwo.css"
 import { SeparatePara } from "@lib/ultils";
 import Link from 'next/link';
 import toast, { ToastBar } from 'react-hot-toast';
@@ -163,7 +162,7 @@ export default function EditFile({ user, file }: mainCreateFileType) {
                             priority
                             style={{ width: "auto" }}
                         />}
-                        {file.content && <SeparatePara para={file.content} class_={styles.content} />}
+                        {file.content && <SeparatePara para={file.content} class_={"paraBlog"} />}
                         <React.Fragment>
                             <CreateInputs user={user} fileId={file.id} />
                         </React.Fragment>
