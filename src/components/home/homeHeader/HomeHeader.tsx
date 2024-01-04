@@ -9,7 +9,7 @@ import Login from "@component/comp/Login";
 
 export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
     const colorWld = "/images/colorWorld.png";
-    const logo = "/images/logo_125.png";
+    const logo = "/images/logo_500.png";
     const len = wordSalad1.length;
     const lenHalf = Math.floor(len / 2);
     const [tools, setTools] = React.useState<boolean>(false);
@@ -22,6 +22,7 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
         <div className={!isLoggedIn ? styles.mainHeader : styles.hide}>
             <h1 style={{ backgroundImage: `url(${colorWld})` }}> CREATE YOUR BLOG/POST</h1>
             <LogoImage logo={logo} />
+            <h2> We welcome all</h2>
             <h3> www.ablogroom.com</h3>
             <div className={styles.mainHeaderGrid}>
                 <div className={styles.childGrid}>

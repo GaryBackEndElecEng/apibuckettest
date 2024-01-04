@@ -220,7 +220,7 @@
   }
   .footerGrid {
     margin-inline: 10px;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
   .two {
     grid-column: 1;

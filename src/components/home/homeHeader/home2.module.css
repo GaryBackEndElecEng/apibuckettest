@@ -3,8 +3,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
+  /* width: 100%; */
   margin-block: 1rem;
+  margin: auto;
+  position: relative;
 }
 .hide {
   display: none;
@@ -16,7 +18,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   animation: repeatAlways 20s infinite;
-  font-size: 120%;
+  font-size: 150%;
   text-decoration: underline;
   text-underline-offset: 1.25rem;
 }
@@ -86,7 +88,7 @@
 .wrdSalad > p.spanStart,
 .wrdSalad > p.spanEnd,
 .wrdSalad > p.spanMiddle {
-  line-height: 1.25rem;
+  line-height: 2rem;
 }
 .wrdSalad > p.spanMiddle {
   opacity: 1;
@@ -181,14 +183,18 @@
   .wrdSalad > p.spanStart,
   .wrdSalad > p.spanEnd,
   .wrdSalad > p.spanMiddle {
-    line-height: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 @media screen and (max-width: 480px) {
+  .mainHeader > h1 {
+    font-size: 120%;
+  }
   .mainHeaderGrid {
     display: grid;
     grid-template-columns: minmax(350px, 470px);
     grid-template-rows: max-content;
+    padding: 10px;
   }
   .wrdSalad {
     padding-block: 3rem;
@@ -196,9 +202,11 @@
   .wrdSalad > p.spanStart,
   .wrdSalad > p.spanEnd {
     font-size: 130%;
+    line-height: 1.5rem;
   }
   .wrdSalad > p.spanMiddle {
     font-size: 100%;
+    line-height: 1.5rem;
   }
 }
 @media screen and (max-width: 420px) {

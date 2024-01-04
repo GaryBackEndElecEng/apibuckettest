@@ -20,8 +20,8 @@ export default function LogoImage({ logo }: { logo: string }) {
             ref={logoRef}
             src={logo}
             alt="www.ablogroom.com"
-            width={125}
-            height={125}
+            width={225}
+            height={225}
             priority
             style={{ width: "auto" }}
             blurDataURL={logo}

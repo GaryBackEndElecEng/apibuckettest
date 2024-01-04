@@ -346,12 +346,12 @@
     gap: 1rem;
   }
   .homeGridElement {
-    margin-inline: 0;
+    padding-inline: 0.5rem;
   }
 }
 @media screen and (max-width: 920px) {
   .homeMainPage {
-    width: auto;
+    width: 100%;
   }
   .homeHeader {
     width: 100%;
@@ -392,6 +392,9 @@
   }
 }
 @media screen and (max-width: 480px) {
+  .homeMainPage {
+    width: 90%;
+  }
   .p_grid {
     flex-direction: column;
   }
