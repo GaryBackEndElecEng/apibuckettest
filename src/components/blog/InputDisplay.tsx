@@ -3,7 +3,7 @@ import { contactType, inputType, contentStyle } from '@/lib/Types';
 import React from 'react';
 // import "@pages/globalsTwo.css"
 import Image from 'next/image';
-import { ConvertToFormula, ConvertToList, SeparatePara } from "@lib/ultils";
+import { ConvertToFormula, ConvertToList, SeparatePara, parseLink } from "@lib/ultils";
 import styles from "@component/blog/blog.module.css";
 import { useGeneralContext } from '../context/GeneralContextProvider';
 import { TextField } from '@mui/material';
@@ -119,7 +119,7 @@ function GenInput({ input }: { input: inputType }) {
                         {input.name} :
                     </h3>}
                     <div onClick={(e) => handleLink(e, input.content)} >
-                        <FaArrowRightLong style={{ color: "orange" }} />    {input.content}
+                        <FaArrowRightLong style={{ color: "orange" }} />{parseLink(input.content)}
                     </div>
                 </div>
             )

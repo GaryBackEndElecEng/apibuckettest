@@ -648,6 +648,18 @@ export function parseStyle(name: string) {
         return
     }
 }
+export function parseLink(name: string) {
+    if (name && name.split("/")) {
+        if (name.split("/").length > 0) {
+            let links = name.split("/")
+            return links[links.length - 1]
+        } else {
+            return name
+        }
+    } else {
+        return name
+    }
+}
 
 
 
