@@ -63,7 +63,7 @@ export default function PostItem({ post }: postItemType) {
                         placeholder="blur"
                         blurDataURL={post.imageUrl}
                     />}
-                    <p>{post.content}</p>
+                    <p>{post.content.slice(0, 75)}...</p>
 
                     <button className={styles.btnPostItem} onClick={(e) => handleRout(e, post)}>edit</button>
                 </div>

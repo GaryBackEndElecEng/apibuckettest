@@ -445,8 +445,8 @@ export function ConvertToFormula({ para }: { para: string }) {
     const space: RegExp = /(?:\r\n|\r|\n)+\s/gm; //This matches 0-9
     const nextLine: RegExp = /(?:\r\n|\r|\n)/gm;
     const minus: RegExp = /-/gm; //matches "-"
-    const opBrack: RegExp = /\[/gm; //matches "["
-    const cbBrack: RegExp = /\]/gm; //matches "]"
+    const opBrack: RegExp = /(?:\[)/gm; //matches "["
+    const cbBrack: RegExp = /(?:\])/gm; //matches "]"
     const sum: RegExp = /sum/gm; //matches "sum"
     const func: RegExp = /function/gm; //matches "sum"
     const funct: RegExp = /func/gm; //matches "sum"
@@ -455,7 +455,7 @@ export function ConvertToFormula({ para }: { para: string }) {
     const empty: RegExp = /empty/gm; //matches "<sub"
     const opCurl: RegExp = /{/gm; //matches "<sub"
     const clCurl: RegExp = /}/gm; //matches "<sub"
-    const times: RegExp = /x/gm; //matches "<sub"
+    const times: RegExp = /X/gm; //matches "<sub"
     const dbarrow: RegExp = /2arrow/gm; //matches "<sub"
     const divide: RegExp = /divide/gm; //matches "<sub"
     const lim: RegExp = /lim/gm; //matches "lim"
@@ -470,7 +470,14 @@ export function ConvertToFormula({ para }: { para: string }) {
     const muchGreater: RegExp = />>/gm; //matches "return"
     const cube: RegExp = /cube/gm; //matches "return"
     const notEqual: RegExp = /notequal/gm; //matches "return"
-    const angle: RegExp = /angle/gm; //matches "return"
+    const angle: RegExp = /angle/gm;
+    const colon: RegExp = /:/gm;
+    const semicolon: RegExp = /;/gm;
+    const async_: RegExp = /async/gm;
+    const await_: RegExp = /await/gm;
+    const export_: RegExp = /export/gm;
+    const iff_: RegExp = /if/gm;
+
 
     const searchList = [
         { name: "angle", match: angle, repl: ` &ang; ` },
@@ -483,9 +490,8 @@ export function ConvertToFormula({ para }: { para: string }) {
         { name: "minus", match: minus, repl: ` &minus; ` },
         { name: "nextLine", match: nextLine, repl: `<br/>` },
         { name: "space", match: space, repl: `<div style="margin-left:10px"/>` },
-        { name: "opBrack", match: opBrack, repl: `&lbrack;<span style="border-left:20px" > ` },
-        { name: "cbBrack", match: cbBrack, repl: `</span >&rbrack;` },
-        { name: "times", match: times, repl: `X ` },
+
+        { name: "times", match: times, repl: ` X ` },
         { name: "return", match: ret, repl: `<span style="color:green"> return </span> ` },
         { name: "sum", match: sum, repl: ` &sum; ` },
         { name: "pi", match: pi, repl: `<span style="color:blue" > &pi; </span>` },
@@ -497,11 +503,17 @@ export function ConvertToFormula({ para }: { para: string }) {
         { name: "dbarrow", match: dbarrow, repl: `<span style="color:red"> &hArr; </span> ` },
         { name: "arrow", match: arrow, repl: `<span style="color:blue"> &rArr; </span> ` },
         { name: "lim", match: lim, repl: ` lim &rArr;` },
-        { name: "promise", match: promise, repl: `<span style="color:red">$& </span>` },
+        { name: "promise", match: promise, repl: `<span style="color : red">Promise </span>` },
         { name: "divide", match: divide, repl: ` &#47; ` },
-        { name: "opCurl", match: opCurl, repl: `<span style="color:pink"> &#123; </span><div style="margin-left:25px;">` },
-        { name: "clCurl", match: clCurl, repl: `<span style="color:pink"> &#125; </span></div>` },
+        { name: "opCurl", match: opCurl, repl: `<span style="color : green">&#123;</span><div style="margin-left:20px;">` },
+        { name: "clCurl", match: clCurl, repl: `</div><span style="color : green">&#125;</span>` },
         { name: "func", match: func, repl: ` <span style="color:red">function</span> ` },
+        // { name: "colon", match: colon, repl: ` <span style="color:red"> &#58; </span> ` },
+        // { name: "semicolon", match: semicolon, repl: ` <span style="color:red">&#59;</span> ` },
+        { name: "async", match: async_, repl: ` <span style="color:green">async</span> ` },
+        { name: "await", match: await_, repl: ` <span style="color:yellow">await</span> ` },
+        { name: "export", match: export_, repl: ` <span style="color:pink">export</span> ` },
+        { name: "iff", match: iff_, repl: ` <span style="color:red">if</span> ` },
 
     ]
     let para2: string = "";
@@ -534,7 +546,7 @@ export function sortInput(inputs: inputType[]) {
     return retInputs
 }
 export async function insertOrder(inputs: inputType[], targetInput: inputType, target: number) {
-    const insertOrder = { ...targetInput, order: target }
+
     let tempArr: inputType[] = [];
     let cleanArr: inputType[] = [];
     inputs.map((input, index) => {
@@ -555,7 +567,7 @@ export async function insertOrder(inputs: inputType[], targetInput: inputType, t
         } else {
             cleanArr.push(input)
         }
-    })
+    });
     let num: number = 0;
     const retInputs = await Promise.all(
         cleanArr.map(async (input, index) => {

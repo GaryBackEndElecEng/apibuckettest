@@ -91,6 +91,9 @@ div.link > h3 {
     padding: 0.5rem;
     font-size: 150%;
   }
+  section.code > div > p {
+    line-height: 1.5rem;
+  }
   section.section p,
   article.article p,
   section.conclusion p {
