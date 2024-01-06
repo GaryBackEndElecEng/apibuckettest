@@ -166,8 +166,13 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
             img: file.imageUrl ? file.imageUrl : image,
             author: { author: name, url: `/blogs/${file.id}`, }
         };
-
-
+        const inputImages: (string | null)[] = file.inputs.map((input, index) => {
+            if (input.s3Key) {
+                input.url = `${url}/${input.s3Key}`
+            }
+            return input.url
+        });
+        const inputImg: string[] = inputImages && inputImages.length ? inputImages.filter(img => (img !== null)) as string[] : [image]
         // optionally access and extend (rather than replace) parent metadata
         const referrer = (await parent).referrer;
         const previousImages = (await parent)?.openGraph?.images || []
@@ -187,7 +192,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
             referrer,
 
             openGraph: {
-                images: [image, Rate.img, ...previousImages],
+                images: [Rate.img, ...inputImg],
                 url: blogUrl,
                 emails: [user.email, ...emails]
             },

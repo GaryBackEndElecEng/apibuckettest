@@ -1,11 +1,12 @@
 "use client";
 import React from 'react';
-import { wordSalad1 } from "./wordSalad"
+import { wordSalad1 } from "./wordSalad";
 import styles from "./home2.module.css"
 import { FaExclamation } from "react-icons/fa";
 import GiveTools from "./GiveTools";
 import LogoImage from "./LogoImage";
 import Login from "@component/comp/Login";
+import MainWordSalad from "./MainWordSalad";
 
 export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
     const colorWld = "/images/colorWorld.png";
@@ -26,17 +27,7 @@ export default function HomeHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             <h3> www.ablogroom.com</h3>
             <div className={styles.mainHeaderGrid}>
                 <div className={styles.childGrid}>
-                    <div className={styles.wrdSalad}>
-                        {wordSalad1.map((word, index) => (
-                            <React.Fragment key={index}>
-                                <p className={styles.spanStart}>{word.name} </p>
-                                <p className={styles.spanMiddle} >{word.name1}</p>
-                                <p className={styles.spanEnd} >{word.name3}</p>
-                                <FaExclamation style={{ color: "red" }} className={styles.spanEnd} />
-
-                            </React.Fragment>
-                        ))}
-                    </div>
+                    <MainWordSalad />
                 </div>
 
             </div>
