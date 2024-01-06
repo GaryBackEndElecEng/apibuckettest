@@ -222,7 +222,6 @@
   margin-inline: 0.5rem;
   filter: drop-shadow(1px 1px 6px grey);
   border-radius: 15px 15px 15px 15px;
-  border: 1px solid black;
   width: 80%;
 }
 .inputImage > small {

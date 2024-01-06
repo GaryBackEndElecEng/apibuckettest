@@ -167,6 +167,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
         const newAuthors = [...authors, Rate.author];
         const desc = (post && post.content) ? post.content : `${post.name} description of an author's blog.`;
         const blogUrl = `/blogs/${post.id}`
+        const postImages: typeof previousImages = [Rate.img, ...previousImages]
 
         return {
             title: `${post.name}:Rating: ${Rate.rate}- Blog Room Page`,
@@ -176,7 +177,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
             referrer,
 
             openGraph: {
-                images: [Rate.img, ...previousImages],
+                images: postImages,
                 url: blogUrl,
                 emails: [user.email, ...emails]
             },

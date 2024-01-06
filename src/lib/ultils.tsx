@@ -663,8 +663,13 @@ export function parseStyle(name: string) {
 export function parseLink(name: string) {
     if (name && name.split("/")) {
         if (name.split("/").length > 0) {
-            let links = name.split("/")
-            return links[links.length - 1]
+            let links = name.split("/");
+            let nameLnk = links[links.length - 1]
+            if (nameLnk !== "") {
+                return links[links.length - 1]
+            } else {
+                return links[links.length - 2]
+            }
         } else {
             return name
         }

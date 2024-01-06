@@ -172,7 +172,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
             }
             return input.url
         });
-        const inputImg: string[] = inputImages && inputImages.length ? inputImages.filter(img => (img !== null)) as string[] : [image]
+
         // optionally access and extend (rather than replace) parent metadata
         const referrer = (await parent).referrer;
         const previousImages = (await parent)?.openGraph?.images || []
@@ -183,16 +183,17 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
         const newAuthors = [...authors, Rate.author];
         const desc = (file && file.content) ? file.content : `${file.name} description of an author's blog.`;
         const blogUrl = `/blogs/${file.id}`
+        const inputImg: typeof previousImages = inputImages && inputImages.length ? [Rate.img, ...inputImages.filter(img => (img !== null))] as string[] : [image]
 
         return {
             title: `${file.title}:Rating: ${Rate.rate}- Blog Room Page`,
-            description: `${desc}, ${prevDesc}`,
+            description: `${desc.slice(0, 100)}..., ${prevDesc}`,
             authors: newAuthors,
             creator: creator,
             referrer,
 
             openGraph: {
-                images: [Rate.img, ...inputImg],
+                images: [...inputImg, ...previousImages],
                 url: blogUrl,
                 emails: [user.email, ...emails]
             },
