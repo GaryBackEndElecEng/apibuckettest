@@ -30,19 +30,13 @@ export default function MainCreatePost({ getuser, newpost }: mainCreateType) {
             setUserBlogs(getuser.files);
             setUserPosts(getuser.posts);
         }
-        if (newpost) {
-            setPost(newpost)
-            toast.success("uploaded newPost")
-        } else {
-            toast.error("post not uploaded")
-        }
 
-    }, [setUser, setPostMsg, getuser, newpost, setPost, setUserPosts, setUserBlogs]);
+    }, [setUser, setPostMsg, getuser, setUserPosts, setUserBlogs]);
 
     return (
         <div className={styles.mainCreatorPost}>
             <h2>Create a post</h2>
-            <CreatePost user={user} post={post} />
+            <CreatePost user={user} newpost={newpost} />
         </div>
 
     )

@@ -64,22 +64,38 @@ export async function getUser() {
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(`${msg}@dashboard/CreatePost/page@prisma@user`)
+        } finally {
+            await prisma.$disconnect()
         }
     }
 }
 
 export async function newPost(userId: string) {
     try {
-        const newpost = await prisma.post.create({
-            data: {
-                name: "title",
+        const isPost = await prisma.post.findMany({
+            where: {
                 content: "content",
                 userId: userId
             }
         });
-        return newpost
+        if (isPost[0]) {
+            return isPost[0] as unknown as postType
+        } else {
+            const newpost = await prisma.post.create({
+                data: {
+                    name: "title",
+                    content: "content",
+                    userId: userId
+                }
+            });
+            return newpost as unknown as postType
+        }
     } catch (error) {
         const msg = getErrorMessage(error);
         console.error(`${msg}@dashboard/CreatePost/page@prisma@post`)
+    } finally {
+        await prisma.$disconnect()
     }
 }
+
+

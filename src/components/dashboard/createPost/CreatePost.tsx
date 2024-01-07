@@ -22,18 +22,27 @@ type postFetchType = {
 }
 type createMainCreatePost = {
     user: userType | null,
-    post: postType | undefined
+    newpost: postType | undefined
 }
 
-export default function CreatePost({ user, post }: createMainCreatePost) {
+export default function CreatePost({ user, newpost }: createMainCreatePost) {
     const { userBlogs } = useBlogContext();
-    const { setPost, setPosts, posts, setPostMsg, postMsg } = usePostContext()
+    const { setPost, post, setPosts, posts, setPostMsg, setUserPosts, userPosts } = usePostContext()
     const [loaded, setLoaded] = React.useState<boolean>(false);
     const [complete, setComplete] = React.useState<boolean>(false);
     const [isBlogLink, setIsBlogLink] = React.useState<boolean>(false);
     const [temImage, setTemImage] = React.useState<string | undefined>();
 
+    React.useEffect(() => {
+        if (!newpost) return
+        setPost(newpost)
+        toast.success("new post")
+    }, [newpost, setPost]);
 
+    React.useEffect(() => {
+        if (!user) return
+        setUserPosts(user.posts)
+    }, [user, setUserPosts])
 
     //bloglink: `/blog/${file_.id}`
 
@@ -41,7 +50,9 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
     React.useEffect(() => {
         if (post && post.name && post.content && post.userId) {
             setComplete(true);
+
         }
+
     }, [post, user, setComplete]);
 
 
@@ -62,6 +73,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
                     setLoaded(true);
                     setComplete(false);
                     setPosts([...posts as postType[], body.post]);
+                    setUserPosts([...userPosts, body.post])
                 }
             } catch (error) {
                 const message = getErrorMessage(error);
@@ -71,6 +83,7 @@ export default function CreatePost({ user, post }: createMainCreatePost) {
         }
 
     }
+
 
     const postOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         e.preventDefault();

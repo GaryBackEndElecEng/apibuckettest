@@ -112,6 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     if (req.method === "DELETE") {
         const postId = req.query.postId as string;
+        console.log("DELETE", postId)
         if (postId) {
             try {
                 const post = await prisma.post.delete({

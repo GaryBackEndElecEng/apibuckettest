@@ -302,10 +302,12 @@ export function useChange(path: string | null) {
 }
 export function filterSort(arr: nameRateType[]) {
     let cleanArr: nameRateType[] = [];
-    for (const [key, value] of Object.entries(arr)) {
-        const obj = cleanArr.find(obj => (obj.name === value.name));
-        if (!obj) {
-            cleanArr.push(value)
+    if (arr && arr.length) {
+        for (const [key, value] of Object.entries(arr)) {
+            const obj = cleanArr.find(obj => (obj.name === value.name));
+            if (!obj) {
+                cleanArr.push(value)
+            }
         }
     }
     return cleanArr
@@ -313,45 +315,57 @@ export function filterSort(arr: nameRateType[]) {
 
 export function ArrRateFileResult(files: fileType[]) {
     let arr: nameRateType[] = []
-    files.map((file, index) => {
-        const len = file.rates && file.rates.length > 0 ? file.rates.length : 1;
-        const calcAv = file.rates.reduce((a, b) => (a + b.rate), 0);
-        const rateAv = Math.round(calcAv / len)
-        arr.push({ name: file.name, avRate: rateAv, count: len });
-        return
-    });
+    if (files && files[0] && files[0].rates[0]) {
+        files.map((file, index) => {
+            const len = file.rates && file.rates.length > 0 ? file.rates.length : 1;
+            const calcAv = file.rates.reduce((a, b) => (a + b.rate), 0);
+            const rateAv = Math.round(calcAv / len)
+            arr.push({ name: file.name, avRate: rateAv, count: len });
+            return
+        });
+    }
     return filterSort(arr)
 }
 export function ArrRatePostResult(posts: postType[]) {
     let arr: nameRateType[] = []
-    posts.map((post, index) => {
-        if (!post.rates) return
-        const len = post.rates && post.rates.length > 0 ? post.rates.length : 1;
-        const calcAv = post.rates.reduce((a, b) => (a + b.rate), 0);
-        const rateAv = Math.round(calcAv / len)
-        arr.push({ name: post.name, avRate: rateAv, count: len });
-        return
-    });
+    if (posts && posts[0] && posts.length) {
+        posts.map((post, index) => {
+            if (post && !post.rates) return
+            const len = post.rates && post.rates.length > 0 ? post.rates.length : 1;
+            const calcAv = post.rates.reduce((a, b) => (a + b.rate), 0);
+            const rateAv = Math.round(calcAv / len)
+            arr.push({ name: post.name, avRate: rateAv, count: len });
+            return
+        });
+    }
     return filterSort(arr)
 }
 
 export function postHits(pages: pageHitType[], posts: postType[]): pageHitType[] {
-    const retResults = posts.map((post, index) => {
-        const getpageHits = pages.filter(page => (page.page.includes(`/posts/${post.id}`)));
-        const retCount = getpageHits.reduce((a, b) => (a + b.count), 0);
-        const newHit = { ...getpageHits[0], name: post.name, count: retCount }
-        return newHit
-    });
-    return retResults
+    if (posts && posts.length) {
+        const retResults = posts.map((post, index) => {
+            const getpageHits = pages.filter(page => (page.page.includes(`/posts/${post.id}`)));
+            const retCount = getpageHits.reduce((a, b) => (a + b.count), 0);
+            const newHit = { ...getpageHits[0], name: post.name, count: retCount }
+            return newHit
+        });
+        return retResults
+    } else {
+        return pages as pageHitType[]
+    }
 }
 export function blogHits(pages: pageHitType[], files: fileType[]): pageHitType[] {
-    const retResults = files.map((file, index) => {
-        const getpageHits = pages.filter(page => (page.page.includes(`/blogs/${file.id}`)));
-        const retCount = getpageHits.reduce((a, b) => (a + b.count), 0);
-        const newHit = { ...getpageHits[0], name: file.name, count: retCount }
-        return newHit
-    });
-    return retResults
+    if (pages && pages.length) {
+        const retResults: pageHitType[] = files.map((file, index) => {
+            const getpageHits = pages.filter(page => (page.page.includes(`/blogs/${file.id}`)));
+            const retCount = getpageHits.reduce((a, b) => (a + b.count), 0);
+            const newHit = { ...getpageHits[0], name: file.name, count: retCount }
+            return newHit
+        });
+        return retResults
+    } else {
+        return pages
+    }
 }
 
 export function useHits() {
@@ -363,7 +377,7 @@ export function useHits() {
     const [total, setTotal] = React.useState<number>(0);
     const [retArr, setRetArr] = React.useState<retType[]>([])
     React.useEffect(() => {
-        if (pageHits) {
+        if (pageHits && pageHits.length) {
             const getTotal = pageHits.reduce((a, b) => (a + b.count), 0);
             setTotal(getTotal);
             const getArr = pageHits.map(page => ({ page: page.page, count: page.count }));
