@@ -12,7 +12,7 @@ export default function MainWordSalad() {
         const observer = new IntersectionObserver((entries) => {
             let entry = entries[0];
             setShow(entry.isIntersecting);
-        }, { threshold: 1 });
+        }, { threshold: 0.7 });
 
         if (refSal.current) {
             observer.observe(refSal.current)

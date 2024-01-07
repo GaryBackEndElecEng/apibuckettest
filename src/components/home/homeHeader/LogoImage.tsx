@@ -10,7 +10,7 @@ export default function LogoImage({ logo }: { logo: string }) {
         const observer = new IntersectionObserver((entries) => {
             let entry = entries[0];
             setShow(entry.isIntersecting);
-        }, { threshold: 1 });
+        }, { threshold: 0.6 });
         if (logoRef.current && logo) {
             observer.observe(logoRef.current);
         }

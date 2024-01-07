@@ -230,6 +230,9 @@
 }
 
 @media screen and (max-width: 920px) {
+  .mainHeader {
+    z-index: -1;
+  }
   .mainHeaderGrid {
     display: grid;
     grid-template-columns: minmax(400px, 920px);
