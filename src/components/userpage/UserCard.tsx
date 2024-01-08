@@ -3,7 +3,7 @@ import React from 'react';
 import styles from "./userpage.module.css"
 import { userType } from '@/lib/Types';
 import Image from 'next/image';
-import { useWindowSize } from "@lib/ultils";
+import { firstUpper, useWindowSize } from "@lib/ultils";
 
 export default function UserCard({ user }: { user: userType }) {
     const [Name, setName] = React.useState<string | null>(null);
@@ -19,7 +19,7 @@ export default function UserCard({ user }: { user: userType }) {
                 <div className={styles.MainUserCard}>
                     <div>
 
-                        <h3>{user && user.name}</h3>
+                        <h3>{user && firstUpper(user.name as string)}</h3>
 
 
                         {user.image ?
@@ -44,17 +44,4 @@ export default function UserCard({ user }: { user: userType }) {
         </div>
     )
 }
-export function firstLast(name: string) {
-    let arrLet = name.split("");
-    let newN: string = name;
-    arrLet.forEach((let_, index) => {
-        if (index > 0) {
-            if (let_.toUpperCase() === let_) {
-                newN = `${arrLet.slice(0, index).join("")} ${arrLet.slice(index, arrLet.length - 1).join("")}`
 
-            }
-        }
-    });
-    return newN
-
-}

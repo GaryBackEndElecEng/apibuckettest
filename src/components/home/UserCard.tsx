@@ -5,7 +5,7 @@ import Image from 'next/image';
 import "@pages/globalsTwo.css";
 import styles from "@component/home/home.module.css";
 import { useRouter } from "next/navigation";
-import { NameSep, separateName } from "@lib/ultils";
+import { NameSep, firstUpper, separateName } from "@lib/ultils";
 import { Ephesis } from 'next/font/google';
 const ephesis = Ephesis({ subsets: ['latin'], weight: "400" });
 
@@ -22,7 +22,7 @@ export default function UserCard({ user }: { user: userType }) {
         <>
             {user &&
                 <div className={styles.userCard} onClick={(e) => handleRoute(e)}>
-                    <h3 className={ephesis.className}>{user.name && separateName(user.name)}</h3>
+                    <h3 className={ephesis.className}>{user.name && firstUpper(separateName(user.name))}</h3>
                     <p style={{ color: "white", background: "black" }}>
 
                         {user.name && image && <Image src={image} width={75} height={75} alt={user.name} className={styles.profileImage}

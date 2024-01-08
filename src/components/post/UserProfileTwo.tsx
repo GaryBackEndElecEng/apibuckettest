@@ -5,7 +5,7 @@ import styles from "@component/post/post.module.css";
 import { getErrorMessage } from "@lib/errorBoundaries";
 import { userType } from '@/lib/Types';
 import Image from 'next/image';
-import { NameSep } from '@/lib/ultils';
+import { NameSep, firstUpper } from '@/lib/ultils';
 
 
 export default function UserProfile({ user }: { user: userType | undefined }) {
@@ -15,7 +15,7 @@ export default function UserProfile({ user }: { user: userType | undefined }) {
     return (
         <React.Fragment>
             {user && <div className={`${styles.userProfileTwo}`}>
-                <h3 className="text-center text-xl mb-1">{user.name && user.name}</h3>
+                <h3 className="text-center text-xl mb-1">{user.name && firstUpper(user.name)}</h3>
                 <p>
                     {user.image ?
                         <Image src={user.image} width={75} height={75} alt="www.ablogroom.com" priority

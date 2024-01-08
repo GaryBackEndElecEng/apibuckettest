@@ -281,6 +281,23 @@ export function separateName(name: string) {
         return name
     }
 }
+export function firstUpper(fullName: string) {
+    const splitName: string[] = fullName.split(" ");
+    const check: boolean = splitName ? true : false;
+    if (!check) return fullName;
+    const capName = splitName.map((name, index) => {
+        let letArr = name.split("");
+        const nameJoin: string = letArr.map((Let, index) => {
+            if (index === 0) {
+                return Let.toUpperCase()
+            } else {
+                return Let
+            }
+        }).join("");
+        return nameJoin
+    }).join(" ")
+    return capName
+}
 
 export function useChange(path: string | null) {
     const [hasChanged, setHasChanged] = React.useState<boolean>(false);
